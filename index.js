@@ -1,14 +1,18 @@
 import { cdbr_data, ed_interpolate } from "./cdbr_data.js";
+import promptSync from 'prompt-sync';
 
 // Declarations
-const averageMechPower = 30;        // kW
 const gearboxEfficiency = 0.9;
 const motorEfficiency = 0.9;
 const voltageClass = 400;           // Volts AC RMS
 const brakeActivateVoltage = 760;   // Volts DC
-const dutyCycle = 40;               // Percent
-const hoistHeight = 200;             // Meters
-const hoistSpeed = 10;              // Meters / minute
+
+// Get Input Data from User
+const prompt = promptSync();
+const averageMechPower = Number.parseInt(prompt('Average Mechanical Power [kW]: '));
+const dutyCycle = Number.parseInt(prompt('Hoist Duty Cycle [%]: '));
+const hoistHeight = Number.parseInt(prompt('Hoist Hieght [m]: '));
+const hoistSpeed = Number.parseInt(prompt('Hoist Speed [m/min]: '));
 
 let averageBrakePower = averageMechPower * gearboxEfficiency * motorEfficiency;
 let maxBrakePower = averageBrakePower * 2;
@@ -29,7 +33,7 @@ else if (voltageClass === 200) maxBrakeResistance = (380 ** 2) / (maxBrakePower 
 
 let maxBrakeTime = (hoistHeight / hoistSpeed) * 60;
 
-console.log(`Average Braking Power = ${averageBrakePower} kW`);
+console.log(`\nAverage Braking Power = ${averageBrakePower} kW`);
 console.log(`Maximum Braking Power = ${maxBrakePower} kW`);
 //console.log(`Maximum Braking Resistance = ${maxBrakeResistance.toFixed(1)} Ω`);
 console.log(`Maximum Braking Time = ${Math.round(maxBrakeTime)} s`);
