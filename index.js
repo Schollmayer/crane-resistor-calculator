@@ -8,11 +8,13 @@ const voltageClass = 400;           // Volts AC RMS
 const brakeActivateVoltage = 760;   // Volts DC
 
 // Get Input Data from User
+
 const prompt = promptSync();
 const averageMechPower = Number.parseInt(prompt('Average Mechanical Power [kW]: '));
 const dutyCycle = Number.parseInt(prompt('Hoist Duty Cycle [%]: '));
 const hoistHeight = Number.parseInt(prompt('Hoist Hieght [m]: '));
 const hoistSpeed = Number.parseInt(prompt('Hoist Speed [m/min]: '));
+
 
 let averageBrakePower = averageMechPower * gearboxEfficiency * motorEfficiency;
 let maxBrakePower = averageBrakePower * 2;
@@ -50,7 +52,7 @@ if (cdbr_data.some(cdbr => cdbr.minResistance < maxBrakeResistance)) {
   Ix = ed_interpolate(selectedEDCurve, maxBrakeTime);
   // Ensure minBrakingCurrent < Ix < maxBrakingCurrent
   if ((maxBrakingCurrent > Ix) && (minBrakingCurrent < Ix)) {
-      maxBrakingCurrent = Ix;
+    maxBrakingCurrent = Ix;
     // Ensure resistance still possible if 10% tolerance is considered
     if ((maxBrakeResistance - selectedCDBR.minResistance) > maxBrakeResistance * 0.1) {
       selectionCompleted = true;
@@ -97,7 +99,7 @@ if (!selectionCompleted) {
 
 // Function to select a CDBR unit according to input data
 function find_cdbr(catalogue, maxBResist, maxBTime, dutyC) {
-  
+
 }
 
 
