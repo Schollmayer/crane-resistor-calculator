@@ -1,2 +1,4 @@
-# crane-resistor-calculator
-Calculator for crane braking resistor and transistor selection
+# Crane Braking Transistor and Resistor Calculator
+This tool helps select the braking transistor and resistor when using Yaskawa drives on hoist applications.
+
+
