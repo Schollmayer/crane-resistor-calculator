@@ -61,7 +61,7 @@ const cr700_4005 = {
   contDischargeCurrent: 0.57,    // Continuous braking current in [A]
 };
 
-const cr700_4005 = {
+const cr700_4006 = {
   type: "CIPR-CR70C4006",
   voltageClass: 400,
   hdPower: 2.2,                  // Heavy duty output power rating in [kW]
@@ -215,4 +215,4 @@ const cr700_4150 = {
   contDischargeCurrent: 28.6,    // Continuous braking current in [A]
 };
 
-export const cr700_data = [cr700_4003, cr700_4005, cr700_4006, cr700_4009, cr700_4015, cr700_4018,       cr700_4024, cr700_4031, cr700_4039, cr700_4045, cr700_4060, cr700_4075, cr700_4091, cr700_4112,      cr700_4150];
+export const cr700_data = [cr700_4003, cr700_4005, cr700_4006, cr700_4007, cr700_4009, cr700_4015, cr700_4018, cr700_4024, cr700_4031, cr700_4039, cr700_4045, cr700_4060, cr700_4075, cr700_4091, cr700_4112, cr700_4150];
