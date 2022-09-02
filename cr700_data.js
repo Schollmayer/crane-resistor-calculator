@@ -1,37 +1,37 @@
 // Define CR700 Internal Braking Transistor Data
 
 const tb_70Percent = {
-  brakingTorque = 70,
+  brakingTorque: 70,
   brakeTime: [1.0, 10.0, 50.0, 100.0, 200.0, 500.0, 1000.0, 1600.0, 2200.0],
   dutyCycle: [90.0, 90.5, 80.0, 65.0, 55.0, 30.0, 14.0, 5.0, 2.5, 1.0]
 };
 
 const tb_84Percent = {
-  brakingTorque = 84,
+  brakingTorque: 84,
   brakeTime: [1.0, 10.0, 20.0, 50.0, 90.0, 160.0, 270.0, 380.0, 420.0, 500.0],
   dutyCycle: [50.0, 50.0, 45.0, 40.0, 30.0, 20.0, 10.0, 5.0, 3.0, 1.0]
 };
 
 const tb_98Percent = {
-  brakingTorque = 98,
+  brakingTorque: 98,
   brakeTime: [1.0, 16.0, 58.0, 106.0, 150.0, 170.0, 200.0],
   dutyCycle: [35.0, 30.0, 20.0, 10.0, 5.0, 3.0, 1.0]
 };
 
 const tb_120Percent = {
-  brakingTorque = 120,
+  brakingTorque: 120,
   brakeTime: [1.0, 5.0, 20.0, 43.0, 67.0, 80.0, 85.0],
   dutyCycle: [20.0, 19.0, 16.0, 10.0, 5.0, 3.0, 1.0]
 };
 
 const tb_141Percent = {
-  brakingTorque = 141,
+  brakingTorque: 141,
   brakeTime: [1.0, 5.0, 14.0, 20.0, 35.0, 45.0, 55.0],
   dutyCycle: [14.0, 12.0, 10.0, 7.5, 5.0, 3.0, 1.0]
 };
 
 const tb_155Percent = {
-  brakingTorque = 155,
+  brakingTorque: 155,
   brakeTime: [1.0, 5.0, 10.0, 21.0, 29.0, 40.0],
   dutyCycle: [11.0, 9.0, 7.0, 5.0, 3.0, 1.0]
 };
