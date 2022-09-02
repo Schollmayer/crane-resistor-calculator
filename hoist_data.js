@@ -1,6 +1,9 @@
+// Imports
+import { cdbr_data, ed_interpolate } from "./cdbr_data.js";
 import Prompt from './input_helpers.cjs';
 
-class Hoist {
+// Declarations
+export class Hoist {
   constructor(hoistName) {
     this.hoistName = hoistName;
 
@@ -32,16 +35,95 @@ class Hoist {
     return this.averageBrakePower() * 2;
   }
   maxBrakeTime() {
-    return (this.hoistHeight / this.hoistSpeed) * 60;
+    return Math.round((this.hoistHeight / this.hoistSpeed) * 60);
   }
   maxBrakeResistance() {
-    return (this.brakeActivateVoltage ** 2) / (this.maxBrakePower() * 1000);
+    return ((this.brakeActivateVoltage ** 2) / (this.maxBrakePower() * 1000)).toFixed(1);
+  }
+  selectedCDBR() {
+    return findCDBR(this.maxBrakeResistance(), this.maxBrakeTime(), this.brakeActivateVoltage, this.dutyCycle);
   }
 }
 
-//const prompt = require('prompt-sync')({sigint: true});
-const hoists = [];
-hoists.push(new Hoist(Prompt.get_string_from_user("Hoist Name", 1, 16)));
-console.log(hoists);
-console.log(hoists[0].hoistName);
-console.log(hoists[0].maxBrakePower());
+// Functions
+const findCDBR = (maxBrakeResistance, maxBrakeTime, brakeActivationV, dutyCycle) => {
+  let selectedCDBR;
+  let selectedEDCurve;
+  let maxBrakingCurrent;
+  let minBrakingCurrent;
+  let Ix;
+  let selectionCompleted = false;
+  
+  // Is there a CDBR with the min connectable resistance less than the maximum allowable braking resistance?
+  if (cdbr_data.some(cdbr => cdbr.minResistance < maxBrakeResistance)) {
+    // Select CDBR and verify if it is suitable for the application
+    selectedCDBR = cdbr_data.find(cdbr => cdbr.minResistance < maxBrakeResistance);
+    selectedEDCurve = selectedCDBR.overloadCurves.find(curve => dutyCycle <= curve.dutyCycle);
+    console.log(`\nPreliminary Selection: ${selectedCDBR.type} \n\tMin Connectable Resistance = ${selectedCDBR.minResistance}`);
+    maxBrakingCurrent = brakeActivationV / selectedCDBR.minResistance;
+    minBrakingCurrent = brakeActivationV / maxBrakeResistance;
+    
+    Ix = ed_interpolate(selectedEDCurve, maxBrakeTime);
+    
+    // Ensure minBrakingCurrent < Ix < maxBrakingCurrent
+    if ((maxBrakingCurrent > Ix) && (minBrakingCurrent < Ix)) {
+      maxBrakingCurrent = Ix;
+      // Ensure resistance still possible if 10% tolerance is considered
+      if ((maxBrakeResistance - selectedCDBR.minResistance) > maxBrakeResistance * 0.1) {
+        selectionCompleted = true;
+        console.log(`\nCDBR found on first attempt.`);
+        return {
+          cdbr: selectedCDBR,
+          qtty: 1,
+          maxResistance: maxBrakeResistance
+        };
+      }
+    }
+
+    // Preliminary CDBR selection too small
+    if (!selectionCompleted) {
+      console.log(`\nPreliminary selection too small, calculating alternative`);
+      // Check if a larger CDBR is available
+      if (cdbr_data.some(cdbr => cdbr.minResistance < selectedCDBR.minResistance)) {
+        selectedCDBR = cdbr_data.find(cdbr => cdbr.minResistance < selectedCDBR.minResistance);
+        selectedEDCurve = selectedCDBR.overloadCurves.find(curve => dutyCycle <= curve.dutyCycle);
+        console.log(`\nAlternative Selection: ${selectedCDBR.type} \n\tMin Connectable Resistance = ${selectedCDBR.minResistance}`);
+        maxBrakingCurrent = brakeActivationV / selectedCDBR.minResistance;
+        minBrakingCurrent = brakeActivationV / maxBrakeResistance;
+        Ix = ed_interpolate(selectedEDCurve, maxBrakeTime);
+        // Ensure minBrakingCurrent < Ix < maxBrakingCurrent
+        if ((maxBrakingCurrent > Ix) && (minBrakingCurrent < Ix)) {
+          maxBrakingCurrent = Ix;
+          // Ensure resistance still possible if 10% tolerance is considered
+          if ((maxBrakeResistance - selectedCDBR.minResistance) > maxBrakeResistance * 0.1) {
+            selectionCompleted = true;
+            console.log(`\nCDBR found on second attempt.`);
+            return {
+              cdbr: selectedCDBR,
+              qtty: 1,
+              maxResistance: maxBrakeResistance
+            };  
+          }
+        }
+      }
+      else console.log(`\nNo alternative found, multiple CDBR units required\n`);
+    }
+  }
+
+  // Multiple CDBRs required
+  if (!selectionCompleted) {
+    selectedCDBR = cdbr_data.find(cdbr => cdbr.type === "CDBR-4220D");
+    selectedEDCurve = selectedCDBR.overloadCurves.find(curve => dutyCycle <= curve.dutyCycle);
+    Ix = ed_interpolate(selectedEDCurve, maxBrakeTime);
+    let resistance = brakeActivationV / Ix;
+    let cdbrQuantity = Math.ceil(resistance / maxBrakeResistance);
+    maxBrakeResistance = cdbrQuantity * maxBrakeResistance;
+    selectionCompleted = true;
+    console.log(`\nMultiple CDBRs selected.`);
+    return {
+      cdbr: selectedCDBR,
+      qtty: cdbrQuantity,
+      maxResistance: maxBrakeResistance
+    }; 
+  } 
+}
