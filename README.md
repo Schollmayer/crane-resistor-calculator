@@ -3,3 +3,6 @@ This tool helps select the braking transistor and resistor when using Yaskawa dr
 
 
 ## Backlog
+- Finish CR700 selection
+- Program in infinte loop
+- 

@@ -2,8 +2,8 @@
 
 const tb_70Percent = {
   brakingTorque: 70,
-  brakeTime: [1.0, 10.0, 50.0, 100.0, 200.0, 500.0, 1000.0, 1600.0, 2200.0],
-  dutyCycle: [90.0, 90.5, 80.0, 65.0, 55.0, 30.0, 14.0, 5.0, 2.5, 1.0]
+  brakeTime: [1.0, 10.0, 50.0, 230.0, 500.0, 760.0, 1200.0, 1600.0, 1800.0],
+  dutyCycle: [90.0, 90.0, 80.0, 50.0, 30.0, 20.0, 10.0, 5.0, 3.0]
 };
 
 const tb_84Percent = {
@@ -36,7 +36,9 @@ const tb_155Percent = {
   dutyCycle: [11.0, 9.0, 7.0, 5.0, 3.0, 1.0]
 };
 
-export const cr700OLCurves = [tb_70Percent, tb_84Percent, tb_98Percent, tb_120Percent, tb_141Percent, tb_155Percent];
+/*export const cr700OLCurves = [tb_70Percent, tb_84Percent, tb_98Percent, tb_120Percent, tb_141Percent, tb_155Percent];*/
+
+export const cr700OLCurves = [tb_155Percent, tb_141Percent, tb_120Percent, tb_98Percent, tb_84Percent, tb_70Percent]
   
 
 const cr700_4003 = {

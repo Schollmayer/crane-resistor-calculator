@@ -42,10 +42,13 @@ export class Hoist {
     return Math.round((this.hoistHeight / this.hoistSpeed) * 60);
   }
   maxBrakeResistance() {
-    return ((this.brakeActivateVoltage ** 2) / (this.maxBrakePower() * 1000)).toFixed(1);
+    return (this.brakeActivateVoltage ** 2) / (this.maxBrakePower() * 1000);
   }
   selectedCDBR() {
     return findCDBR(this.maxBrakeResistance(), this.maxBrakeTime(), this.brakeActivateVoltage, this.dutyCycle);
+  }
+  selectedCR700() {
+    return findCR700(this.motorRatedCurrent, this.averageBrakePower(), this.maxBrakeResistance(), this.maxBrakeTime(), this.dutyCycle);
   }
 }
 
@@ -136,30 +139,57 @@ const findCDBR = (maxBrakeResistance, maxBrakeTime, brakeActivationV, dutyCycle)
 
 
 // Function to select CR700 drive according to application motoring and braking requirements
-const findCR700 = (motorRatedCurrent, avMechPower, maxBrakeResistance, maxBrakeTime, dutyCycle) => {
+const findCR700 = (motorRatedCurrent, avBrakePower, maxBrakeResistance, maxBrakeTime, dutyCycle) => {
   let tbCurveAbove;
   let tbCurveBelow;
 
   // Initial CR700 selection according to motor rated current
-  let selectedCR700 = cr700_data.find(cr700 => cr700.hdCurrent >= motorRatedCurrent);
+  let selectedCR700 = cr700_data.find(cr700 => { 
+    if ((cr700.hdCurrent >= motorRatedCurrent) && (cr700.minBrakeResistance < maxBrakeResistance)) return true;
+  });
   console.log(`Initial selection is ${selectedCR700.type}`);
 
-  let brakingTorquePercent = Math.round((avMechPower / selectedCR700.hdPower) * 100);
+  let brakingTorquePercent = Math.round((avBrakePower / selectedCR700.hdPower) * 100);
   console.log(brakingTorquePercent);
 
   // Ensure that minimum connectable resistance is less than then max allowed resistance
-  if ((selectedCR700.minBrakeResistance < maxBrakeResistance) && (brakingTorquePercent <= 150)) {
-    if (cr700OLCurves.some(curve => !(curve.brakingTorque <= brakingTorquePercent))) {
+  if (brakingTorquePercent <= 155) {
+    if (brakingTorquePercent < cr700OLCurves[cr700OLCurves.length-1].brakingTorque) {
       console.log(`Initial selection OK`);
       return selectedCR700;
     }
     else {
-      tbCurveBelow = cr700OLCurves.find(curve => curve.brakingTorque >= brakingTorquePercent);
-      tbCurveAbove = cr700OLCurves.find(curve => curve.brakingTorque <= brakingTorquePercent);
-      console.log(tbCurveBelow, tbCurveAbove);
+      //tbCurveBelow = cr700OLCurves.find(curve => curve.brakingTorque >= brakingTorquePercent);
+      //tbCurveAbove = cr700OLCurves.find(curve => curve.brakingTorque <= brakingTorquePercent);
+
+      tbCurveAbove = cr700OLCurves.find(curve => {
+        console.log(`Curve to be tested: tb_${curve.brakingTorque}Percent`)
+        let curveFound = false;
+        if ((curve.brakeTime.some(time => time <= maxBrakeTime)) && (curve.dutyCycle.some(ed => ed <= dutyCycle))) {
+          console.log(`Curve found: false`);
+          return false;
+        }
+        for (let i = 0; i < curve.brakeTime.length; i++) {
+          if ((maxBrakeTime < curve.brakeTime[i]) && (dutyCycle < curve.dutyCycle[i])) {
+            curveFound = true;
+            break;
+          }
+        }
+        console.log(`Curve found: ${curveFound}`);
+        if (curveFound) return true;
+        else return false;
+      });
+      console.log(tbCurveAbove);
+      if (tbCurveAbove.brakingTorque >= brakingTorquePercent) {
+        console.log(`Initial selection OK`);
+        return selectedCR700;
+      }
     }
+    console.log(`Selected CR700 too small.`);
+    return false;
   }
-
+  else {
+    console.log(`Selected CR700 too small.`);
+    return false;
+  }
 }
-
-findCR700(100, 37, 10, 50, 30);
