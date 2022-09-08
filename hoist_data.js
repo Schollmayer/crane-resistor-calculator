@@ -1,6 +1,6 @@
 // Imports
 import { cdbr_data, ed_interpolate } from "./cdbr_data.js";
-import { cr700_data, cr700OLCurves } from "./cr700_data.js";
+import { cr700_data, cr700OLCurves, tb_interpolate } from "./cr700_data.js";
 import Prompt from './input_helpers.cjs';
 
 // Declarations
@@ -143,47 +143,52 @@ const findCR700 = (motorRatedCurrent, avBrakePower, maxBrakeResistance, maxBrake
   let tbCurveAbove;
   let tbCurveBelow;
 
-  // Initial CR700 selection according to motor rated current
+  // Initial CR700 selection according to motor rated current and mininmum connectable braking resistance
   let selectedCR700 = cr700_data.find(cr700 => { 
     if ((cr700.hdCurrent >= motorRatedCurrent) && (cr700.minBrakeResistance < maxBrakeResistance)) return true;
   });
   console.log(`Initial selection is ${selectedCR700.type}`);
 
   let brakingTorquePercent = Math.round((avBrakePower / selectedCR700.hdPower) * 100);
-  console.log(brakingTorquePercent);
+  console.log(`Required Braking Torque: ${brakingTorquePercent}% of drive rating`);
 
-  // Ensure that minimum connectable resistance is less than then max allowed resistance
-  if (brakingTorquePercent <= 155) {
+  // Continue verification only if the braking torque at the operation point 
+    // is less than the braking torque of the lowest overload curve
+  if (brakingTorquePercent <= cr700OLCurves[0].brakingTorque) {
+    // If the braking torque at the operation point is less than the braking 
+      // torque of the highest overload curve, selection is OK
     if (brakingTorquePercent < cr700OLCurves[cr700OLCurves.length-1].brakingTorque) {
       console.log(`Initial selection OK`);
       return selectedCR700;
     }
-    else {
-      //tbCurveBelow = cr700OLCurves.find(curve => curve.brakingTorque >= brakingTorquePercent);
-      //tbCurveAbove = cr700OLCurves.find(curve => curve.brakingTorque <= brakingTorquePercent);
-
-      tbCurveAbove = cr700OLCurves.find(curve => {
-        console.log(`Curve to be tested: tb_${curve.brakingTorque}Percent`)
-        let curveFound = false;
-        if ((curve.brakeTime.some(time => time <= maxBrakeTime)) && (curve.dutyCycle.some(ed => ed <= dutyCycle))) {
-          console.log(`Curve found: false`);
-          return false;
-        }
-        for (let i = 0; i < curve.brakeTime.length; i++) {
-          if ((maxBrakeTime < curve.brakeTime[i]) && (dutyCycle < curve.dutyCycle[i])) {
+    // Determine the allowable braking torque at the operation point
+    tbCurveAbove = cr700OLCurves.find(curve => {
+      console.log(`Curve to be tested: tb_${curve.brakingTorque}Percent`)
+      let curveFound = false;
+      /*if ((curve.brakeTime.some(time => time <= maxBrakeTime)) && (curve.dutyCycle.some(ed => ed <= dutyCycle))) {
+        console.log(`Curve found: false`);
+        return false;
+      }*/
+      for (let i = 0; i < curve.brakeTime.length; i++) {
+        if ((maxBrakeTime < curve.brakeTime[i]) && (dutyCycle < curve.dutyCycle[i-1])) {
+          let allowedDutyCycle = tb_interpolate(curve, maxBrakeTime);
+          if (dutyCycle < allowedDutyCycle) {
             curveFound = true;
             break;
           }
         }
-        console.log(`Curve found: ${curveFound}`);
-        if (curveFound) return true;
-        else return false;
-      });
-      console.log(tbCurveAbove);
-      if (tbCurveAbove.brakingTorque >= brakingTorquePercent) {
-        console.log(`Initial selection OK`);
-        return selectedCR700;
       }
+      console.log(`Curve found: ${curveFound}`);
+      if (curveFound) return true;
+      else return false;
+    });
+    console.log(tbCurveAbove);
+    // Backlog: determine actual allowable braking torque at the ed/brakeTime operation point
+    
+    // If the allowable braking torque at the operation point is in range, selection is OK
+    if (allowedBrakingTorque < brakingTorquePercent) {
+      console.log(`Initial selection OK`);
+      return selectedCR700;
     }
     console.log(`Selected CR700 too small.`);
     return false;
