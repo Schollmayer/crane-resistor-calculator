@@ -6,3 +6,4 @@ This tool helps select the braking transistor and resistor when using Yaskawa dr
 - Finish CR700 selection
 - Program in infinte loop
 - Divide selection in 1) Internal Braking Transistor and 2) External Braking Transistor
+- Start to program unit tests

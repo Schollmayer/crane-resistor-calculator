@@ -165,13 +165,9 @@ const findCR700 = (motorRatedCurrent, avBrakePower, maxBrakeResistance, maxBrake
     tbCurveAbove = cr700OLCurves.find(curve => {
       console.log(`Curve to be tested: tb_${curve.brakingTorque}Percent`)
       let curveFound = false;
-      /*if ((curve.brakeTime.some(time => time <= maxBrakeTime)) && (curve.dutyCycle.some(ed => ed <= dutyCycle))) {
-        console.log(`Curve found: false`);
-        return false;
-      }*/
       for (let i = 0; i < curve.brakeTime.length; i++) {
         if ((maxBrakeTime < curve.brakeTime[i]) && (dutyCycle < curve.dutyCycle[i-1])) {
-          let allowedDutyCycle = tb_interpolate(curve, maxBrakeTime);
+          let allowedDutyCycle = tb_interpolate(curve, maxBrakeTime).allowableDutyCycle;
           if (dutyCycle < allowedDutyCycle) {
             curveFound = true;
             break;
@@ -197,4 +193,15 @@ const findCR700 = (motorRatedCurrent, avBrakePower, maxBrakeResistance, maxBrake
     console.log(`Selected CR700 too small.`);
     return false;
   }
+}
+
+// Function to determine the actual allowable braking torque at the ed/brakeTime operation point
+function allowableBrakingTorque (tb_curveAbove, ed, brakeTime) {
+  // Get slope of closest segment of braking curve above operation point
+  const slope = tb_interpolate(tb_curveAbove, brakeTime)[1];
+  // Select point for parallel line from braking curve below operation point
+  const tb_curveBelow = cr700OLCurves[cr700OLCurves.findIndex(curve => curve.brakingTorque === tb_curveAbove.brakingTorque) -1];
+  const timeIndexCurveBelow = [tb_curveBelow.brakeTime.findIndex(time => time < brakeTime)];
+  const closestPointCurveBelow = [tb_curveBelow.brakeTime[timeIndexCurveBelow], tb_curveBelow.dutyCycle[timeIndexCurveBelow]];
+  // Calculate distance between segment and point
 }

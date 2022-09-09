@@ -39,7 +39,7 @@ const tb_155Percent = {
 /*export const cr700OLCurves = [tb_70Percent, tb_84Percent, tb_98Percent, tb_120Percent, tb_141Percent, tb_155Percent];*/
 
 export const cr700OLCurves = [tb_155Percent, tb_141Percent, tb_120Percent, tb_98Percent, tb_84Percent, tb_70Percent]
-  
+
 
 const cr700_4003 = {
   type: "CIPR-CR70C4003",
@@ -228,7 +228,11 @@ export const tb_interpolate = (tb_curve, actBrakeTime) => {
   const y1 = tb_curve.dutyCycle[timeIndex - 1];
   const y2 = tb_curve.dutyCycle[timeIndex];
 
-  const m = ( y2 - y1 ) / ( x2 - x1 );       // Slope
-  const b = y1 - m * x1;                     // Y-Crossing
-  return m * actBrakeTime + b;               // Solve y (dutyCycle) for another x value (brakeTime)
+  const m = (y2 - y1) / (x2 - x1);             	    // Slope
+  const b = y1 - m * x1;                            // Y-Crossing
+  const allowableDutyCycle = m * actBrakeTime + b   // Solve y (dutyCycle) for another x value (brakeTime)
+  return {                                          // Return allowable duty cycle and slope
+    allowableDutyCycle,
+    slope: m
+  };
 }
