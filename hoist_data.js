@@ -1,6 +1,6 @@
 // Imports
 import { cdbr_data, ed_interpolate } from "./cdbr_data.js";
-import { cr700_data, cr700OLCurves, tb_interpolate } from "./cr700_data.js";
+import { cr700_data, cr700OLCurves, getAllowableED, findBrakeCurveSegment } from "./cr700_data.js";
 import Prompt from './input_helpers.cjs';
 
 // Declarations
@@ -167,7 +167,7 @@ const findCR700 = (motorRatedCurrent, avBrakePower, maxBrakeResistance, maxBrake
       let curveFound = false;
       for (let i = 0; i < curve.brakeTime.length; i++) {
         if ((maxBrakeTime < curve.brakeTime[i]) && (dutyCycle < curve.dutyCycle[i-1])) {
-          let allowedDutyCycle = tb_interpolate(curve, maxBrakeTime).allowableDutyCycle;
+          let allowedDutyCycle = getAllowableED(curve, maxBrakeTime);
           if (dutyCycle < allowedDutyCycle) {
             curveFound = true;
             break;
@@ -180,7 +180,8 @@ const findCR700 = (motorRatedCurrent, avBrakePower, maxBrakeResistance, maxBrake
     });
     console.log(tbCurveAbove);
     // Backlog: determine actual allowable braking torque at the ed/brakeTime operation point
-    
+    const allowedBrakingTorque = allowableBrakingTorque(tbCurveAbove, dutyCycle, maxBrakeTime);
+    console.log(`Allowed Braking Torque = ${allowedBrakingTorque.toFixed(1)}`);
     // If the allowable braking torque at the operation point is in range, selection is OK
     if (allowedBrakingTorque < brakingTorquePercent) {
       console.log(`Initial selection OK`);
@@ -197,11 +198,48 @@ const findCR700 = (motorRatedCurrent, avBrakePower, maxBrakeResistance, maxBrake
 
 // Function to determine the actual allowable braking torque at the ed/brakeTime operation point
 function allowableBrakingTorque (tb_curveAbove, ed, brakeTime) {
-  // Get slope of closest segment of braking curve above operation point
-  const slope = tb_interpolate(tb_curveAbove, brakeTime)[1];
-  // Select point for parallel line from braking curve below operation point
+  // Backlog: verify the line is not horizontal or vertical
+  
+  // (1)Get slope of closest segment of braking curve above operation point
+  const brakeCurveSegment = findBrakeCurveSegment(tb_curveAbove, brakeTime);
+  console.log(`Original line: y = ${brakeCurveSegment.slope.toFixed(2)}*x + ${brakeCurveSegment.yCrossing.toFixed(1)}`)
+  // (2) Perpendicular line to braking curve segment that passes through operation point
+  const perpendicularSlope = -(1/brakeCurveSegment.slope);      // perpendicularSlope = -1/m
+  const yCrossPerpLine = ed - perpendicularSlope * brakeTime    // y = mx + b  ==> b = y - mx
+  console.log(`Perpendicular line: y = ${perpendicularSlope.toFixed(1)}*x + ${yCrossPerpLine.toFixed(1)}`)
+  // (3) Select point for parallel line from braking curve below operation point
   const tb_curveBelow = cr700OLCurves[cr700OLCurves.findIndex(curve => curve.brakingTorque === tb_curveAbove.brakingTorque) -1];
-  const timeIndexCurveBelow = [tb_curveBelow.brakeTime.findIndex(time => time < brakeTime)];
+  const timeIndexCurveBelow = [tb_curveBelow.brakeTime.findIndex(time => time > brakeTime)];
   const closestPointCurveBelow = [tb_curveBelow.brakeTime[timeIndexCurveBelow], tb_curveBelow.dutyCycle[timeIndexCurveBelow]];
-  // Calculate distance between segment and point
+  console.log(`Closest point in braking curve below: [${closestPointCurveBelow}]`);
+  // (4) Parallel line to braking curve segment that passes through closest point on braking curve below
+  const yCrossParLine = closestPointCurveBelow[1] - brakeCurveSegment.slope * closestPointCurveBelow[0];
+  console.log(`Parallel line: y = ${brakeCurveSegment.slope.toFixed(1)}*x + ${yCrossParLine.toFixed(1)}`)
+  // (5) Distance between parallel lines
+    // (5-1) Intersection between (1) and (2)
+  const point1_x = (yCrossPerpLine - brakeCurveSegment.yCrossing) / (brakeCurveSegment.slope - perpendicularSlope);
+  const point1_y = perpendicularSlope * point1_x + yCrossPerpLine;
+  if (point1_y != brakeCurveSegment.slope * point1_x + brakeCurveSegment.yCrossing) console.log(`Calculation error`);
+    // (5-2) Intersection between (2) and (4)
+  const point2_x = (yCrossParLine - yCrossPerpLine) / (perpendicularSlope - brakeCurveSegment.slope);
+  const point2_y = perpendicularSlope * point2_x + yCrossPerpLine;    // Solve y = mx + b
+  if (point2_y != brakeCurveSegment.slope * point2_x + yCrossParLine) console.log(`Calculation error`);
+    // (5-3) Use distance formula
+  const distanceBetwBrakeCurves = Math.sqrt(Math.pow(point2_y - point1_y, 2) + Math.pow(point2_x - point1_x, 2));
+  console.log(`Distance between curves ${distanceBetwBrakeCurves.toFixed(2)}`);
+  // (6) Divide segment in parts depending on braking torque between curve below and above
+  const brakeTorqueDifference = tb_curveBelow.brakingTorque - tb_curveAbove.brakingTorque;
+  const distanceBetwPoints = distanceBetwBrakeCurves / brakeTorqueDifference;
+  const brakingTorquePoints = [];
+  for (let i = 0; i < brakeTorqueDifference; i++) {
+    brakingTorquePoints.push(
+      {
+        brakingTorque: tb_curveAbove.brakingTorque + i,
+        brakingTime: point1_x - ((distanceBetwPoints*i*(point1_x-point2_x)) / distanceBetwBrakeCurves),
+        ed: point1_y - ((distanceBetwPoints*i*(point1_y-point2_y)) / distanceBetwBrakeCurves)
+      });
+  }
+  console.log(brakingTorquePoints);
+  return 80;
+  
 }

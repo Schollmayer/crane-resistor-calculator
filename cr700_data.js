@@ -1,3 +1,6 @@
+// Imports
+import { getLineParameters } from "./helpers.js";
+
 // Define CR700 Internal Braking Transistor Data
 
 const tb_70Percent = {
@@ -219,8 +222,8 @@ const cr700_4150 = {
 
 export const cr700_data = [cr700_4003, cr700_4005, cr700_4006, cr700_4007, cr700_4009, cr700_4015, cr700_4018, cr700_4024, cr700_4031, cr700_4039, cr700_4045, cr700_4060, cr700_4075, cr700_4091, cr700_4112, cr700_4150];
 
-// Find the allowable duty cycle for a given braking time on a specific overload curve
-export const tb_interpolate = (tb_curve, actBrakeTime) => {
+// Find the linear segment on a braking curve that corresponds to the actual braking time
+export const findBrakeCurveSegment = (tb_curve, actBrakeTime) => {
   let timeIndex = tb_curve.brakeTime.findIndex(brakingTime => actBrakeTime < brakingTime);
   //console.log(timeIndex);
   const x1 = tb_curve.brakeTime[timeIndex - 1];
@@ -228,11 +231,18 @@ export const tb_interpolate = (tb_curve, actBrakeTime) => {
   const y1 = tb_curve.dutyCycle[timeIndex - 1];
   const y2 = tb_curve.dutyCycle[timeIndex];
 
-  const m = (y2 - y1) / (x2 - x1);             	    // Slope
-  const b = y1 - m * x1;                            // Y-Crossing
-  const allowableDutyCycle = m * actBrakeTime + b   // Solve y (dutyCycle) for another x value (brakeTime)
-  return {                                          // Return allowable duty cycle and slope
-    allowableDutyCycle,
-    slope: m
+  const line = getLineParameters(x1, y1, x2, y2);
+  
+  return {
+    point1: [x1, y1],
+    point2: [x2, y2],
+    slope: line.m,
+    yCrossing: line.b
   };
+}
+
+// Get the allowable duty cycle for a given braking time on a specific overload curve
+export const getAllowableED = (tb_curve, actBrakeTime) => {
+  const segment = findBrakeCurveSegment(tb_curve, actBrakeTime);
+  return segment.slope * actBrakeTime + segment.yCrossing;   // Solve y (dutyCycle) for another x value (actBrakeTime) using y = mx + b
 }
