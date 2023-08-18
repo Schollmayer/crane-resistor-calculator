@@ -16,6 +16,3 @@ export const pointBelowLine = (xPoint, yPoint, m, b) => {
   else if (( m > 0) && (deltaY > 0)) return true;
   else return false;
 }
-
-/*let test = pointBelowLine (1, 1, -0.15, 10);
-console.log(test);*/
