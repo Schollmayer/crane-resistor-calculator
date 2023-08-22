@@ -212,6 +212,7 @@ export const cr700OLLinear = [tb_141P_linear, tb_135P_linear, tb_130P_linear, tb
 const cr700_4003 = {
   type: "CIPR-CR70C4003",
   voltageClass: 400,
+  internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 1.1,                  // Heavy duty output power rating in [kW]
   hdCurrent: 3.4,                // Heavy duty output current rating in [A]
   brakeActivationVoltage: 788,   // Braking transistor activation voltage in [Vdc]
@@ -222,6 +223,7 @@ const cr700_4003 = {
 const cr700_4005 = {
   type: "CIPR-CR70C4005",
   voltageClass: 400,
+  internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 1.5,                  // Heavy duty output power rating in [kW]
   hdCurrent: 4.8,                // Heavy duty output current rating in [A]
   brakeActivationVoltage: 788,   // Braking transistor activation voltage in [Vdc]
@@ -232,6 +234,7 @@ const cr700_4005 = {
 const cr700_4006 = {
   type: "CIPR-CR70C4006",
   voltageClass: 400,
+  internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 2.2,                  // Heavy duty output power rating in [kW]
   hdCurrent: 5.5,                // Heavy duty output current rating in [A]
   brakeActivationVoltage: 788,   // Braking transistor activation voltage in [Vdc]
@@ -242,6 +245,7 @@ const cr700_4006 = {
 const cr700_4007 = {
   type: "CIPR-CR70C4007",
   voltageClass: 400,
+  internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 3.0,                  // Heavy duty output power rating in [kW]
   hdCurrent: 7.2,                // Heavy duty output current rating in [A]
   brakeActivationVoltage: 788,   // Braking transistor activation voltage in [Vdc]
@@ -252,6 +256,7 @@ const cr700_4007 = {
 const cr700_4009 = {
   type: "CIPR-CR70C4009",
   voltageClass: 400,
+  internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 4.0,                  // Heavy duty output power rating in [kW]
   hdCurrent: 9.2,                // Heavy duty output current rating in [A]
   brakeActivationVoltage: 788,   // Braking transistor activation voltage in [Vdc]
@@ -262,6 +267,7 @@ const cr700_4009 = {
 const cr700_4015 = {
   type: "CIPR-CR70C4015",
   voltageClass: 400,
+  internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 5.5,                  // Heavy duty output power rating in [kW]
   hdCurrent: 14.8,               // Heavy duty output current rating in [A]
   brakeActivationVoltage: 788,   // Braking transistor activation voltage in [Vdc]
@@ -272,6 +278,7 @@ const cr700_4015 = {
 const cr700_4018 = {
   type: "CIPR-CR70C4018",
   voltageClass: 400,
+  internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 7.5,                  // Heavy duty output power rating in [kW]
   hdCurrent: 18.0,               // Heavy duty output current rating in [A]
   brakeActivationVoltage: 788,   // Braking transistor activation voltage in [Vdc]
@@ -282,6 +289,7 @@ const cr700_4018 = {
 const cr700_4024 = {
   type: "CIPR-CR70C4024",
   voltageClass: 400,
+  internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 11.0,                 // Heavy duty output power rating in [kW]
   hdCurrent: 24.0,               // Heavy duty output current rating in [A]
   brakeActivationVoltage: 788,   // Braking transistor activation voltage in [Vdc]
@@ -292,6 +300,7 @@ const cr700_4024 = {
 const cr700_4031 = {
   type: "CIPR-CR70C4031",
   voltageClass: 400,
+  internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 15.0,                 // Heavy duty output power rating in [kW]
   hdCurrent: 31.0,               // Heavy duty output current rating in [A]
   brakeActivationVoltage: 788,   // Braking transistor activation voltage in [Vdc]
@@ -302,6 +311,7 @@ const cr700_4031 = {
 const cr700_4039 = {
   type: "CIPR-CR70C4039",
   voltageClass: 400,
+  internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 18.5,                 // Heavy duty output power rating in [kW]
   hdCurrent: 39.0,               // Heavy duty output current rating in [A]
   brakeActivationVoltage: 788,   // Braking transistor activation voltage in [Vdc]
@@ -312,6 +322,7 @@ const cr700_4039 = {
 const cr700_4045 = {
   type: "CIPR-CR70C4045",
   voltageClass: 400,
+  internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 22.0,                 // Heavy duty output power rating in [kW]
   hdCurrent: 45.0,               // Heavy duty output current rating in [A]
   brakeActivationVoltage: 788,   // Braking transistor activation voltage in [Vdc]
@@ -322,6 +333,7 @@ const cr700_4045 = {
 const cr700_4060 = {
   type: "CIPR-CR70C4060",
   voltageClass: 400,
+  internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 30.0,                 // Heavy duty output power rating in [kW]
   hdCurrent: 60.0,               // Heavy duty output current rating in [A]
   brakeActivationVoltage: 788,   // Braking transistor activation voltage in [Vdc]
@@ -332,6 +344,7 @@ const cr700_4060 = {
 const cr700_4075 = {
   type: "CIPR-CR70C4075",
   voltageClass: 400,
+  internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 37.0,                 // Heavy duty output power rating in [kW]
   hdCurrent: 75.0,               // Heavy duty output current rating in [A]
   brakeActivationVoltage: 788,   // Braking transistor activation voltage in [Vdc]
@@ -342,6 +355,7 @@ const cr700_4075 = {
 const cr700_4091 = {
   type: "CIPR-CR70C4091",
   voltageClass: 400,
+  internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 45.0,                 // Heavy duty output power rating in [kW]
   hdCurrent: 90.0,               // Heavy duty output current rating in [A]
   brakeActivationVoltage: 788,   // Braking transistor activation voltage in [Vdc]
@@ -352,6 +366,7 @@ const cr700_4091 = {
 const cr700_4112 = {
   type: "CIPR-CR70C4112",
   voltageClass: 400,
+  internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 55.0,                 // Heavy duty output power rating in [kW]
   hdCurrent: 112.0,              // Heavy duty output current rating in [A]
   brakeActivationVoltage: 788,   // Braking transistor activation voltage in [Vdc]
@@ -362,6 +377,7 @@ const cr700_4112 = {
 const cr700_4150 = {
   type: "CIPR-CR70C4150",
   voltageClass: 400,
+  internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 75.0,                 // Heavy duty output power rating in [kW]
   hdCurrent: 150.0,              // Heavy duty output current rating in [A]
   brakeActivationVoltage: 788,   // Braking transistor activation voltage in [Vdc]

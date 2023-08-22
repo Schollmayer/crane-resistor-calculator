@@ -24,22 +24,26 @@ print_cdbr_selection(CDBRselection.cdbr, CDBRselection.qtty, CDBRselection.maxRe
 
 // Function to print the CR700 selection results to the console
 function print_cr700_selection(cr700, maxR, aveP, maxP) {
-  console.log(`\nCR700 Drive and Braking Resistor Selection`);
-  console.log(`Type: ${cr700.type}`);
-  console.log(`Minimum Braking Resistance = ${(cr700.minBrakeResistance * 1.05).toFixed(1)} Ω`);
-  console.log(`Maximum Braking Resistance = ${(maxR * 0.95).toFixed(1)} Ω`);
-  console.log(`Continuous Resistor Power Rating = ${aveP.toFixed(1)} kW`);
-  console.log(`Peak Resistor Power Rating = ${maxP.toFixed(1)} kW`);
+  if (cr700.internalBrakeTransistor) console.log(`\nCR700 Drive and Braking Resistor Selection`);
+  else console.log(`\nCR700 Drive Selection`);
+  console.log(`  Model: ${cr700.type}`);
+  console.log(`  Rated Current: ${cr700.hdCurrent}A`);
+  if (cr700.internalBrakeTransistor) {
+    console.log(`  Minimum Braking Resistance = ${(cr700.minBrakeResistance).toFixed(1)} Ω`);
+    console.log(`  Maximum Braking Resistance = ${(maxR).toFixed(1)} Ω`);
+    console.log(`  Continuous Resistor Power Rating = ${aveP.toFixed(1)} kW`);
+    console.log(`  Peak Resistor Power Rating = ${maxP.toFixed(1)} kW`);
+  }
 }
 
 // Function to print the CDBR selection results to the console
 function print_cdbr_selection(cdbr, qtty, maxR, aveP, maxP) {
   console.log(`\nExternal Braking Transistor and Resistor Selection`);
-  console.log(`Type: ${cdbr.type}`);
-  console.log(`Quantity: ${qtty}`)
-  console.log(`Minimum Braking Resistance = ${(cdbr.minResistance * 1.05).toFixed(1)} Ω`);
-  console.log(`Maximum Braking Resistance = ${(maxR * 0.95).toFixed(1)} Ω`);
-  console.log(`Continuous Resistor Power Rating = ${aveP.toFixed(1)} kW`);
-  console.log(`Peak Resistor Power Rating = ${maxP.toFixed(1)} kW`);
+  console.log(`  Model: ${cdbr.type}`);
+  console.log(`  Quantity: ${qtty}`)
+  console.log(`  Minimum Braking Resistance = ${(cdbr.minResistance).toFixed(1)} Ω`);
+  console.log(`  Maximum Braking Resistance = ${(maxR).toFixed(1)} Ω`);
+  console.log(`  Continuous Resistor Power Rating = ${aveP.toFixed(1)} kW`);
+  console.log(`  Peak Resistor Power Rating = ${maxP.toFixed(1)} kW`);
 }
 
