@@ -385,8 +385,64 @@ const cr700_4150 = {
   maxDischargeCurrent: 151.5,    // Maximum braking current in [A]
   contDischargeCurrent: 28.6,    // Continuous braking current in [A]
 };
+const cr700_4180 = {
+  type: "CIPR-CR70C4180",
+  voltageClass: 400,
+  internalBrakeTransistor: false, // Internal braking transistor
+  hdPower: 90.0,                  // Heavy duty output power rating in [kW]
+  hdCurrent: 180.0,               // Heavy duty output current rating in [A]
+};
+const cr700_4216 = {
+  type: "CIPR-CR70C4216",
+  voltageClass: 400,
+  internalBrakeTransistor: false, // Internal braking transistor
+  hdPower: 110.0,                 // Heavy duty output power rating in [kW]
+  hdCurrent: 216.0,               // Heavy duty output current rating in [A]
+};
+const cr700_4260 = {
+  type: "CIPR-CR70C4260",
+  voltageClass: 400,
+  internalBrakeTransistor: false, // Internal braking transistor
+  hdPower: 132.0,                 // Heavy duty output power rating in [kW]
+  hdCurrent: 260.0,               // Heavy duty output current rating in [A]
+};
+const cr700_4304 = {
+  type: "CIPR-CR70C4304",
+  voltageClass: 400,
+  internalBrakeTransistor: false, // Internal braking transistor
+  hdPower: 160.0,                 // Heavy duty output power rating in [kW]
+  hdCurrent: 304.0,               // Heavy duty output current rating in [A]
+};
+const cr700_4371 = {
+  type: "CIPR-CR70C4371",
+  voltageClass: 400,
+  internalBrakeTransistor: false, // Internal braking transistor
+  hdPower: 200.0,                 // Heavy duty output power rating in [kW]
+  hdCurrent: 371.0,               // Heavy duty output current rating in [A]
+};
+const cr700_4414 = {
+  type: "CIPR-CR70C4414",
+  voltageClass: 400,
+  internalBrakeTransistor: false, // Internal braking transistor
+  hdPower: 220.0,                 // Heavy duty output power rating in [kW]
+  hdCurrent: 414.0,               // Heavy duty output current rating in [A]
+};
+const cr700_4453 = {
+  type: "CIPR-CR70C4453",
+  voltageClass: 400,
+  internalBrakeTransistor: false, // Internal braking transistor
+  hdPower: 250.0,                 // Heavy duty output power rating in [kW]
+  hdCurrent: 453.0,               // Heavy duty output current rating in [A]
+};
+const cr700_4605 = {
+  type: "CIPR-CR70C4605",
+  voltageClass: 400,
+  internalBrakeTransistor: false, // Internal braking transistor
+  hdPower: 315.0,                 // Heavy duty output power rating in [kW]
+  hdCurrent: 605.0,               // Heavy duty output current rating in [A]
+};
 
-export const cr700_data = [cr700_4003, cr700_4005, cr700_4006, cr700_4007, cr700_4009, cr700_4015, cr700_4018, cr700_4024, cr700_4031, cr700_4039, cr700_4045, cr700_4060, cr700_4075, cr700_4091, cr700_4112, cr700_4150];
+export const cr700_data = [cr700_4003, cr700_4005, cr700_4006, cr700_4007, cr700_4009, cr700_4015, cr700_4018, cr700_4024, cr700_4031, cr700_4039, cr700_4045, cr700_4060, cr700_4075, cr700_4091, cr700_4112, cr700_4150, cr700_4180, cr700_4216, cr700_4260, cr700_4304, cr700_4371, cr700_4414, cr700_4453, cr700_4605];
 
 // Find the linear segment on a braking curve that corresponds to the actual braking time
 export const findBrakeCurveSegment = (tb_curve, actBrakeTime) => {

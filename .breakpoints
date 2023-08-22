@@ -2,16 +2,10 @@
   "files": {
     "hoist_data.js": [
       {
-        "id": "92204a7b-7a5b-4178-a90f-e2d5b8672d70",
-        "line": 220,
-        "version": 12026,
-        "index": 10158
-      },
-      {
-        "id": "31c2353e-1bd8-460f-a492-0e24690a42ca",
-        "line": 236,
-        "version": 12026,
-        "index": 10794
+        "id": "357eddc3-dfee-48a9-bc05-b4a8b050d960",
+        "line": 148,
+        "version": 12829,
+        "index": 6495
       }
     ]
   }
