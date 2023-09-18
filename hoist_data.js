@@ -69,7 +69,7 @@ const findCDBR = (maxBrakeResistance, maxBrakeTime, brakeActivationV, dutyCycle)
     // Select CDBR and verify if it is suitable for the application
     selectedCDBR = cdbr_data.find(cdbr => cdbr.minResistance < maxBrakeResistance);
     selectedEDCurve = selectedCDBR.overloadCurves.find(curve => dutyCycle <= curve.dutyCycle);
-    console.log(`\nPreliminary Selection: ${selectedCDBR.type} \n\tMin Connectable Resistance = ${selectedCDBR.minResistance}`);
+    //console.log(`\nPreliminary Selection: ${selectedCDBR.type} \n\tMin Connectable Resistance = ${selectedCDBR.minResistance}`);
     maxBrakingCurrent = brakeActivationV / selectedCDBR.minResistance;
     minBrakingCurrent = brakeActivationV / maxBrakeResistance;
 
@@ -81,7 +81,7 @@ const findCDBR = (maxBrakeResistance, maxBrakeTime, brakeActivationV, dutyCycle)
       // Ensure resistance still possible if 10% tolerance is considered
       if ((maxBrakeResistance - selectedCDBR.minResistance) > maxBrakeResistance * 0.1) {
         selectionCompleted = true;
-        console.log(`\nCDBR found on first attempt.`);
+        //console.log(`\nCDBR found on first attempt.`);
         return {
           cdbr: selectedCDBR,
           qtty: 1,
@@ -162,7 +162,7 @@ let selectedCR700;
     }
     return selectedCR700;
   }
-  console.log(`\nInitial selection is ${selectedCR700.type}`);
+  //console.log(`\nInitial selection is ${selectedCR700.type}`);
 
   if ( checkBrakingTorque(dutyCycle, maxBrakeTime, avBrakePower, selectedCR700) ) return selectedCR700;
   else console.log(`\nInitial CR700 selection too small, calculating alternative...`);

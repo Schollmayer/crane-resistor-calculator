@@ -21,8 +21,8 @@ if ( typeof(CR700selection) != 'undefined') {
   print_cr700_selection(CR700selection, hoists[0].maxBrakeResistance(), hoists[0].averageBrakePower(), hoists[0].maxBrakePower());
 }
 
-/*let CDBRselection = hoists[0].selectedCDBR();
-print_cdbr_selection(CDBRselection.cdbr, CDBRselection.qtty, CDBRselection.maxResistance, hoists[0].averageBrakePower(), hoists[0].maxBrakePower());*/
+let CDBRselection = hoists[0].selectedCDBR();
+print_cdbr_selection(CDBRselection.cdbr, CDBRselection.qtty, CDBRselection.maxResistance, hoists[0].averageBrakePower(), hoists[0].maxBrakePower());
 
 // Function to print the CR700 selection results to the console
 function print_cr700_selection(cr700, maxR, aveP, maxP) {
