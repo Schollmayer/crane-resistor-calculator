@@ -53,6 +53,54 @@ export class Hoist {
   }
 }
 
+export class HoistFrontend {
+  constructor(hoistName) {
+    this.hoistName = hoistName;
+
+    this.voltageClass = 400;            // Drive voltage class
+    this.brakeActivateVoltage = 760;    // Braking transistor activation voltage (DC)
+
+    // Get motor rated current in Ampere. Range [1 - 2000] A
+    this.motorRatedCurrent = document.getElementById("motorRatedCurrentInput");
+
+    // Get average mechanical power in kilowatt. Range [1-1000] kW
+    this.averageMechPower = document.getElementById("avMechPowerInput");
+
+    // Get motor efficiency in percent. Range [70-99] %
+    this.motorEfficiency = document.getElementById("motorRatedCurrentInput");
+
+    // Get gearbox efficiency in percent. Range [70-99] %
+    this.gearboxEfficiency = document.getElementById("gearboxEffInput") / 100;
+
+    // Get duty cycle in percent. Range [10 - 40] %
+    this.dutyCycle = document.getElementById("gearboxEffInput");
+
+    // Get hoist height in meters. Range [1 - 200] m
+    this.hoistHeight = document.getElementById("hoistHeigthInput");
+
+    // Get hoist speed in meters per minute. Range [1 - 50] m/min
+    this.hoistSpeed = document.getElementById("hoistLinSpeedInput");
+  }
+  averageBrakePower() {
+    return this.averageMechPower * this.motorEfficiency * this.gearboxEfficiency;
+  }
+  maxBrakePower() {
+    return this.averageBrakePower() * 2;
+  }
+  maxBrakeTime() {
+    return Math.round((this.hoistHeight / this.hoistSpeed) * 60);
+  }
+  maxBrakeResistance() {
+    return (this.brakeActivateVoltage ** 2) / (this.maxBrakePower() * 1000);
+  }
+  selectedCDBR() {
+    return findCDBR(this.maxBrakeResistance(), this.maxBrakeTime(), this.brakeActivateVoltage, this.dutyCycle);
+  }
+  selectedCR700() {
+    return findCR700(this.motorRatedCurrent, this.averageBrakePower(), this.maxBrakeResistance(), this.maxBrakeTime(), this.dutyCycle);
+  }
+}
+
 // Functions
 
 // Function to select one or more CDBR braking units according to application requirements
