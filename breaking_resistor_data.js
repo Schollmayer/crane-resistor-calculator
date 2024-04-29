@@ -983,20 +983,6 @@ const RH_6000W022_10_UL_T = {
   ],
 }
 
-const RH_6000W022_10_UL_T = {
-  type: "RH-6000W022-10-UL-T",
-  resistance: 22,
-  tolerance: 0.1,
-  contPower: 1200,
-  ratedPower: [
-    {
-      type: "ED 10%",
-      edPercentage: 10,
-      power: 4500,
-    },
-  ],
-}
-
 const RH_6000W022_UL_T = {
   type: "RH-6000W022-UL-T",
   resistance: 22,
