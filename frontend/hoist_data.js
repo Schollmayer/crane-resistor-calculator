@@ -2,56 +2,6 @@
 import { cdbr_data, ed_interpolate } from "./cdbr_data.js";
 import { cr700_data, cr700OLCurves, getAllowableED, findBrakeCurveSegment, cr700OLLinear } from "./cr700_data.js";
 import { pointBelowLine } from "./helpers.js";
-import Prompt from './input_helpers.cjs';
-
-// Declarations
-export class Hoist {
-  constructor(hoistName) {
-    this.hoistName = hoistName;
-
-    this.voltageClass = 400;            // Drive voltage class
-    this.brakeActivateVoltage = 760;    // Braking transistor activation voltage (DC)
-
-    // Get motor rated current in Ampere. Range [1 - 2000] A
-    this.motorRatedCurrent = Prompt.get_variable_from_user(`Motor Rated Current`, `A`, 1, 605);
-
-    // Get average mechanical power in kilowatt. Range [1-1000] kW
-    this.averageMechPower = Prompt.get_variable_from_user(`Average Mechanical Power`, `kW`, 1, 315);
-
-    // Get motor efficiency in percent. Range [70-99] %
-    this.motorEfficiency = Prompt.get_variable_from_user(`Motor Efficiency`, `%`, 70, 99) / 100;
-
-    // Get gearbox efficiency in percent. Range [70-99] %
-    this.gearboxEfficiency = Prompt.get_variable_from_user(`Gearbox Efficiency`, `%`, 70, 99) / 100;
-
-    // Get duty cycle in percent. Range [10 - 40] %
-    this.dutyCycle = Prompt.get_variable_from_user(`Duty Cycle`, `%`, 10, 40);
-
-    // Get hoist height in meters. Range [1 - 200] m
-    this.hoistHeight = Prompt.get_variable_from_user(`Hoist Height`, `m`, 1, 200);
-
-    // Get hoist speed in meters per minute. Range [1 - 50] m/min
-    this.hoistSpeed = Prompt.get_variable_from_user(`Hoist Speed`, `m/min`, 1, 50);
-  }
-  averageBrakePower() {
-    return this.averageMechPower * this.motorEfficiency * this.gearboxEfficiency;
-  }
-  maxBrakePower() {
-    return this.averageBrakePower() * 2;
-  }
-  maxBrakeTime() {
-    return Math.round((this.hoistHeight / this.hoistSpeed) * 60);
-  }
-  maxBrakeResistance() {
-    return (this.brakeActivateVoltage ** 2) / (this.maxBrakePower() * 1000);
-  }
-  selectedCDBR() {
-    return findCDBR(this.maxBrakeResistance(), this.maxBrakeTime(), this.brakeActivateVoltage, this.dutyCycle);
-  }
-  selectedCR700() {
-    return findCR700(this.motorRatedCurrent, this.averageBrakePower(), this.maxBrakeResistance(), this.maxBrakeTime(), this.dutyCycle);
-  }
-}
 
 export class HoistFrontend {
   constructor(hoistName) {
@@ -61,25 +11,25 @@ export class HoistFrontend {
     this.brakeActivateVoltage = 760;    // Braking transistor activation voltage (DC)
 
     // Get motor rated current in Ampere. Range [1 - 2000] A
-    this.motorRatedCurrent = document.getElementById("motorRatedCurrentInput");
+    this.motorRatedCurrent = document.getElementById("motorRatedCurrentInput").value;
 
     // Get average mechanical power in kilowatt. Range [1-1000] kW
-    this.averageMechPower = document.getElementById("avMechPowerInput");
+    this.averageMechPower = document.getElementById("avMechPowerInput").value;
 
     // Get motor efficiency in percent. Range [70-99] %
-    this.motorEfficiency = document.getElementById("motorRatedCurrentInput");
+    this.motorEfficiency = document.getElementById("motorEffInput").value / 100;
 
     // Get gearbox efficiency in percent. Range [70-99] %
-    this.gearboxEfficiency = document.getElementById("gearboxEffInput") / 100;
+    this.gearboxEfficiency = document.getElementById("gearboxEffInput").value / 100;
 
     // Get duty cycle in percent. Range [10 - 40] %
-    this.dutyCycle = document.getElementById("gearboxEffInput");
+    this.dutyCycle = document.getElementById("ed%Input").value;
 
     // Get hoist height in meters. Range [1 - 200] m
-    this.hoistHeight = document.getElementById("hoistHeigthInput");
+    this.hoistHeight = document.getElementById("hoistHeigthInput").value;
 
     // Get hoist speed in meters per minute. Range [1 - 50] m/min
-    this.hoistSpeed = document.getElementById("hoistLinSpeedInput");
+    this.hoistSpeed = document.getElementById("hoistLinSpeedInput").value;
   }
   averageBrakePower() {
     return this.averageMechPower * this.motorEfficiency * this.gearboxEfficiency;
@@ -189,68 +139,68 @@ const findCDBR = (maxBrakeResistance, maxBrakeTime, brakeActivationV, dutyCycle)
 
 // Function to select CR700 drive according to application motoring and braking requirements
 const findCR700 = (motorRatedCurrent, avBrakePower, maxBrakeResistance, maxBrakeTime, dutyCycle) => {
-let selectedCR700;
-  
+  let selectedCR700;
+
   // Initial CR700 selection according to motor rated current and mininmum connectable braking resistance (including 5% tolerance). Braking resistance considered only if CR700 has internal braking transistor
   if (motorRatedCurrent <= 150) {
-    selectedCR700 = cr700_data.find(cr700 => { 
-      if ( cr700.internalBrakeTransistor) {
-        if ((cr700.hdCurrent >= motorRatedCurrent) && ((cr700.minBrakeResistance*1.05) < maxBrakeResistance)) return true;
+    selectedCR700 = cr700_data.find(cr700 => {
+      if (cr700.internalBrakeTransistor) {
+        if ((cr700.hdCurrent >= motorRatedCurrent) && ((cr700.minBrakeResistance * 1.05) < maxBrakeResistance)) return true;
         //if ( cr700.hdCurrent >= motorRatedCurrent ) return true;
       }
     });
   }
   // If motor rated current is higher than largest CR700 with internal braking transistor, or if previous step did not find a suitable CR700 drive, do not use braking resistance as selection criteria
-  if ((motorRatedCurrent > 150) || (typeof(selectedCR700) === 'undefined')) {
-    selectedCR700 = cr700_data.find(cr700 => { 
+  if ((motorRatedCurrent > 150) || (typeof (selectedCR700) === 'undefined')) {
+    selectedCR700 = cr700_data.find(cr700 => {
       if (cr700.hdCurrent >= motorRatedCurrent) return true;
     });
-    if (typeof(selectedCR700) === 'undefined') {
+    if (typeof (selectedCR700) === 'undefined') {
       console.log(`\nNo CR700 drive found that fits application requirements`);
     }
     return selectedCR700;
   }
   //console.log(`\nInitial selection is ${selectedCR700.type}`);
 
-  if ( checkBrakingTorque(dutyCycle, maxBrakeTime, avBrakePower, selectedCR700) ) return selectedCR700;
+  if (checkBrakingTorque(dutyCycle, maxBrakeTime, avBrakePower, selectedCR700)) return selectedCR700;
   else console.log(`\nInitial CR700 selection too small, calculating alternative...`);
 
   // Select larger CR700, if available
-  while ( cr700_data.some( cr700 => cr700.hdCurrent > selectedCR700.hdCurrent )) {
-    selectedCR700 = cr700_data.find( cr700 => cr700.hdCurrent > selectedCR700.hdCurrent);
+  while (cr700_data.some(cr700 => cr700.hdCurrent > selectedCR700.hdCurrent)) {
+    selectedCR700 = cr700_data.find(cr700 => cr700.hdCurrent > selectedCR700.hdCurrent);
     console.log(`\nAlternative selection is ${selectedCR700.type}`);
     if (selectedCR700.internalBrakeTransistor) {
-      if ( checkBrakingTorque(dutyCycle, maxBrakeTime, avBrakePower, selectedCR700) ) return selectedCR700;
+      if (checkBrakingTorque(dutyCycle, maxBrakeTime, avBrakePower, selectedCR700)) return selectedCR700;
     }
     else return selectedCR700
     console.log(`CR700 selection still too small, calculating new alternative...`);
   }
-  
+
   console.log(`\nNo CR700 drive found that fits application requirements`);
   return selectedCR700;
-  
+
 }
 
 // Function to determine if the allowable braking torque at the ed/brakeTime operation point for the selected CR700 is higher than application requirements
-function checkBrakingTorque (ed, brakeTime, brakePower, cr700) {
+function checkBrakingTorque(ed, brakeTime, brakePower, cr700) {
   let tbLineAbove;
 
   let brakingTorquePercent = Math.round((brakePower / cr700.hdPower) * 100);
   console.log(`\nRequired braking torque: ${brakingTorquePercent}% of drive rating`);
 
   // Continue verification only if the braking torque at the operation point 
-      // is less than the braking torque of the lowest overload curve (Tb[%] <= 155% in case of CR700)
+  // is less than the braking torque of the lowest overload curve (Tb[%] <= 155% in case of CR700)
   if (brakingTorquePercent <= cr700OLCurves[0].brakingTorque) {
-      
+
     // If the braking torque at the operation point is less than the braking 
-      // torque of the highest overload curve, selection is OK (Tb [%] < 70% in case of CR700)
-    if (brakingTorquePercent < cr700OLCurves[cr700OLCurves.length-1].brakingTorque) {
-      console.log(`Allowable braking torque at operation point: >${cr700OLCurves[cr700OLCurves.length-1].brakingTorque}%`);
+    // torque of the highest overload curve, selection is OK (Tb [%] < 70% in case of CR700)
+    if (brakingTorquePercent < cr700OLCurves[cr700OLCurves.length - 1].brakingTorque) {
+      console.log(`Allowable braking torque at operation point: >${cr700OLCurves[cr700OLCurves.length - 1].brakingTorque}%`);
       console.log(`Selection OK`);
       return true;
     }
-  
-    tbLineAbove = cr700OLLinear.find ( line => {
+
+    tbLineAbove = cr700OLLinear.find(line => {
       //console.log(`Line to be tested: tb_${line.brakingTorque}P`);
       let lineFound = false;
       lineFound = pointBelowLine(brakeTime, ed, line.slope, line.yCrossing);
@@ -259,7 +209,7 @@ function checkBrakingTorque (ed, brakeTime, brakePower, cr700) {
     });
     console.log(`Allowable Braking Torque: ${tbLineAbove.brakingTorque}%`);
     //return tbLineAbove.brakingTorque;
-    if ( brakingTorquePercent < tbLineAbove.brakingTorque) return true;
+    if (brakingTorquePercent < tbLineAbove.brakingTorque) return true;
     else return false;
   }
   else return false;

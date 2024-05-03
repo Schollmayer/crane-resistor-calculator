@@ -1,5 +1,5 @@
-import { cdbr_data, ed_interpolate } from "./cdbr_data.js";
-import { Hoist } from "./hoist_data.js";
+import { cdbr_data, ed_interpolate } from "./frontend/cdbr_data.js";
+import { Hoist } from "./frontend/hoist_data.js";
 import Prompt from './input_helpers.cjs';
 
 // Declarations

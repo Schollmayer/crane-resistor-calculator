@@ -1,6 +1,5 @@
 import { cdbr_data, ed_interpolate } from "./cdbr_data.js";
-import { Hoist, HoistFrontend } from "./hoist_data.js";
-import Prompt from './input_helpers.cjs';
+import {HoistFrontend } from "./hoist_data.js";
 
 //Define output fields
 
@@ -22,10 +21,17 @@ const ResQuantityOutput2 = document.getElementById('ResQuantityOutput2');
 const calculateButton = document.getElementById('calculateButton');
 
 function calculateResult(){
-    let hoist = new HoistFrontend("Hoist1")
+    let hoist = new HoistFrontend("Hoist1");
+    let CR700selection = hoist.selectedCR700();
+    let CDBRselection = hoist.selectedCDBR();
     avBrakingPowerOutput.value = hoist.averageBrakePower().toFixed(1)
     maxBrakingPowerOutput.value = hoist.maxBrakePower().toFixed(1)
-    maxContBreakTimeOutput.value = hoist.maxBrakeTime()
+    maxContBreakTimeOutput.value = hoist.maxBrakeTime().toFixed(1)
+
+    maxBrakingResOutput.value = CDBRselection.maxResistance.toFixed(2)
+    cdbrOutput1.value = CDBRselection.cdbr.type
+    cdbrOutputQuantity1.value = CDBRselection.qtty
+
 }
 
 calculateButton.addEventListener('click', calculateResult);
