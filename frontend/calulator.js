@@ -1,5 +1,6 @@
 import { cdbr_data, ed_interpolate } from "./cdbr_data.js";
 import {HoistFrontend } from "./hoist_data.js";
+import {getEDFilteredResistors} from "./breaking_resistor_data.js";
 
 //Define output fields
 
@@ -37,3 +38,7 @@ function calculateResult(){
 calculateButton.addEventListener('click', calculateResult);
 // Routine Start
 // Define new hoist by user
+
+function getBestResistorCombination (minR, maxR, power, resistorList) {
+    return;
+  }

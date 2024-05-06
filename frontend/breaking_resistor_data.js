@@ -1214,7 +1214,7 @@ function getPowerByEdPercentage(edPercentage, breakingResistor, breakingTime) {
   }
 }
 
-function getEDFilteredResistors(breaking_resistor_data, edPercentage, breakingTime) {
+export function getEDFilteredResistors(breaking_resistor_data, edPercentage, breakingTime) {
   var resistorArr = [];
   for (let i = 0; i < breaking_resistor_data.length; i++) {
     let resistorPower = getPowerByEdPercentage(edPercentage, breaking_resistor_data[i], breakingTime)
@@ -1237,3 +1237,5 @@ if (DEBUG){
   console.log(getPowerByEdPercentage(22,RH_7500W023_UL_T, 100)); 
   console.log(getEDFilteredResistors(breaking_resistor_data, 26, 100));
 }
+
+
