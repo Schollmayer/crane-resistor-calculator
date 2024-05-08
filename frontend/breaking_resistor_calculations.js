@@ -4,32 +4,25 @@ import { breaking_resistor_data, getEDFilteredResistors, testResistorList } from
 const LowerresistorTolerance = 0.9;
 const upperResistorTolerance = 1.1;
 
-function findUniqueCombinations(items, count) {
-    var uniqueCombinations = new Set();
-
-    // Generate all combinations of up to 'count' items
-    for (let i = 0; i < items.length; i++) {
-        uniqueCombinations.add([items[i]]);
-        if (count >= 2) {
-            for (let j = i; j < items.length; j++) {
-                uniqueCombinations.add([items[i], items[j]]);
-                if (count >= 3) {
-                    for (let k = j; k < items.length; k++) {
-                        uniqueCombinations.add([items[i], items[j], items[k]]);
-                        if (count >= 4) {
-                            for (let l = k; l < items.length; l++) {
-                                uniqueCombinations.add([items[i], items[j], items[k], items[l]]);
-                                if (count >= 5) {
-                                    for (let m = l; m < items.length; m++) {
-                                        uniqueCombinations.add([items[i], items[j], items[k], items[l], items[m]]);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+function findUniqueCombinations(items, maxItemCount) {
+    const uniqueCombinations = new Set();
+    // Generate all combinations of up to maxItemCount items
+    function generateCombinations(currentCombination, startIndex) {
+        if (currentCombination.length <= maxItemCount) {
+            uniqueCombinations.add(currentCombination.slice()); // Add a copy of the combination
         }
+        if (currentCombination.length === maxItemCount) {
+            return; // Reached maximum count, stop recursion
+        }
+        for (let i = startIndex; i < items.length; i++) {
+            currentCombination.push(items[i]);
+            generateCombinations(currentCombination, i); // Allow repetitions, no need for i + 1
+            currentCombination.pop(); // Backtrack
+        }
+    }
+    // Include combinations starting from each item in the array
+    for (let i = 0; i < items.length; i++) {
+        generateCombinations([items[i]], i); // Allow repetitions from the start
     }
     return uniqueCombinations;
 }
@@ -99,11 +92,13 @@ function filterforResistorRequirements(set, minResistance, maxResistance, power)
     return filteredArray;
 }
 
-// Example usage
-const items = getEDFilteredResistors(breaking_resistor_data, 40, 100)
-var uniqueCombinations = findUniqueCombinations(items, 5);
-var setWithInformation = addInformationToSet(uniqueCombinations);
-console.log(uniqueCombinations);
-//console.log(setWithInformation);
-console.log(filterforResistorRequirements(setWithInformation, 25, 35,11200*1.9));
+export function calculateResistors(minR, maxR, power,dutyCycle, dutyCycleDuration){
+    const items = getEDFilteredResistors(breaking_resistor_data, dutyCycle, dutyCycleDuration)
+    var uniqueCombinations = findUniqueCombinations(items, 4);
+    var setWithInformation = addInformationToSet(uniqueCombinations);
+    return filterforResistorRequirements(setWithInformation, minR, maxR,power);
+}
+
+
+
 

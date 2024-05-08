@@ -1,4 +1,5 @@
 import { ga700_data } from "./ga700_data.js"
+import { calculateResistors } from "./breaking_resistor_calculations.js";
 
 const calculateResistorButton = document.getElementById('calculateResistorButton');
 const dutyCycle = document.getElementById('dutyCycle');
@@ -13,7 +14,7 @@ calculateResistorButton.addEventListener('click', calculate);
 
 function calculate() {
     if (hasBuildInBreakingTranssitor()){
-        getBestResistorCombination(getRmin(),calculateRmax(),power.value)
+        getBestResistorCombination(getRmin(),calculateRmax(),power.value,dutyCycle.value,dutyCycleDuration.value)
     }
 }
 
@@ -34,6 +35,8 @@ function getRmin() {
     return Rmin;
 }
 
-function getBestResistorCombination(minR, maxR, power) {
-
+function getBestResistorCombination(minR, maxR, power,dutyCycle, dutyCycleDuration) {
+   var results = calculateResistors(minR, maxR, power,dutyCycle, dutyCycleDuration);
+   console.log("Results")
+   console.log(results)
 }
