@@ -1,27 +1,36 @@
-import { breaking_resistor_data, getEDFilteredResistors } from "./breaking_resistor_data.js";
+import { breaking_resistor_data, getEDFilteredResistors, testResistorList } from "./breaking_resistor_data.js";
 
 //As all resistors in the portfolio have 10% tolerance, a fixed value will be used to reduce computation time
 const LowerresistorTolerance = 0.9;
 const upperResistorTolerance = 1.1;
 
-function findUniqueCombinations(items, maxItemCount) {
-    const uniqueCombinations = new Set();
-    // Generate all combinations of up to maxItemCount items
-    function generateCombinations(currentCombination, startIndex) {
-        if (currentCombination.length <= maxItemCount) {
-            uniqueCombinations.add(currentCombination.slice()); // Add a copy of the combination
-        }
-        if (currentCombination.length === maxItemCount) {
-            return; // Reached maximum count, stop recursion
-        }
-        for (let i = startIndex; i < items.length; i++) {
-            currentCombination.push(items[i]);
-            generateCombinations(currentCombination, i + 1); // Recursive call with next index
-            currentCombination.pop(); // Backtrack
+function findUniqueCombinations(items, count) {
+    var uniqueCombinations = new Set();
+
+    // Generate all combinations of up to 'count' items
+    for (let i = 0; i < items.length; i++) {
+        uniqueCombinations.add([items[i]]);
+        if (count >= 2) {
+            for (let j = i; j < items.length; j++) {
+                uniqueCombinations.add([items[i], items[j]]);
+                if (count >= 3) {
+                    for (let k = j; k < items.length; k++) {
+                        uniqueCombinations.add([items[i], items[j], items[k]]);
+                        if (count >= 4) {
+                            for (let l = k; l < items.length; l++) {
+                                uniqueCombinations.add([items[i], items[j], items[k], items[l]]);
+                                if (count >= 5) {
+                                    for (let m = l; m < items.length; m++) {
+                                        uniqueCombinations.add([items[i], items[j], items[k], items[l], items[m]]);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
-    generateCombinations([], 0); // Start with an empty combination at index 0
-    //return Array.from(uniqueCombinations);
     return uniqueCombinations;
 }
 
@@ -66,9 +75,9 @@ function filterforResistorRequirements(set, minResistance, maxResistance, power)
         if (item.totalPower < power){
             return false;
         }
-        if (!item.powerResistorRatioAcceptable)
-            {return false;}
-
+        if (!item.powerResistorRatioAcceptable){
+            return false;
+        }
         return true;
     }
     set.forEach(item => {
@@ -76,12 +85,25 @@ function filterforResistorRequirements(set, minResistance, maxResistance, power)
             set.delete(item);
         }
     });
+
+    var filteredArray = Array.from(set).sort((a, b) => {
+        // First, compare by power
+        if (a.totalPower < b.totalPower) return -1;
+        if (a.totalPower > b.totalPower) return 1;
+        // If power is the same, compare by quantity
+        if (a.quantity < b.quantity) return -1;
+        if (a.quantity > b.quantity) return 1;
+        // If both power and quantity are equal, return 0
+        return 0;
+    });
+    return filteredArray;
 }
 
 // Example usage
 const items = getEDFilteredResistors(breaking_resistor_data, 40, 100)
-const uniqueCombinations = findUniqueCombinations(items, 4);
+var uniqueCombinations = findUniqueCombinations(items, 5);
 var setWithInformation = addInformationToSet(uniqueCombinations);
-filterforResistorRequirements(setWithInformation, 35, 50,14000);
 console.log(uniqueCombinations);
-console.log(setWithInformation);
+//console.log(setWithInformation);
+console.log(filterforResistorRequirements(setWithInformation, 25, 35,11200*1.9));
+

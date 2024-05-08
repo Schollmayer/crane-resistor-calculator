@@ -1099,7 +1099,7 @@ const RH_9600W015 = {
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 112000
+      power: 11200
     },
   ],
 }
@@ -1175,12 +1175,14 @@ export const breaking_resistor_data = [
   RH_7500W023_UL_T, RH_7500W023, RH_6000W022_UL_T, RH_6000W022_UL_T,
   RH_9600W015, RH_9600W015_10, RH_9600W015_10_UL_T, RH_9600W015_UL_T
 ]
+ 
+export const testResistorList = [RH_9600W015, RH_0260W220];
 
 function getPowerByEdPercentage(edPercentage, breakingResistor, breakingTime) {
   const { ratedPower, contPower } = breakingResistor;
   if (ratedPower.length == 1) {
     if (ratedPower[0].edPercentage == edPercentage)
-      return contPower;
+      return ratedPower[0].power;
     else {
       return contPower;
     }
@@ -1190,14 +1192,18 @@ function getPowerByEdPercentage(edPercentage, breakingResistor, breakingTime) {
   }
   else if (edPercentage <= 6) {
     return ratedPower[0].power;
-  } else if (edPercentage >= 40) {
+  } else if (edPercentage > 40) {
     return contPower;
   } else {
     // Find the two closest points for interpolation
     let lowerIndex = 0;
     let upperIndex = 0;
     for (let i = 1; i < ratedPower.length; i++) {
-      if (ratedPower[i].edPercentage >= edPercentage) {
+
+      if (ratedPower[i].edPercentage == edPercentage){
+        return ratedPower[i].power;
+      }
+      else if (ratedPower[i].edPercentage > edPercentage) {
         upperIndex = i;
         lowerIndex = i - 1;
         break;
@@ -1222,7 +1228,7 @@ export function getEDFilteredResistors(breaking_resistor_data, edPercentage, bre
       type: breaking_resistor_data[i].type,
       resistance: breaking_resistor_data[i].resistance,
       tolerance: breaking_resistor_data[i].tolerance,
-      power: resistorPower,a
+      power: resistorPower,
     }
     resistorArr.push(importantResistorData);
   }
@@ -1234,8 +1240,9 @@ if (DEBUG){
   //console.log(getPowerByEdPercentage(10,RH_9600W015_UL_T, 90));
   //console.log(getPowerByEdPercentage(30,RH_9600W015_UL_T, 130)); 
   //console.log(getPowerByEdPercentage(50,RH_9600W015_UL_T, 90));
-  console.log(getPowerByEdPercentage(22,RH_7500W023_UL_T, 100)); 
-  console.log(getEDFilteredResistors(breaking_resistor_data, 26, 100));
+  //console.log(getPowerByEdPercentage(22,RH_7500W023_UL_T, 100)); 
+  console.log("getEDfilteredResistors");
+  console.log( getEDFilteredResistors(breaking_resistor_data, 30, 100));
 }
 
 

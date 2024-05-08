@@ -35,6 +35,5 @@ function getRmin() {
 }
 
 function getBestResistorCombination(minR, maxR, power) {
-    var x = 2;
-    return;
+
 }
