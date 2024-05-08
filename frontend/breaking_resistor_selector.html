@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Resistor Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container my-5">
+        <h1>Resistor selection tool</h1>
+        <p> Please input values.</p>
+        <div class="col-lg-4 px-0">
+            <form>
+                <label>Select drive model:</label>
+                <select class="driveSelect" id = "driveSelect">
+                    <option selected>Select drive model</option>
+                    <script type="module">
+                        import { ga700_data } from "./ga700_data.js"
+                        const selectElement = document.getElementById('driveSelect');
+                        ga700_data.forEach((drive, index) => {
+                            const option = document.createElement('option');
+                            option.text = drive.type;
+                            option.value = drive;
+                            selectElement.appendChild(option);
+                        });
+                    </script>
+                </select>
+                <div class="form-group">
+                    <label for="dutyCycle">Duty cycle [%]</label>
+                    <input type="number" class="form-control" id="dutyCycle" placeholder="Enter breaking duty cycle"
+                        min="1" max="100" required>
+                </div>
+                <div class="form-group">
+                    <label for="dutyCycleDuration">Duty cycle duration [s]</label>
+                    <input type="number" class="form-control" id="dutyCycleDuration"
+                        placeholder="Enter breaking duty cycle duration" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="peakPower">Peak power [W]</label>
+                    <input type="number" class="form-control" id="peakPower" placeholder="Enter peak power in W" min="1"
+                        required>
+                </div>
+                <div class="form-group">
+                    <label for="power">Power [W]</label>
+                    <input type="number" class="form-control" id="power" placeholder="Enter power in W" min="1"
+                        required>
+                </div>
+            </form>
+
+            <button type="button" class="btn btn-primary" id="calculateResistorButton">Calculate</button>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+    <script type="module" src="breaking_resistor_selector.js"></script>
+
+</body>
+
+</html>

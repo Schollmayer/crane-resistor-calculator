@@ -27,21 +27,32 @@ function findUniqueCombinations(items, maxItemCount) {
 
 function addInformationToSet(set) {
     var setWithAdditionalInformation = new Set();
-    for (const item of set) {
+    for (var item of set) {
         var totalResistanceLocal = 0.0;
         var totalPowerLocal = 0.0;
-        var totalPriceLocal = 0.0 ;
+        var totalPriceLocal = 0.0;
+        var powerResistorRatioAcceptable = true;
         for (let i = 0; i < item.length; i++) {
             totalResistanceLocal += item[i].resistance;
             totalPowerLocal += item[i].power;
             //totalPriceLocal += item[i].price;
         }
+
+        for (let i = 0; i < item.length; i++) { 
+            let resistorRatio = item[i].resistance / totalResistanceLocal;
+            let powerRatio  = item[i].power / totalPowerLocal;
+            if (resistorRatio > powerRatio){
+                powerResistorRatioAcceptable = false;
+            }
+        }
+
         setWithAdditionalInformation.add({
             totalResistance: totalResistanceLocal,
             totalPower: totalPowerLocal,
             quantity: item.length,
             resistors: item,
             totalPrice: totalPriceLocal,
+            powerResistorRatioAcceptable : powerResistorRatioAcceptable,
         })
     }
     return setWithAdditionalInformation;
@@ -55,6 +66,9 @@ function filterforResistorRequirements(set, minResistance, maxResistance, power)
         if (item.totalPower < power){
             return false;
         }
+        if (!item.powerResistorRatioAcceptable)
+            {return false;}
+
         return true;
     }
     set.forEach(item => {
@@ -65,9 +79,9 @@ function filterforResistorRequirements(set, minResistance, maxResistance, power)
 }
 
 // Example usage
-const items = getEDFilteredResistors(breaking_resistor_data, 20, 100)
-const uniqueCombinations = findUniqueCombinations(items, 5);
+const items = getEDFilteredResistors(breaking_resistor_data, 40, 100)
+const uniqueCombinations = findUniqueCombinations(items, 4);
 var setWithInformation = addInformationToSet(uniqueCombinations);
-filterforResistorRequirements(setWithInformation, 8, 25,1000);
+filterforResistorRequirements(setWithInformation, 35, 50,14000);
 console.log(uniqueCombinations);
 console.log(setWithInformation);

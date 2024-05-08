@@ -1222,7 +1222,7 @@ export function getEDFilteredResistors(breaking_resistor_data, edPercentage, bre
       type: breaking_resistor_data[i].type,
       resistance: breaking_resistor_data[i].resistance,
       tolerance: breaking_resistor_data[i].tolerance,
-      power: resistorPower,
+      power: resistorPower,a
     }
     resistorArr.push(importantResistorData);
   }
