@@ -5,7 +5,7 @@
 const DEBUG = true;
 
 const EDTime = 120;
-
+//TODO find price
 const RH_0100W050 = {
   type: "RH-0100W050-10-UL",
   resistance: 50,
@@ -45,6 +45,7 @@ const RH_0100W330 = {
   resistance: 330,
   tolerance: 0.1,
   contPower: 50,
+  price: 102,
   ratedPower: [
     {
       type: "ED 6%",
@@ -74,6 +75,7 @@ const RH_0100W830 = {
   resistance: 830,
   tolerance: 0.1,
   contPower: 50,
+  price: 65,
   ratedPower: [
     {
       type: "ED 6%",
@@ -103,6 +105,7 @@ const RH_0200W045 = {
   resistance: 45,
   tolerance: 0.1,
   contPower: 140,
+  price: 104,
   ratedPower: [
     {
       type: "ED 6%",
@@ -132,6 +135,7 @@ const RH_0200W045_UL_T = {
   resistance: 45,
   tolerance: 0.1,
   contPower: 110,
+  price: 108,
   ratedPower: [
     {
       type: "ED 6%",
@@ -161,6 +165,7 @@ const RH_0260W120 = {
   resistance: 120,
   tolerance: 0.1,
   contPower: 250,
+  price: 102,
   ratedPower: [
     {
       type: "ED 6%",
@@ -190,6 +195,7 @@ const RH_0260W135 = {
   resistance: 135,
   tolerance: 0.1,
   contPower: 250,
+  price: 102,
   ratedPower: [
     {
       type: "ED 6%",
@@ -213,7 +219,7 @@ const RH_0260W135 = {
     },
   ],
 }
-
+//TODO find price
 const RH_0260W220 = {
   type: "RH-0260W220",
   resistance: 220,
@@ -248,6 +254,7 @@ const RH_0260W270 = {
   resistance: 270,
   tolerance: 0.1,
   contPower: 250,
+  price: 57,
   ratedPower: [
     {
       type: "ED 6%",
@@ -277,6 +284,7 @@ const RH_0390W070 = {
   resistance: 70,
   tolerance: 0.1,
   contPower: 300,
+  price: 79,
   ratedPower: [
     {
       type: "ED 6%",
@@ -300,7 +308,7 @@ const RH_0390W070 = {
     },
   ],
 }
-
+//TODO find price
 const RH_0400W024 = {
   type: "RH-0400W024",
   resistance: 24,
@@ -329,7 +337,7 @@ const RH_0400W024 = {
     },
   ],
 }
-
+//TODO find price
 const RH_0400W032 = {
   type: "RH-0400W032",
   resistance: 32,
@@ -358,7 +366,7 @@ const RH_0400W032 = {
     },
   ],
 }
-
+//TODO find price
 const RH_0400W045 = {
   type: "RH-0400W045",
   resistance: 45,
@@ -393,6 +401,7 @@ const RH_0520W120 = {
   resistance: 120,
   tolerance: 0.1,
   contPower: 400,
+  price: 62,
   ratedPower: [
     {
       type: "ED 6%",
@@ -416,7 +425,7 @@ const RH_0520W120 = {
     },
   ],
 }
-
+//TODO find price
 const RH_0780W032 = {
   type: "RH-0780W032",
   resistance: 32,
@@ -451,6 +460,7 @@ const RH_0780W040 = {
   resistance: 40,
   tolerance: 0.1,
   contPower: 500,
+  price: 189,
   ratedPower: [
     {
       type: "ED 6%",
@@ -480,6 +490,7 @@ const RH_0780W040_10 = {
   resistance: 40,
   tolerance: 0.1,
   contPower: 250,
+  price: 78,
   ratedPower: [
     {
       type: "ED 6%",
@@ -514,6 +525,7 @@ const RH_0780W040_UL_T = {
   resistance: 40,
   tolerance: 0.1,
   contPower: 400,
+  price: 270,
   ratedPower: [
     {
       type: "ED 6%",
@@ -543,6 +555,7 @@ const RH_1000W120 = {
   resistance: 120,
   tolerance: 0.1,
   contPower: 900,
+  price: 199,
   ratedPower: [
     {
       type: "ED 6%",
@@ -572,6 +585,7 @@ const RH_1560W040 = {
   resistance: 40,
   tolerance: 0.1,
   contPower: 1500,
+  price: 215,
   ratedPower: [
     {
       type: "ED 6%",
@@ -601,6 +615,7 @@ const RH_1560W040_UL_T = {
   resistance: 40,
   tolerance: 0.1,
   contPower: 1000,
+  price: 364,
   ratedPower: [
     {
       type: "ED 6%",
@@ -630,6 +645,7 @@ const RH_1560W040_10 = {
   resistance: 40,
   tolerance: 0.1,
   contPower: 300,
+  price: 110,
   ratedPower: [
     {
       type: "ED 6%",
@@ -664,6 +680,7 @@ const RH_2700W025 = {
   resistance: 25,
   tolerance: 0.1,
   contPower: 2600,
+  price: 340,
   ratedPower: [
     {
       type: "ED 6%",
@@ -693,6 +710,7 @@ const RH_2700W025_UL_T = {
   resistance: 25,
   tolerance: 0.1,
   contPower: 1800,
+  price: 416,
   ratedPower: [
     {
       type: "ED 6%",
@@ -723,6 +741,7 @@ const RH_29000W3P8_10 = {
   resistance: 3.8,
   tolerance: 0.1,
   contPower: 8000,
+  price: 1117,
   ratedPower: [
     {
       type: "ED 10%",
@@ -737,6 +756,7 @@ const RH_3700W025 = {
   resistance: 25,
   tolerance: 0.1,
   contPower: 3600,
+  price: 438,
   ratedPower: [
     {
       type: "ED 6%",
@@ -766,6 +786,7 @@ const RH_3700W025_UL_T = {
   resistance: 25,
   tolerance: 0.1,
   contPower: 2500,
+  price: 476,
   ratedPower: [
     {
       type: "ED 6%",
@@ -795,6 +816,7 @@ const RH_38500W3P8_10 = {
   resistance: 3.8,
   tolerance: 0.1,
   contPower: 9500,
+  price: 1207,
   ratedPower: [
     {
       type: "ED 10%",
@@ -809,6 +831,7 @@ const RH_38500W3P8_10_UL_T = {
   resistance: 3.8,
   tolerance: 0.1,
   contPower: 8500,
+  price: 1293,
   ratedPower: [
     {
       type: "ED 10%",
@@ -823,6 +846,7 @@ const RH_48000W3P8_10 = {
   resistance: 3.8,
   tolerance: 0.1,
   contPower: 12000,
+  price: 1198,
   ratedPower: [
     {
       type: "ED 10%",
@@ -836,6 +860,7 @@ const RH_48000W3P8_10_UL_T = {
   resistance: 3.8,
   tolerance: 0.1,
   contPower: 10800,
+  price: 1308,
   ratedPower: [
     {
       type: "ED 10%",
@@ -850,6 +875,7 @@ const RH_4800W022 = {
   resistance: 22,
   tolerance: 0.1,
   contPower: 4600,
+  price: 426,
   ratedPower: [
     {
       type: "ED 6%",
@@ -879,6 +905,7 @@ const RH_4800W022_10 = {
   resistance: 22,
   tolerance: 0.1,
   contPower: 1400,
+  price: 278,
   ratedPower: [
     {
       type: "ED 10%",
@@ -893,6 +920,7 @@ const RH_4800W022_10_UL_T = {
   resistance: 22,
   tolerance: 0.1,
   contPower: 1000,
+  price: 371,
   ratedPower: [
     {
       type: "ED 10%",
@@ -907,6 +935,7 @@ const RH_4800W022_UL_T = {
   resistance: 22,
   tolerance: 0.1,
   contPower: 3200,
+  price: 585,
   ratedPower: [
     {
       type: "ED 6%",
@@ -936,6 +965,7 @@ const RH_6000W022 = {
   resistance: 22,
   tolerance: 0.1,
   contPower: 5800,
+  price: 497,
   ratedPower: [
     {
       type: "ED 6%",
@@ -965,6 +995,7 @@ const RH_6000W022_10 = {
   resistance: 22,
   tolerance: 0.1,
   contPower: 1600,
+  price: 287,
   ratedPower: [
     {
       type: "ED 10%",
@@ -979,6 +1010,7 @@ const RH_6000W022_10_UL_T = {
   resistance: 22,
   tolerance: 0.1,
   contPower: 1200,
+  price: 380,
   ratedPower: [
     {
       type: "ED 10%",
@@ -993,6 +1025,7 @@ const RH_6000W022_UL_T = {
   resistance: 22,
   tolerance: 0.1,
   contPower: 4000,
+  price: 616,
   ratedPower: [
     {
       type: "ED 6%",
@@ -1022,6 +1055,7 @@ const RH_7500W023 = {
   resistance: 23,
   tolerance: 0.1,
   contPower: 7200,
+  price: 790,
   ratedPower: [
     {
       type: "ED 6%",
@@ -1051,6 +1085,7 @@ const RH_7500W023_UL_T = {
   resistance: 23,
   tolerance: 0.1,
   contPower: 5000,
+  price: 781,
   ratedPower: [
     {
       type: "ED 6%",
@@ -1080,6 +1115,7 @@ const RH_9600W015 = {
   resistance: 15,
   tolerance: 0.1,
   contPower: 9200,
+  price: 826,
   ratedPower: [
     {
       type: "ED 6%",
@@ -1109,6 +1145,7 @@ const RH_9600W015_10 = {
   resistance: 15,
   tolerance: 0.1,
   contPower: 3000,
+  price: 470,
   ratedPower: [
     {
       type: "ED 10%",
@@ -1123,6 +1160,7 @@ const RH_9600W015_10_UL_T = {
   resistance: 15,
   tolerance: 0.1,
   contPower: 2100,
+  price: 497,
   ratedPower: [
     {
       type: "ED 10%",
@@ -1137,6 +1175,7 @@ const RH_9600W015_UL_T = {
   resistance: 15,
   tolerance: 0.1,
   contPower: 6400,
+  price: 876,
   ratedPower: [
     {
       type: "ED 6%",

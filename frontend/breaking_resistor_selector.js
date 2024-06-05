@@ -37,6 +37,28 @@ function getRmin() {
 
 function getBestResistorCombination(minR, maxR, power,dutyCycle, dutyCycleDuration) {
    var results = calculateResistors(minR, maxR, power,dutyCycle, dutyCycleDuration);
-   console.log("Results")
-   console.log(results)
+   console.log("Results");
+   console.log(results);
+   displayObjects(results);
 }
+
+function displayObjects(objects) {
+    var outputDiv = document.getElementById("output");
+  
+    objects.forEach(function(obj) {
+      var container = document.createElement("div");
+      container.classList.add("object-container");
+  
+      for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          var attribute = document.createElement("div");
+          attribute.textContent = key + ": " + obj[key];
+          attribute.classList.add("attribute");
+          container.appendChild(attribute);
+        }
+      }
+  
+      outputDiv.appendChild(container);
+    });
+  }
+  
