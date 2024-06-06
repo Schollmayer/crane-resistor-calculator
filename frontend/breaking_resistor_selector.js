@@ -8,99 +8,113 @@ const power = document.getElementById('power');
 const dutyCycleDuration = document.getElementById('dutyCycleDuration');
 const driveSelect = document.getElementById('driveSelect');
 
-
 calculateResistorButton.addEventListener('click', calculate);
 
 
 function calculate() {
-    if (hasBuildInBreakingTranssitor()){
-        getBestResistorCombination(getRmin(),calculateRmax(),power.value,dutyCycle.value,dutyCycleDuration.value)
-    }
+  if (hasBuildInBreakingTranssitor()) {
+    getBestResistorCombination(getRmin(), calculateRmax(), power.value, dutyCycle.value, dutyCycleDuration.value);
+  }
 }
 
 function hasBuildInBreakingTranssitor() {
-    const selectedIndex = driveSelect.selectedIndex;
-    return ga700_data[selectedIndex].internalBrakeTransistor;
+  const selectedIndex = driveSelect.selectedIndex;
+  return ga700_data[selectedIndex].internalBrakeTransistor;
 }
 
 function calculateRmax() {
-    const selectedIndex = driveSelect.selectedIndex;
-    const Rmax = (ga700_data[selectedIndex].brakeActivationVoltage * ga700_data[selectedIndex].brakeActivationVoltage) / peakPower.value;
-    return Rmax;
+  const selectedIndex = driveSelect.selectedIndex;
+  const Rmax = (ga700_data[selectedIndex].brakeActivationVoltage * ga700_data[selectedIndex].brakeActivationVoltage) / peakPower.value;
+  return Rmax;
 }
 
 function getRmin() {
-    const selectedIndex = driveSelect.selectedIndex;
-    const Rmin = ga700_data[selectedIndex].minBrakeResistance;
-    return Rmin;
+  const selectedIndex = driveSelect.selectedIndex;
+  const Rmin = ga700_data[selectedIndex].minBrakeResistance;
+  return Rmin;
 }
 
-function getBestResistorCombination(minR, maxR, power,dutyCycle, dutyCycleDuration) {
-   var results = calculateResistors(minR, maxR, power,dutyCycle, dutyCycleDuration);
-   console.log("Results");
-   console.log(results);
-   displayObjects(results);
+
+function getBestResistorCombination(minR, maxR, power, dutyCycle, dutyCycleDuration) {
+  clearOutput();
+  showSpinner();
+  setTimeout(() => {
+    var results = calculateResistors(minR, maxR, power, dutyCycle, dutyCycleDuration);
+    hideSpinner();
+    displayObjects(results);
+  }, 10);
+
+}
+
+function clearOutput() {
+  var outputDiv = document.getElementById("output");
+  // Clear previous output
+  outputDiv.innerHTML = "";
+}
+
+function showSpinner() {
+  document.getElementById('spinner').style.display = 'block';
+}
+
+function hideSpinner() {
+  document.getElementById('spinner').style.display = 'none';
 }
 
 function displayObjects(objects) {
   var outputDiv = document.getElementById("output");
-  
-  // Clear previous output
-  outputDiv.innerHTML = "";
+  objects.forEach(function (obj, index) {
+    var card = document.createElement("div");
+    card.classList.add("card", "mb-3");
 
-  objects.forEach(function(obj, index) {
-      var card = document.createElement("div");
-      card.classList.add("card", "mb-3");
+    var cardBody = document.createElement("div");
+    cardBody.classList.add("card-body");
 
-      var cardBody = document.createElement("div");
-      cardBody.classList.add("card-body");
+    var cardTitle = document.createElement("h5");
+    cardTitle.classList.add("card-title");
+    cardTitle.textContent = `Option ${index + 1}`;
+    cardBody.appendChild(cardTitle);
 
-      var cardTitle = document.createElement("h5");
-      cardTitle.classList.add("card-title");
-      cardTitle.textContent = `Option ${index + 1}`;
-      cardBody.appendChild(cardTitle);
+    var resistorTitle = document.createElement("h6");
+    resistorTitle.classList.add("card-subtitle", "mb-2", "text-muted");
+    resistorTitle.textContent = obj.resistors.length > 1 ? "Breaking Resistors" : "Breaking Resistor";
+    cardBody.appendChild(resistorTitle);
 
-      var resistorTitle = document.createElement("h6");
-      resistorTitle.classList.add("card-subtitle", "mb-2", "text-muted");
-      resistorTitle.textContent = obj.resistors.length > 1 ? "Breaking Resistors" : "Breaking Resistor";
-      cardBody.appendChild(resistorTitle);
+    // Format resistors output
+    var resistorCount = {};
+    obj.resistors.forEach(resistor => {
+      resistorCount[resistor.type] = (resistorCount[resistor.type] || 0) + 1;
+    });
 
-      // Format resistors output
-      var resistorCount = {};
-      obj.resistors.forEach(resistor => {
-          resistorCount[resistor.type] = (resistorCount[resistor.type] || 0) + 1;
-      });
+    for (let [type, count] of Object.entries(resistorCount)) {
+      var resistorDetail = document.createElement("div");
+      resistorDetail.innerHTML = `${count}x ${type}`;
+      cardBody.appendChild(resistorDetail);
+    }
 
-      for (let [type, count] of Object.entries(resistorCount)) {
-          var resistorDetail = document.createElement("div");
-          resistorDetail.innerHTML = `${count}x ${type}`;
-          cardBody.appendChild(resistorDetail);
-      }
-
-      var detailButton = document.createElement("button");
-      detailButton.classList.add("btn", "btn-primary", "mt-3");
-      detailButton.textContent = "Show details";
-      detailButton.addEventListener("click", function() {
-          var details = document.getElementById(`details-${index}`);
-          if (!details) {
-              details = document.createElement("div");
-              details.classList.add("mt-2");
-              details.id = `details-${index}`;
-              details.innerHTML = `
+    var detailButton = document.createElement("button");
+    detailButton.classList.add("btn", "btn-primary", "mt-3");
+    detailButton.textContent = "Show details";
+    detailButton.addEventListener("click", function () {
+      var details = document.getElementById(`details-${index}`);
+      if (!details) {
+        details = document.createElement("div");
+        details.classList.add("mt-2");
+        details.id = `details-${index}`;
+        details.innerHTML = `
                   <strong>Total Resistance:</strong> ${obj.totalResistance} Ω<br>
                   <strong>Total Power:</strong> ${obj.totalPower.toFixed(2)} W<br>
                   <strong>Total Quantity:</strong> ${obj.resistors.length}
               `;
-              cardBody.appendChild(details);
-              detailButton.textContent = "Show less";
-          } else {
-              cardBody.removeChild(details);
-              detailButton.textContent = "Show details";
-          }
-      });
-      cardBody.appendChild(detailButton);
+        cardBody.appendChild(details);
+        detailButton.textContent = "Show less";
+      } else {
+        cardBody.removeChild(details);
+        detailButton.textContent = "Show details";
+      }
+    });
+    cardBody.appendChild(detailButton);
 
-      card.appendChild(cardBody);
-      outputDiv.appendChild(card);
+    card.appendChild(cardBody);
+    outputDiv.appendChild(card);
   });
 }

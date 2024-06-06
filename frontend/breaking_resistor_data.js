@@ -3,7 +3,7 @@
 //These resistors have been left out 
 //All prices are the list prices in Euro
 
-const DEBUG = true;
+const DEBUG = false;
 
 const EDTime = 120;
 //TODO find price

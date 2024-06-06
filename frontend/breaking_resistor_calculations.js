@@ -79,10 +79,10 @@ function filterForResistorRequirements(resistors, minResistance, maxResistance, 
     return filteredResistors.slice(0, 3);
 }
 
+
 export function calculateResistors(minR, maxR, power, dutyCycle, dutyCycleDuration) {
     const items = getEDFilteredResistors(breaking_resistor_data, dutyCycle, dutyCycleDuration);
     const uniqueCombinations = findUniqueCombinations(items, 5);
-    console.log(uniqueCombinations)
     const resistorsWithInformation = addInformationToSet(uniqueCombinations);
     return filterForResistorRequirements(resistorsWithInformation, minR, maxR, power);
 }
