@@ -43,22 +43,25 @@ function getBestResistorCombination(minR, maxR, power,dutyCycle, dutyCycleDurati
 }
 
 function displayObjects(objects) {
-    var outputDiv = document.getElementById("output");
+  var outputDiv = document.getElementById("output");
   
-    objects.forEach(function(obj) {
+  // Clear previous output
+  outputDiv.innerHTML = "";
+
+  objects.forEach(function(obj) {
       var container = document.createElement("div");
       container.classList.add("object-container");
-  
+
       for (var key in obj) {
-        if (obj.hasOwnProperty(key)) {
-          var attribute = document.createElement("div");
-          attribute.textContent = key + ": " + obj[key];
-          attribute.classList.add("attribute");
-          container.appendChild(attribute);
-        }
+          if (obj.hasOwnProperty(key)) {
+              var attribute = document.createElement("div");
+              attribute.textContent = key + ": " + obj[key];
+              attribute.classList.add("attribute");
+              container.appendChild(attribute);
+          }
       }
-  
+
       outputDiv.appendChild(container);
-    });
-  }
+  });
+}
   

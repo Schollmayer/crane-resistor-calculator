@@ -1,6 +1,7 @@
 //define breaking resistor
 //Some resistors have the same values in their -UL-T version and in der their standart version
 //These resistors have been left out 
+//All prices are the list prices in Euro
 
 const DEBUG = true;
 
@@ -11,6 +12,7 @@ const RH_0100W050 = {
   resistance: 50,
   tolerance: 0.1,
   contPower: 50,
+  price: 99,
   ratedPower: [
     {
       type: "ED 6%",
@@ -225,6 +227,7 @@ const RH_0260W220 = {
   resistance: 220,
   tolerance: 0.1,
   contPower: 250,
+  price: 99,
   ratedPower: [
     {
       type: "ED 6%",
@@ -314,6 +317,7 @@ const RH_0400W024 = {
   resistance: 24,
   tolerance: 0.1,
   contPower: 400,
+  price: 99,
   ratedPower: [
     {
       type: "ED 6%",
@@ -343,6 +347,7 @@ const RH_0400W032 = {
   resistance: 32,
   tolerance: 0.1,
   contPower: 400,
+  price: 99,
   ratedPower: [
     {
       type: "ED 6%",
@@ -372,6 +377,7 @@ const RH_0400W045 = {
   resistance: 45,
   tolerance: 0.1,
   contPower: 400,
+  price: 99,
   ratedPower: [
     {
       type: "ED 6%",
@@ -431,6 +437,7 @@ const RH_0780W032 = {
   resistance: 32,
   tolerance: 0.1,
   contPower: 500,
+  price: 99,
   ratedPower: [
     {
       type: "ED 6%",
@@ -1268,6 +1275,7 @@ export function getEDFilteredResistors(breaking_resistor_data, edPercentage, bre
       resistance: breaking_resistor_data[i].resistance,
       tolerance: breaking_resistor_data[i].tolerance,
       power: resistorPower,
+      price: breaking_resistor_data[i].price,
     }
     resistorArr.push(importantResistorData);
   }

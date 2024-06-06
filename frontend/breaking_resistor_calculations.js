@@ -37,7 +37,7 @@ function addInformationToSet(set) {
         for (let i = 0; i < item.length; i++) {
             totalResistanceLocal += item[i].resistance;
             totalPowerLocal += item[i].power;
-            //totalPriceLocal += item[i].price;
+            totalPriceLocal += item[i].price;
         }
 
         for (let i = 0; i < item.length; i++) { 
@@ -80,16 +80,16 @@ function filterforResistorRequirements(set, minResistance, maxResistance, power)
     });
 
     var filteredArray = Array.from(set).sort((a, b) => {
-        // First, compare by power
+        // First, compare by price
+        if (a.totalPrice < b.totalPrice) return -1;
+        if (a.totalPrice > b.totalPrice) return 1;
+        // If power is the same, compare by quantity
         if (a.totalPower < b.totalPower) return -1;
         if (a.totalPower > b.totalPower) return 1;
-        // If power is the same, compare by quantity
-        if (a.quantity < b.quantity) return -1;
-        if (a.quantity > b.quantity) return 1;
-        // If both power and quantity are equal, return 0
+        // If both price and quantity are equal, return 0
         return 0;
     });
-    return filteredArray;
+    return filteredArray.slice(0, 3);
 }
 
 export function calculateResistors(minR, maxR, power,dutyCycle, dutyCycleDuration){
