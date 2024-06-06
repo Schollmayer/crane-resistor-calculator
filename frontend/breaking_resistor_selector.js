@@ -48,20 +48,59 @@ function displayObjects(objects) {
   // Clear previous output
   outputDiv.innerHTML = "";
 
-  objects.forEach(function(obj) {
-      var container = document.createElement("div");
-      container.classList.add("object-container");
+  objects.forEach(function(obj, index) {
+      var card = document.createElement("div");
+      card.classList.add("card", "mb-3");
 
-      for (var key in obj) {
-          if (obj.hasOwnProperty(key)) {
-              var attribute = document.createElement("div");
-              attribute.textContent = key + ": " + obj[key];
-              attribute.classList.add("attribute");
-              container.appendChild(attribute);
-          }
+      var cardBody = document.createElement("div");
+      cardBody.classList.add("card-body");
+
+      var cardTitle = document.createElement("h5");
+      cardTitle.classList.add("card-title");
+      cardTitle.textContent = `Option ${index + 1}`;
+      cardBody.appendChild(cardTitle);
+
+      var resistorTitle = document.createElement("h6");
+      resistorTitle.classList.add("card-subtitle", "mb-2", "text-muted");
+      resistorTitle.textContent = obj.resistors.length > 1 ? "Breaking Resistors" : "Breaking Resistor";
+      cardBody.appendChild(resistorTitle);
+
+      // Format resistors output
+      var resistorCount = {};
+      obj.resistors.forEach(resistor => {
+          resistorCount[resistor.type] = (resistorCount[resistor.type] || 0) + 1;
+      });
+
+      for (let [type, count] of Object.entries(resistorCount)) {
+          var resistorDetail = document.createElement("div");
+          resistorDetail.innerHTML = `${count}x ${type}`;
+          cardBody.appendChild(resistorDetail);
       }
 
-      outputDiv.appendChild(container);
+      var detailButton = document.createElement("button");
+      detailButton.classList.add("btn", "btn-primary", "mt-3");
+      detailButton.textContent = "Show details";
+      detailButton.addEventListener("click", function() {
+          var details = document.getElementById(`details-${index}`);
+          if (!details) {
+              details = document.createElement("div");
+              details.classList.add("mt-2");
+              details.id = `details-${index}`;
+              details.innerHTML = `
+                  <strong>Total Resistance:</strong> ${obj.totalResistance} Ω<br>
+                  <strong>Total Power:</strong> ${obj.totalPower.toFixed(2)} W<br>
+                  <strong>Total Quantity:</strong> ${obj.resistors.length}
+              `;
+              cardBody.appendChild(details);
+              detailButton.textContent = "Show less";
+          } else {
+              cardBody.removeChild(details);
+              detailButton.textContent = "Show details";
+          }
+      });
+      cardBody.appendChild(detailButton);
+
+      card.appendChild(cardBody);
+      outputDiv.appendChild(card);
   });
 }
-  
