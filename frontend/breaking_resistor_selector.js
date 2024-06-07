@@ -39,9 +39,9 @@ function getBestResistorCombination(minR, maxR, power, dutyCycle, dutyCycleDurat
   clearOutput();
   showSpinner();
   setTimeout(() => {
-    var results = calculateResistors(minR, maxR, power, dutyCycle, dutyCycleDuration);
+    var resistorResults = calculateResistors(minR, maxR, power, dutyCycle, dutyCycleDuration);
     hideSpinner();
-    displayObjects(results);
+    displayObjects(resistorResults);
   }, 10);
 
 }
