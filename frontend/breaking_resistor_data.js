@@ -7,6 +7,8 @@ const DEBUG = false;
 
 const EDTime = 120;
 //TODO find price
+/*
+Resistor is not listed in sales tool
 const RH_0100W050 = {
   type: "RH-0100W050-10-UL",
   resistance: 50,
@@ -41,7 +43,7 @@ const RH_0100W050 = {
     },
   ],
 }
-
+*/
 const RH_0100W330 = {
   type: "RH-0100W330",
   resistance: 330,
@@ -222,6 +224,8 @@ const RH_0260W135 = {
   ],
 }
 //TODO find price
+/*
+Resistor is not listed in sales tool
 const RH_0260W220 = {
   type: "RH-0260W220",
   resistance: 220,
@@ -251,7 +255,7 @@ const RH_0260W220 = {
     },
   ],
 }
-
+*/
 const RH_0260W270 = {
   type: "RH-0260W270",
   resistance: 270,
@@ -311,13 +315,12 @@ const RH_0390W070 = {
     },
   ],
 }
-//TODO find price
 const RH_0400W024 = {
   type: "RH-0400W024",
   resistance: 24,
   tolerance: 0.1,
   contPower: 400,
-  price: 99,
+  price: 119, //Price of RH-0400W024-UL-T as only this one was listed.
   ratedPower: [
     {
       type: "ED 6%",
@@ -341,13 +344,13 @@ const RH_0400W024 = {
     },
   ],
 }
-//TODO find price
+
 const RH_0400W032 = {
   type: "RH-0400W032",
   resistance: 32,
   tolerance: 0.1,
   contPower: 400,
-  price: 99,
+  price: 131, //Price of RH-0400W032-UL-T as only UL-T version was listed
   ratedPower: [
     {
       type: "ED 6%",
@@ -371,13 +374,13 @@ const RH_0400W032 = {
     },
   ],
 }
-//TODO find price
+
 const RH_0400W045 = {
   type: "RH-0400W045",
   resistance: 45,
   tolerance: 0.1,
   contPower: 400,
-  price: 99,
+  price: 108, //Price of RH-0400W045-UL-T as only the UL-T Version was listed
   ratedPower: [
     {
       type: "ED 6%",
@@ -432,6 +435,8 @@ const RH_0520W120 = {
   ],
 }
 //TODO find price
+/*
+Resistor is not listed in sales tool
 const RH_0780W032 = {
   type: "RH-0780W032",
   resistance: 32,
@@ -461,7 +466,7 @@ const RH_0780W032 = {
     },
   ],
 }
-
+*/
 const RH_0780W040 = {
   type: "RH-0780W040",
   resistance: 40,
@@ -1209,9 +1214,9 @@ const RH_9600W015_UL_T = {
 
 //46 Resistors
 export const breaking_resistor_data = [
-  RH_0100W050, RH_0100W330, RH_0100W830, RH_0200W045, RH_0200W045_UL_T, RH_0260W120,
-  RH_0260W135, RH_0260W220, RH_0260W270, RH_0390W070, RH_0400W024, RH_0400W032,
-  RH_0400W045, RH_0520W120, RH_0780W032, RH_0780W040, RH_0780W040_10,
+  /*RH_0100W050,*/ RH_0100W330, RH_0100W830, RH_0200W045, RH_0200W045_UL_T, RH_0260W120,
+  RH_0260W135, /*RH_0260W220,*/ RH_0260W270, RH_0390W070, RH_0400W024, RH_0400W032,
+  RH_0400W045, RH_0520W120, /*RH_0780W032,*/ RH_0780W040, RH_0780W040_10,
   RH_0780W040_UL_T, RH_1000W120, RH_1560W040_UL_T, RH_1560W040_10,
   RH_1560W040, RH_2700W025, RH_2700W025_UL_T, RH_29000W3P8_10,
   RH_3700W025, RH_3700W025_UL_T, RH_38500W3P8_10,
@@ -1222,7 +1227,7 @@ export const breaking_resistor_data = [
   RH_9600W015, RH_9600W015_10, RH_9600W015_10_UL_T, RH_9600W015_UL_T
 ]
  
-export const testResistorList = [RH_9600W015, RH_0260W220];
+export const testResistorList = [RH_9600W015, RH_0100W330];
 
 function getPowerByEdPercentage(edPercentage, breakingResistor, breakingTime) {
   const { ratedPower, contPower } = breakingResistor;
