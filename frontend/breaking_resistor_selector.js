@@ -1,5 +1,7 @@
 import { ga700_data } from "./ga700_data.js"
 import { calculateResistors } from "./breaking_resistor_calculations.js";
+import { checkBrakingTorque } from "./breaking_transistor_calculations.js";
+import { cr700_data, cr700OLCurves, getAllowableED, findBrakeCurveSegment, cr700OLLinear } from "./cr700_data.js";
 
 const calculateResistorButton = document.getElementById('calculateResistorButton');
 const dutyCycle = document.getElementById('dutyCycle');
@@ -8,42 +10,83 @@ const power = document.getElementById('power');
 const dutyCycleDuration = document.getElementById('dutyCycleDuration');
 const driveSelect = document.getElementById('driveSelect');
 
-calculateResistorButton.addEventListener('click', calculate);
-
+calculateResistorButton.addEventListener('click', function(){
+  var form = document.getElementById('breakingDataInputForm');
+  if (form.checkValidity()) {
+      calculate();
+  }
+  else {
+    form.reportValidity(); // This will trigger the browser's built-in validation messages
+}
+});
 
 function calculate() {
-  if (hasBuildInBreakingTranssitor()) {
-    getBestResistorCombination(getRmin(), calculateRmax(), power.value, dutyCycle.value, dutyCycleDuration.value);
-  }
+  performAndDisplayCalculations(getRmin(ga700_data), calculateRmax(ga700_data), power.value, dutyCycle.value, dutyCycleDuration.value);
 }
 
-function hasBuildInBreakingTranssitor() {
-  const selectedIndex = driveSelect.selectedIndex;
-  return ga700_data[selectedIndex].internalBrakeTransistor;
-}
-
-function calculateRmax() {
-  const selectedIndex = driveSelect.selectedIndex;
-  const Rmax = (ga700_data[selectedIndex].brakeActivationVoltage * ga700_data[selectedIndex].brakeActivationVoltage) / peakPower.value;
+function calculateRmax(driveData) {
+  const Rmax = (getSelectedResistor(driveData).brakeActivationVoltage * getSelectedResistor(driveData).brakeActivationVoltage) / peakPower.value;
   return Rmax;
 }
 
-function getRmin() {
-  const selectedIndex = driveSelect.selectedIndex;
-  const Rmin = ga700_data[selectedIndex].minBrakeResistance;
+function getRmin(driveData) {
+  const Rmin = getSelectedResistor(driveData).minBrakeResistance;
   return Rmin;
 }
 
+function getSelectedResistor(driveData) {
+  return driveData[driveSelect.selectedIndex];
+}
 
-function getBestResistorCombination(minR, maxR, power, dutyCycle, dutyCycleDuration) {
+function hasTheBiggerDriveABreakingTransistor(driveData) {
+  return driveData[driveSelect.selectedIndex + 1].internalBrakeTransistor;
+}
+
+function performAndDisplayCalculations(minR, maxR, power, dutyCycle, dutyCycleDuration) {
   clearOutput();
   showSpinner();
-  setTimeout(() => {
-    var resistorResults = calculateResistors(minR, maxR, power, dutyCycle, dutyCycleDuration);
-    hideSpinner();
-    displayObjects(resistorResults);
-  }, 10);
 
+  if (getSelectedResistor(ga700_data).internalBrakeTransistor) {
+    if (checkBrakingTorque(dutyCycle, dutyCycleDuration, power, getSelectedResistor(ga700_data), cr700OLCurves, cr700OLLinear)) {
+      setTimeout(() => {
+        var resistorResults = calculateResistors(minR, maxR, power, dutyCycle, dutyCycleDuration);
+        hideSpinner();
+        displayResistorSelection(resistorResults);
+      }, 20);
+    }
+    else {
+      if (hasTheBiggerDriveABreakingTransistor(ga700_data)) {
+        outputBreakingTransistorError()
+        hideSpinner();
+      }
+      else {
+        outputSameDriveWithBreakingResistor();
+      }
+    }
+  }
+  outputExternalBreakingTransistor()
+}
+
+function outputSameDriveWithBreakingResistor() {
+  var outputDiv = document.getElementById("output");
+  outputDiv.innerHTML = `
+  <h3>Internal breaking transisor not sufficient for desired breaking power.</h3>
+  <h4>The next higher dimensioned drive does not have an internal breaking transistor.
+  Please use an external breaking transistor with the suggested resistor combination.</h4>`
+}
+
+function outputExternalBreakingTransistor() {
+  var outputDiv = document.getElementById("output");
+  outputDiv.innerHTML = `
+  <h3>The selected drive does not have a integrated breaking transistor.</h3>
+  <h4>Please use an external breaking transistor with the suggested resistor combination.</h4>`
+}
+
+function outputBreakingTransistorError() {
+  var outputDiv = document.getElementById("output");
+  outputDiv.innerHTML = `
+  <h3>Internal breaking transisor not sufficient for desired breaking power.</h3>
+  <h4>Please pick a higher dimensioned drive.</h4>`
 }
 
 function clearOutput() {
@@ -52,15 +95,17 @@ function clearOutput() {
   outputDiv.innerHTML = "";
 }
 
+/**Show spinner animation to indicate loading. */
 function showSpinner() {
   document.getElementById('spinner').style.display = 'block';
 }
 
+/**Hide spinner animation. */
 function hideSpinner() {
   document.getElementById('spinner').style.display = 'none';
 }
 
-function displayObjects(objects) {
+function displayResistorSelection(objects) {
   var outputDiv = document.getElementById("output");
   objects.forEach(function (obj, index) {
     var card = document.createElement("div");

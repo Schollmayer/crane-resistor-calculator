@@ -4,6 +4,8 @@ import { breaking_resistor_data, getEDFilteredResistors, testResistorList } from
 const LowerResistorTolerance = 0.9;
 const UpperResistorTolerance = 1.1;
 
+/**Create all possible combinations of resistors in porfolio.
+items expects a list of resistors created by the getEDFilteredResistors() function*/
 function findUniqueCombinations(items, maxItemCount) {
     const uniqueCombinations = [];
     const combination = [];
@@ -26,7 +28,8 @@ function findUniqueCombinations(items, maxItemCount) {
     return uniqueCombinations;
 }
 
-function addInformationToSet(combinations) {
+/**Repack list of resistor combinations into an object which has additional information.**/
+function addInformationToArr(combinations) {
     return combinations.map(item => {
         let totalResistance = 0.0;
         let totalPower = 0.0;
@@ -58,6 +61,7 @@ function addInformationToSet(combinations) {
     });
 }
 
+/**Filters and sorts the array of resistors to only include resistors which fit the specifications sort by cost effectiveness.*/
 function filterForResistorRequirements(resistors, minResistance, maxResistance, power) {
     const filteredResistors = resistors.filter(item => {
         if (item.totalResistance * LowerResistorTolerance < minResistance || item.totalResistance * UpperResistorTolerance > maxResistance) {
@@ -75,14 +79,16 @@ function filterForResistorRequirements(resistors, minResistance, maxResistance, 
         }
         return a.totalPower - b.totalPower;
     });
-
     return filteredResistors.slice(0, 3);
 }
+
+
+
 
 
 export function calculateResistors(minR, maxR, power, dutyCycle, dutyCycleDuration) {
     const items = getEDFilteredResistors(breaking_resistor_data, dutyCycle, dutyCycleDuration);
     const uniqueCombinations = findUniqueCombinations(items, 5);
-    const resistorsWithInformation = addInformationToSet(uniqueCombinations);
+    const resistorsWithInformation = addInformationToArr(uniqueCombinations);
     return filterForResistorRequirements(resistorsWithInformation, minR, maxR, power);
 }

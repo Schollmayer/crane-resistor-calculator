@@ -1229,6 +1229,7 @@ export const breaking_resistor_data = [
  
 export const testResistorList = [RH_9600W015, RH_0100W330];
 
+/**Filter or interpolate the correct power rating according to the breaking time and edPercentage*/
 function getPowerByEdPercentage(edPercentage, breakingResistor, breakingTime) {
   const { ratedPower, contPower } = breakingResistor;
   if (ratedPower.length == 1) {
@@ -1271,6 +1272,7 @@ function getPowerByEdPercentage(edPercentage, breakingResistor, breakingTime) {
   }
 }
 
+/**Returns a list of resistor with corresponding power values which have been filtered for the correct edPercentage and breakingTime*/
 export function getEDFilteredResistors(breaking_resistor_data, edPercentage, breakingTime) {
   var resistorArr = [];
   for (let i = 0; i < breaking_resistor_data.length; i++) {
