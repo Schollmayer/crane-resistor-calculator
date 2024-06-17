@@ -1,7 +1,9 @@
 //define breaking resistor
-//Some resistors have the same values in their -UL-T version and in der their standart version
+//Some resistors have the same values in their -UL-T version and in der their standard version
 //These resistors have been left out 
 //All prices are the list prices in Euro
+//resistance in Ohm
+//contPower/power in kW
 
 const DEBUG = false;
 
@@ -13,33 +15,33 @@ const RH_0100W050 = {
   type: "RH-0100W050-10-UL",
   resistance: 50,
   tolerance: 0.1,
-  contPower: 50,
+  contPower: 0.050,
   price: 99,
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 450
+      power: 0.450
     },
     {
       type: "ED 10%",
       edPercentage: 10,
-      power: 300
+      power: 0.300
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 250
+      power: 0.250
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 150
+      power: 0.150
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 100
+      power: 0.100
     },
   ],
 }
@@ -48,28 +50,28 @@ const RH_0100W330 = {
   type: "RH-0100W330",
   resistance: 330,
   tolerance: 0.1,
-  contPower: 50,
+  contPower: 0.050,
   price: 102,
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 450
+      power: 0.450
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 250
+      power: 0.250
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 150
+      power: 0.150
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 100
+      power: 0.100
     },
   ],
 }
@@ -78,28 +80,28 @@ const RH_0100W830 = {
   type: "RH-0100W830",
   resistance: 830,
   tolerance: 0.1,
-  contPower: 50,
+  contPower: 0.050,
   price: 65,
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 450
+      power: 0.450
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 250
+      power: 0.250
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 150
+      power: 0.150
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 100
+      power: 0.100
     },
   ],
 }
@@ -108,28 +110,28 @@ const RH_0200W045 = {
   type: "RH-0200W045",
   resistance: 45,
   tolerance: 0.1,
-  contPower: 140,
+  contPower: 0.140,
   price: 104,
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 1260
+      power: 1.260
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 700
+      power: 0.700
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 420
+      power: 0.420
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 280
+      power: 0.280
     },
   ],
 }
@@ -138,28 +140,28 @@ const RH_0200W045_UL_T = {
   type: "RH-0200W045_UL_T",
   resistance: 45,
   tolerance: 0.1,
-  contPower: 110,
+  contPower: 0.110,
   price: 108,
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 990
+      power: 0.990
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 550
+      power: 0.550
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 330
+      power: 0.330
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 220
+      power: 0.220
     },
   ],
 }
@@ -168,28 +170,28 @@ const RH_0260W120 = {
   type: "RH-0260W120",
   resistance: 120,
   tolerance: 0.1,
-  contPower: 250,
+  contPower: 0.250,
   price: 102,
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 2250,
+      power: 2.250,
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 1250,
+      power: 1.250,
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 750
+      power: 0.750
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 500
+      power: 0.500
     },
   ],
 }
@@ -198,28 +200,28 @@ const RH_0260W135 = {
   type: "RH-0260W135",
   resistance: 135,
   tolerance: 0.1,
-  contPower: 250,
+  contPower: 0.250,
   price: 102,
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 2250,
+      power: 2.250,
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 1250,
+      power: 1.250,
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 750
+      power: 0.750
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 500
+      power: 0.500
     },
   ],
 }
@@ -230,28 +232,28 @@ const RH_0260W220 = {
   type: "RH-0260W220",
   resistance: 220,
   tolerance: 0.1,
-  contPower: 250,
+  contPower: 0.250,
   price: 99,
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 2250,
+      power: 2.250,
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 1250,
+      power: 1.250,
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 750
+      power: 0.750
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 500
+      power: 0.500
     },
   ],
 }
@@ -260,28 +262,28 @@ const RH_0260W270 = {
   type: "RH-0260W270",
   resistance: 270,
   tolerance: 0.1,
-  contPower: 250,
+  contPower: 0.250,
   price: 57,
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 2250,
+      power: 2.250,
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 1250,
+      power: 1.250,
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 750
+      power: 0.750
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 500
+      power: 0.500
     },
   ],
 }
@@ -290,28 +292,28 @@ const RH_0390W070 = {
   type: "RH-0390W070",
   resistance: 70,
   tolerance: 0.1,
-  contPower: 300,
+  contPower: 0.300,
   price: 79,
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 2700,
+      power: 2.700,
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 1500,
+      power: 1.500,
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 900
+      power: 0.900
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 600
+      power: 0.600
     },
   ],
 }
@@ -319,28 +321,28 @@ const RH_0400W024 = {
   type: "RH-0400W024",
   resistance: 24,
   tolerance: 0.1,
-  contPower: 400,
+  contPower: 0.400,
   price: 119, //Price of RH-0400W024-UL-T as only this one was listed.
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 3600,
+      power: 3.600,
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 2000,
+      power: 2.000,
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 1200
+      power: 1.200
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 800
+      power: 0.800
     },
   ],
 }
@@ -349,28 +351,28 @@ const RH_0400W032 = {
   type: "RH-0400W032",
   resistance: 32,
   tolerance: 0.1,
-  contPower: 400,
+  contPower: 0.400,
   price: 131, //Price of RH-0400W032-UL-T as only UL-T version was listed
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 3600,
+      power: 3.600,
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 2000,
+      power: 2.000,
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 1200
+      power: 1.200
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 800
+      power: 0.800
     },
   ],
 }
@@ -379,28 +381,28 @@ const RH_0400W045 = {
   type: "RH-0400W045",
   resistance: 45,
   tolerance: 0.1,
-  contPower: 400,
+  contPower: 0.400,
   price: 108, //Price of RH-0400W045-UL-T as only the UL-T Version was listed
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 3600,
+      power: 3.600,
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 2000,
+      power: 2.000,
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 1200
+      power: 1.200
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 800
+      power: 0.800
     },
   ],
 }
@@ -409,28 +411,28 @@ const RH_0520W120 = {
   type: "RH-0520W120",
   resistance: 120,
   tolerance: 0.1,
-  contPower: 400,
+  contPower: 0.400,
   price: 62,
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 3600,
+      power: 3.600,
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 2000,
+      power: 2.000,
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 1200
+      power: 1.200
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 800
+      power: 0.800
     },
   ],
 }
@@ -441,28 +443,28 @@ const RH_0780W032 = {
   type: "RH-0780W032",
   resistance: 32,
   tolerance: 0.1,
-  contPower: 500,
+  contPower: 0.500,
   price: 99,
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 4500,
+      power: 4.500,
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 2500,
+      power: 2.500,
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 1500
+      power: 1.500
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 1000
+      power: 1.000
     },
   ],
 }
@@ -471,28 +473,28 @@ const RH_0780W040 = {
   type: "RH-0780W040",
   resistance: 40,
   tolerance: 0.1,
-  contPower: 500,
+  contPower: 0.500,
   price: 189,
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 4500,
+      power: 4.500,
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 2500,
+      power: 2.500,
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 1500
+      power: 1.500
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 1000
+      power: 1.000
     },
   ],
 }
@@ -501,33 +503,33 @@ const RH_0780W040_10 = {
   type: "RH-0780W040-10",
   resistance: 40,
   tolerance: 0.1,
-  contPower: 250,
+  contPower: 0.250,
   price: 78,
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 2250,
+      power: 2.250,
     },
     {
       type: "ED 10%",
       edPercentage: 10,
-      power: 1500,
+      power: 1.500,
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 1250,
+      power: 1.250,
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 750
+      power: 0.750
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 500
+      power: 0.500
     },
   ],
 }
@@ -536,28 +538,28 @@ const RH_0780W040_UL_T = {
   type: "RH-0780W040-UL-T",
   resistance: 40,
   tolerance: 0.1,
-  contPower: 400,
+  contPower: 0.400,
   price: 270,
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 3600,
+      power: 3.600,
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 2000,
+      power: 2.000,
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 1200
+      power: 1.200
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 800
+      power: 0.800
     },
   ],
 }
@@ -566,28 +568,28 @@ const RH_1000W120 = {
   type: "RH-1000W120",
   resistance: 120,
   tolerance: 0.1,
-  contPower: 900,
+  contPower: 0.900,
   price: 199,
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 2700,
+      power: 2.700,
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 1400,
+      power: 1.400,
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 1100
+      power: 1.100
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 1000
+      power: 1.000
     },
   ],
 }
@@ -596,28 +598,28 @@ const RH_1560W040 = {
   type: "RH-1560W040",
   resistance: 40,
   tolerance: 0.1,
-  contPower: 1500,
+  contPower: 1.500,
   price: 215,
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 8200,
+      power: 8.200,
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 3800,
+      power: 3.800,
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 2600
+      power: 2.600
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 2000
+      power: 2.000
     },
   ],
 }
@@ -626,28 +628,28 @@ const RH_1560W040_UL_T = {
   type: "RH-1560W040-UL-T",
   resistance: 40,
   tolerance: 0.1,
-  contPower: 1000,
+  contPower: 1.000,
   price: 364,
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 5500,
+      power: 5.500,
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 2500,
+      power: 2.500,
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 1700
+      power: 1.700
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 1300
+      power: 1.300
     },
   ],
 }
@@ -656,33 +658,33 @@ const RH_1560W040_10 = {
   type: "RH-1560W040-10",
   resistance: 40,
   tolerance: 0.1,
-  contPower: 300,
+  contPower: 0.300,
   price: 110,
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 2700,
+      power: 2.700,
     },
     {
       type: "ED 10%",
       edPercentage: 10,
-      power: 1800,
+      power: 1.800,
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 1500,
+      power: 1.500,
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 900
+      power: 0.900
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 600
+      power: 0.600
     },
   ],
 }
@@ -691,28 +693,28 @@ const RH_2700W025 = {
   type: "RH-2700W025",
   resistance: 25,
   tolerance: 0.1,
-  contPower: 2600,
+  contPower: 2.600,
   price: 340,
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 11200,
+      power: 11.200,
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 5500,
+      power: 5.500,
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 4000
+      power: 4.000
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 3200
+      power: 3.200
     },
   ],
 }
@@ -721,28 +723,28 @@ const RH_2700W025_UL_T = {
   type: "RH-2700W025-UL-T",
   resistance: 25,
   tolerance: 0.1,
-  contPower: 1800,
+  contPower: 1.800,
   price: 416,
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 7800,
+      power: 7.800,
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 3800,
+      power: 3.800,
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 2800
+      power: 2.800
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 2200
+      power: 2.200
     },
   ],
 }
@@ -752,13 +754,13 @@ const RH_29000W3P8_10 = {
   type: "RH-29000W3P8-10",
   resistance: 3.8,
   tolerance: 0.1,
-  contPower: 8000,
+  contPower: 8.000,
   price: 1117,
   ratedPower: [
     {
       type: "ED 10%",
       edPercentage: 10,
-      power: 29000,
+      power: 29.000,
     },
   ],
 }
@@ -767,28 +769,28 @@ const RH_3700W025 = {
   type: "RH-3700W025",
   resistance: 25,
   tolerance: 0.1,
-  contPower: 3600,
+  contPower: 3.600,
   price: 438,
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 18000,
+      power: 18.000,
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 8600,
+      power: 8.600,
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 6000
+      power: 6.000
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 4700
+      power: 4.700
     },
   ],
 }
@@ -797,28 +799,28 @@ const RH_3700W025_UL_T = {
   type: "RH-3700W025-UL-T",
   resistance: 25,
   tolerance: 0.1,
-  contPower: 2500,
+  contPower: 2.500,
   price: 476,
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 12500,
+      power: 12.500,
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 6000,
+      power: 6.000,
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 4200
+      power: 4.200
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 3300
+      power: 3.300
     },
   ],
 }
@@ -827,13 +829,13 @@ const RH_38500W3P8_10 = {
   type: "RH-38500W3P8-10",
   resistance: 3.8,
   tolerance: 0.1,
-  contPower: 9500,
+  contPower: 9.500,
   price: 1207,
   ratedPower: [
     {
       type: "ED 10%",
       edPercentage: 10,
-      power: 38500,
+      power: 38.500,
     },
   ],
 }
@@ -842,13 +844,13 @@ const RH_38500W3P8_10_UL_T = {
   type: "RH-38500W3P8-10-UL-T",
   resistance: 3.8,
   tolerance: 0.1,
-  contPower: 8500,
+  contPower: 8.500,
   price: 1293,
   ratedPower: [
     {
       type: "ED 10%",
       edPercentage: 10,
-      power: 38500,
+      power: 38.500,
     },
   ],
 }
@@ -857,13 +859,13 @@ const RH_48000W3P8_10 = {
   type: "RH-48000W3P8-10",
   resistance: 3.8,
   tolerance: 0.1,
-  contPower: 12000,
+  contPower: 12.000,
   price: 1198,
   ratedPower: [
     {
       type: "ED 10%",
       edPercentage: 10,
-      power: 48000,
+      power: 48.000,
     },
   ],
 }
@@ -871,13 +873,13 @@ const RH_48000W3P8_10_UL_T = {
   type: "RH-48000W3P8-10-UL-T",
   resistance: 3.8,
   tolerance: 0.1,
-  contPower: 10800,
+  contPower: 10.800,
   price: 1308,
   ratedPower: [
     {
       type: "ED 10%",
       edPercentage: 10,
-      power: 48000,
+      power: 48.000,
     },
   ],
 }
@@ -886,28 +888,28 @@ const RH_4800W022 = {
   type: "RH-4800W022",
   resistance: 22,
   tolerance: 0.1,
-  contPower: 4600,
+  contPower: 4.600,
   price: 426,
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 20000,
+      power: 20.000,
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 9800,
+      power: 9.800,
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 7100
+      power: 7.100
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 5700
+      power: 5.700
     },
   ],
 }
@@ -916,13 +918,13 @@ const RH_4800W022_10 = {
   type: "RRH-4800W022-10",
   resistance: 22,
   tolerance: 0.1,
-  contPower: 1400,
+  contPower: 1.400,
   price: 278,
   ratedPower: [
     {
       type: "ED 10%",
       edPercentage: 10,
-      power: 5200,
+      power: 5.200,
     },
   ],
 }
@@ -931,13 +933,13 @@ const RH_4800W022_10_UL_T = {
   type: "RRH-4800W022-10-UL-T",
   resistance: 22,
   tolerance: 0.1,
-  contPower: 1000,
+  contPower: 1.000,
   price: 371,
   ratedPower: [
     {
       type: "ED 10%",
       edPercentage: 10,
-      power: 3700,
+      power: 3.700,
     },
   ],
 }
@@ -946,28 +948,28 @@ const RH_4800W022_UL_T = {
   type: "RH-4800W022-UL-T",
   resistance: 22,
   tolerance: 0.1,
-  contPower: 3200,
+  contPower: 3.200,
   price: 585,
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 13900,
+      power: 13.900,
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 6800,
+      power: 6.800,
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 4900
+      power: 4.900
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 4000
+      power: 4.000
     },
   ],
 }
@@ -976,28 +978,28 @@ const RH_6000W022 = {
   type: "RH-6000W022",
   resistance: 22,
   tolerance: 0.1,
-  contPower: 5800,
+  contPower: 5.800,
   price: 497,
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 27400,
+      power: 27.400,
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 13200,
+      power: 13.200,
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 9400
+      power: 9.400
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 7400
+      power: 7.400
     },
   ],
 }
@@ -1006,13 +1008,13 @@ const RH_6000W022_10 = {
   type: "RH-6000W022-10",
   resistance: 22,
   tolerance: 0.1,
-  contPower: 1600,
+  contPower: 1.600,
   price: 287,
   ratedPower: [
     {
       type: "ED 10%",
       edPercentage: 10,
-      power: 6000,
+      power: 6.000,
     },
   ],
 }
@@ -1021,13 +1023,13 @@ const RH_6000W022_10_UL_T = {
   type: "RH-6000W022-10-UL-T",
   resistance: 22,
   tolerance: 0.1,
-  contPower: 1200,
+  contPower: 1.200,
   price: 380,
   ratedPower: [
     {
       type: "ED 10%",
       edPercentage: 10,
-      power: 4500,
+      power: 4.500,
     },
   ],
 }
@@ -1036,28 +1038,28 @@ const RH_6000W022_UL_T = {
   type: "RH-6000W022-UL-T",
   resistance: 22,
   tolerance: 0.1,
-  contPower: 4000,
+  contPower: 4.000,
   price: 616,
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 18900,
+      power: 18.900,
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 9100,
+      power: 9.100,
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 6500
+      power: 6.500
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 5100
+      power: 5.100
     },
   ],
 }
@@ -1066,28 +1068,28 @@ const RH_7500W023 = {
   type: "RH_7500W023",
   resistance: 23,
   tolerance: 0.1,
-  contPower: 7200,
+  contPower: 7.200,
   price: 790,
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 28500,
+      power: 28.500,
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 14200,
+      power: 14.200,
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 10400
+      power: 10.400
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 8500
+      power: 8.500
     },
   ],
 }
@@ -1096,28 +1098,28 @@ const RH_7500W023_UL_T = {
   type: "RH_7500W023-UL-T",
   resistance: 23,
   tolerance: 0.1,
-  contPower: 5000,
+  contPower: 5.000,
   price: 781,
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 19800,
+      power: 19.800,
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 9900,
+      power: 9.900,
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 7200
+      power: 7.200
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 5900
+      power: 5.900
     },
   ],
 }
@@ -1126,28 +1128,28 @@ const RH_9600W015 = {
   type: "RH-9600W015",
   resistance: 15,
   tolerance: 0.1,
-  contPower: 9200,
+  contPower: 9.200,
   price: 826,
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 39600,
+      power: 39.600,
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 19400,
+      power: 19.400,
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 14000
+      power: 14.000
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 11200
+      power: 11.200
     },
   ],
 }
@@ -1156,13 +1158,13 @@ const RH_9600W015_10 = {
   type: "RH-9600W015-10",
   resistance: 15,
   tolerance: 0.1,
-  contPower: 3000,
+  contPower: 3.000,
   price: 470,
   ratedPower: [
     {
       type: "ED 10%",
       edPercentage: 10,
-      power: 11400,
+      power: 11.400,
     },
   ],
 }
@@ -1171,13 +1173,13 @@ const RH_9600W015_10_UL_T = {
   type: "RH-9600W015-10-UL-T",
   resistance: 15,
   tolerance: 0.1,
-  contPower: 2100,
+  contPower: 2.100,
   price: 497,
   ratedPower: [
     {
       type: "ED 10%",
       edPercentage: 10,
-      power: 8000,
+      power: 8.000,
     },
   ],
 }
@@ -1186,28 +1188,28 @@ const RH_9600W015_UL_T = {
   type: "RH-9600W015-UL-T",
   resistance: 15,
   tolerance: 0.1,
-  contPower: 6400,
+  contPower: 6.400,
   price: 876,
   ratedPower: [
     {
       type: "ED 6%",
       edPercentage: 6,
-      power: 27500,
+      power: 27.500,
     },
     {
       type: "ED 15%",
       edPercentage: 15,
-      power: 13500,
+      power: 13.500,
     },
     {
       type: "ED 25%",
       edPercentage: 25,
-      power: 9700
+      power: 9.700
     },
     {
       type: "ED 40%",
       edPercentage: 40,
-      power: 7800
+      power: 7.800
     },
   ],
 }

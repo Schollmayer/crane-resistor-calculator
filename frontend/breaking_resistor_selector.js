@@ -206,7 +206,7 @@ function displayResistorTransistorSelection(objects, transistorResults) {
         details.id = `details-${index}`;
         details.innerHTML = `
                   <strong>Total Resistance:</strong> ${obj.totalResistance} Ω<br>
-                  <strong>Total Power:</strong> ${obj.totalPower.toFixed(2)} W<br>
+                  <strong>Total Power:</strong> ${obj.totalPower.toFixed(2)} kW<br>
                   <strong>Total Quantity:</strong> ${obj.resistors.length}
               `;
         cardBody.appendChild(details);

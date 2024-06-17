@@ -91,7 +91,7 @@
         ["xpath=//form[@id='breakingDataInputForm']/div[3]/input", "xpath:idRelative"],
         ["xpath=//div[3]/input", "xpath:position"]
       ],
-      "value": "5000"
+      "value": "5"
     }, {
       "id": "464d72d7-7a01-4af7-8977-b1b8356f49b0",
       "comment": "",
@@ -104,7 +104,7 @@
         ["xpath=//form[@id='breakingDataInputForm']/div[4]/input", "xpath:idRelative"],
         ["xpath=//div[4]/input", "xpath:position"]
       ],
-      "value": "2000"
+      "value": "2"
     }, {
       "id": "a39d478a-7044-4b1d-b1ab-2d5100d299f4",
       "comment": "",
