@@ -59,25 +59,35 @@ function performAndDisplayCalculations(minR, maxR, power, dutyCycle, dutyCycleDu
       }, 20);
     }
     else {
-      if (hasTheBiggerDriveABreakingTransistor(ga700_data)) {-
+      if (hasTheBiggerDriveABreakingTransistor(ga700_data)) {
         outputBreakingTransistorError()
         hideSpinner();
       }
       else {
-        outputSameDriveWithBreakingTransistor();
-        var resistorResults = calculateResistors(minR, maxR, power, dutyCycle, dutyCycleDuration);
-        hideSpinner();
-        displayResistorTransistorSelection(resistorResults, null);
+        var selectedCDBR = findCDBR(maxR, getMaxBreakTime(dutyCycle, dutyCycleDuration), getSelectedResistor(ga700_data).brakeActivationVoltage, dutyCycle)
+        if (selectedCDBR) {
+          outputSameDriveWithBreakingTransistor();
+          setTimeout(() => {
+            var resistorResults = calculateResistors(selectedCDBR.cdbr.minR, maxR, power, dutyCycle, dutyCycleDuration);
+            hideSpinner();
+            displayResistorTransistorSelection(resistorResults, selectedCDBR);
+          }, 20);
+        }
+        else {
+          noTransistorFound();
+        }
       }
     }
   }
   else {
-    var selectedCDBR = findCDBR  (maxR, getMaxBreakTime(dutyCycle, dutyCycleDuration), getSelectedResistor(ga700_data).brakeActivationVoltage, dutyCycle)
-    if (selectedCDBR){
+    var selectedCDBR = findCDBR(maxR, getMaxBreakTime(dutyCycle, dutyCycleDuration), getSelectedResistor(ga700_data).brakeActivationVoltage, dutyCycle)
+    if (selectedCDBR) {
       outputExternalBreakingTransistor()
-      var resistorResults = calculateResistors(selectedCDBR.cdbr.minR, maxR, power, dutyCycle, dutyCycleDuration);
-      hideSpinner();
-      displayResistorTransistorSelection(resistorResults, transistorResults);
+      setTimeout(() => {
+        var resistorResults = calculateResistors(selectedCDBR.cdbr.minR, maxR, power, dutyCycle, dutyCycleDuration);
+        hideSpinner();
+        displayResistorTransistorSelection(resistorResults, selectedCDBR);
+      }, 20);
     }
     else {
       noTransistorFound();
@@ -95,7 +105,7 @@ function noTransistorFound() {
 function outputSameDriveWithBreakingTransistor() {
   var outputDiv = document.getElementById("output");
   outputDiv.innerHTML = `
-  <h3>Internal breaking transistor not sufficient for desired breaking power.</h3>
+  <h3>The internal breaking transistor is not sufficient for desired breaking power.</h3>
   <h4>The next higher dimensioned drive does not have an internal breaking transistor.
   Please use an external breaking transistor with the suggested resistor combination.</h4>`
 }
@@ -110,7 +120,7 @@ function outputExternalBreakingTransistor() {
 function outputBreakingTransistorError() {
   var outputDiv = document.getElementById("output");
   outputDiv.innerHTML = `
-  <h3>Internal breaking transisor not sufficient for desired breaking power.</h3>
+  <h3>Internal breaking transistor not sufficient for desired breaking power.</h3>
   <h4>Please pick a higher dimensioned drive.</h4>`
 }
 
@@ -130,7 +140,7 @@ function hideSpinner() {
   document.getElementById('spinner').style.display = 'none';
 }
 
-function displayResistorTransistorSelection(objects) {
+function displayResistorTransistorSelection(objects, transistorResults) {
   var outputDiv = document.getElementById("output");
   objects.forEach(function (obj, index) {
     var card = document.createElement("div");
@@ -144,10 +154,16 @@ function displayResistorTransistorSelection(objects) {
     cardTitle.textContent = `Option ${index + 1}`;
     cardBody.appendChild(cardTitle);
 
+    var flexContainer = document.createElement("div");
+    flexContainer.style.display = "flex";
+    flexContainer.style.justifyContent = "flex-start";
+    cardBody.appendChild(flexContainer);
+
+    var resistorContainer = document.createElement("div");
     var resistorTitle = document.createElement("h6");
     resistorTitle.classList.add("card-subtitle", "mb-2", "text-muted");
     resistorTitle.textContent = obj.resistors.length > 1 ? "Breaking Resistors" : "Breaking Resistor";
-    cardBody.appendChild(resistorTitle);
+    resistorContainer.appendChild(resistorTitle);
 
     // Format resistors output
     var resistorCount = {};
@@ -158,7 +174,25 @@ function displayResistorTransistorSelection(objects) {
     for (let [type, count] of Object.entries(resistorCount)) {
       var resistorDetail = document.createElement("div");
       resistorDetail.innerHTML = `${count}x ${type}`;
-      cardBody.appendChild(resistorDetail);
+      resistorContainer.appendChild(resistorDetail);
+    }
+
+    flexContainer.appendChild(resistorContainer);
+
+    // Transistor container
+    if (transistorResults) {
+      var transistorContainer = document.createElement("div");
+      transistorContainer.style.marginLeft = "20px"; // Adding some space between resistor and transistor details
+      var transistorTitle = document.createElement("h6");
+      transistorTitle.classList.add("card-subtitle", "mb-2", "text-muted");
+      transistorTitle.textContent = "External breaking transistor";
+      transistorContainer.appendChild(transistorTitle);
+
+      var transistorDetail = document.createElement("div");
+      transistorDetail.innerHTML = `${transistorResults.qtty}x ${transistorResults.cdbr.type}`;
+      transistorContainer.appendChild(transistorDetail);
+
+      flexContainer.appendChild(transistorContainer);
     }
 
     var detailButton = document.createElement("button");
@@ -188,3 +222,5 @@ function displayResistorTransistorSelection(objects) {
     outputDiv.appendChild(card);
   });
 }
+
+
