@@ -1,6 +1,6 @@
 import { ga700_data } from "./ga700_data.js"
 import { calculateResistors } from "./breaking_resistor_calculations.js";
-import { checkBrakingTorque } from "./breaking_transistor_calculations.js";
+import { checkBrakingTorque, findCDBR } from "./breaking_transistor_calculations.js";
 import { cr700_data, cr700OLCurves, getAllowableED, findBrakeCurveSegment, cr700OLLinear } from "./cr700_data.js";
 
 const calculateResistorButton = document.getElementById('calculateResistorButton');
@@ -10,14 +10,14 @@ const power = document.getElementById('power');
 const dutyCycleDuration = document.getElementById('dutyCycleDuration');
 const driveSelect = document.getElementById('driveSelect');
 
-calculateResistorButton.addEventListener('click', function(){
+calculateResistorButton.addEventListener('click', function () {
   var form = document.getElementById('breakingDataInputForm');
   if (form.checkValidity()) {
-      calculate();
+    calculate();
   }
   else {
     form.reportValidity(); // This will trigger the browser's built-in validation messages
-}
+  }
 });
 
 function calculate() {
@@ -42,35 +42,60 @@ function hasTheBiggerDriveABreakingTransistor(driveData) {
   return driveData[driveSelect.selectedIndex + 1].internalBrakeTransistor;
 }
 
+function getMaxBreakTime(dutyCycle, dutyCycleDuration) {
+  return (dutyCycle * dutyCycleDuration);
+}
+
 function performAndDisplayCalculations(minR, maxR, power, dutyCycle, dutyCycleDuration) {
   clearOutput();
   showSpinner();
 
   if (getSelectedResistor(ga700_data).internalBrakeTransistor) {
-    if (checkBrakingTorque(dutyCycle, dutyCycleDuration, power, getSelectedResistor(ga700_data), cr700OLCurves, cr700OLLinear)) {
+    if (checkBrakingTorque(dutyCycle, getMaxBreakTime(dutyCycle, dutyCycleDuration), power, getSelectedResistor(ga700_data), cr700OLCurves, cr700OLLinear)) {
       setTimeout(() => {
         var resistorResults = calculateResistors(minR, maxR, power, dutyCycle, dutyCycleDuration);
         hideSpinner();
-        displayResistorSelection(resistorResults);
+        displayResistorTransistorSelection(resistorResults, null);
       }, 20);
     }
     else {
-      if (hasTheBiggerDriveABreakingTransistor(ga700_data)) {
+      if (hasTheBiggerDriveABreakingTransistor(ga700_data)) {-
         outputBreakingTransistorError()
         hideSpinner();
       }
       else {
-        outputSameDriveWithBreakingResistor();
+        outputSameDriveWithBreakingTransistor();
+        var resistorResults = calculateResistors(minR, maxR, power, dutyCycle, dutyCycleDuration);
+        hideSpinner();
+        displayResistorTransistorSelection(resistorResults, null);
       }
     }
   }
-  outputExternalBreakingTransistor()
+  else {
+    var selectedCDBR = findCDBR  (maxR, getMaxBreakTime(dutyCycle, dutyCycleDuration), getSelectedResistor(ga700_data).brakeActivationVoltage, dutyCycle)
+    if (selectedCDBR){
+      outputExternalBreakingTransistor()
+      var resistorResults = calculateResistors(selectedCDBR.cdbr.minR, maxR, power, dutyCycle, dutyCycleDuration);
+      hideSpinner();
+      displayResistorTransistorSelection(resistorResults, transistorResults);
+    }
+    else {
+      noTransistorFound();
+    }
+  }
 }
 
-function outputSameDriveWithBreakingResistor() {
+function noTransistorFound() {
   var outputDiv = document.getElementById("output");
   outputDiv.innerHTML = `
-  <h3>Internal breaking transisor not sufficient for desired breaking power.</h3>
+  <h3>No product found which matches the desired specifications.</h3>
+  <h4>Unfortunately there is no product in our catalog which matches the desired specifications.</h4>`
+}
+
+function outputSameDriveWithBreakingTransistor() {
+  var outputDiv = document.getElementById("output");
+  outputDiv.innerHTML = `
+  <h3>Internal breaking transistor not sufficient for desired breaking power.</h3>
   <h4>The next higher dimensioned drive does not have an internal breaking transistor.
   Please use an external breaking transistor with the suggested resistor combination.</h4>`
 }
@@ -105,7 +130,7 @@ function hideSpinner() {
   document.getElementById('spinner').style.display = 'none';
 }
 
-function displayResistorSelection(objects) {
+function displayResistorTransistorSelection(objects) {
   var outputDiv = document.getElementById("output");
   objects.forEach(function (obj, index) {
     var card = document.createElement("div");
