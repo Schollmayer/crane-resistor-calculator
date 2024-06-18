@@ -1,7 +1,6 @@
-import { ga700_data } from "./ga700_data.js"
 import { calculateResistors } from "./breaking_resistor_calculations.js";
 import { checkBrakingTorque, findCDBR } from "./breaking_transistor_calculations.js";
-import { cr700_data, cr700OLCurves, getAllowableED, findBrakeCurveSegment, cr700OLLinear } from "./cr700_data.js";
+import { ga700_data, ga700OLCurves, ga700OLLinear } from "./ga700_data.js";
 
 const calculateResistorButton = document.getElementById('calculateResistorButton');
 const dutyCycle = document.getElementById('dutyCycle');
@@ -25,11 +24,11 @@ function calculate() {
 }
 
 function calculateRmax(driveData) {
-  const Rmax = (getSelectedResistor(driveData).brakeActivationVoltage * getSelectedResistor(driveData).brakeActivationVoltage) / peakPower.value;
+  const Rmax = (getSelectedResistor(driveData).brakeActivationVoltage * getSelectedResistor(driveData).brakeActivationVoltage) / (peakPower.value * 1000);
   return Rmax;
 }
 
-function getRmin(driveData) {
+function getRmin(driveData) { 
   const Rmin = getSelectedResistor(driveData).minBrakeResistance;
   return Rmin;
 }
@@ -43,7 +42,7 @@ function hasTheBiggerDriveABreakingTransistor(driveData) {
 }
 
 function getMaxBreakTime(dutyCycle, dutyCycleDuration) {
-  return (dutyCycle * dutyCycleDuration);
+  return ((dutyCycle/100) * dutyCycleDuration);
 }
 
 function performAndDisplayCalculations(minR, maxR, power, dutyCycle, dutyCycleDuration) {
@@ -51,7 +50,7 @@ function performAndDisplayCalculations(minR, maxR, power, dutyCycle, dutyCycleDu
   showSpinner();
 
   if (getSelectedResistor(ga700_data).internalBrakeTransistor) {
-    if (checkBrakingTorque(dutyCycle, getMaxBreakTime(dutyCycle, dutyCycleDuration), power, getSelectedResistor(ga700_data), cr700OLCurves, cr700OLLinear)) {
+    if (checkBrakingTorque(dutyCycle, getMaxBreakTime(dutyCycle, dutyCycleDuration), power, getSelectedResistor(ga700_data), ga700OLCurves, ga700OLLinear)) {
       setTimeout(() => {
         var resistorResults = calculateResistors(minR, maxR, power, dutyCycle, dutyCycleDuration);
         hideSpinner();
@@ -140,9 +139,37 @@ function hideSpinner() {
   document.getElementById('spinner').style.display = 'none';
 }
 
-function displayResistorTransistorSelection(objects, transistorResults) {
+function displayNoResistorFoundError(resistorResults, transistorResults) {
   var outputDiv = document.getElementById("output");
-  objects.forEach(function (obj, index) {
+  resistorResults.forEach(function (obj, index) {
+    var card = document.createElement("div");
+    card.classList.add("card", "mb-3");
+
+    var cardBody = document.createElement("div");
+    cardBody.classList.add("card-body");
+
+    var cardTitle = document.createElement("h5");
+    cardTitle.classList.add("card-title");
+    cardTitle.textContent = `Option ${index + 1}`;
+    cardBody.appendChild(cardTitle);
+
+    var flexContainer = document.createElement("div");
+    flexContainer.style.display = "flex";
+    flexContainer.style.justifyContent = "flex-start";
+    cardBody.appendChild(flexContainer);
+
+    var resistorContainer = document.createElement("div");
+    var resistorTitle = document.createElement("h6");
+    resistorTitle.classList.add("card-subtitle", "mb-2", "text-muted");
+    resistorTitle.textContent = obj.resistors.length > 1 ? "Breaking Resistors" : "Breaking Resistor";
+    resistorContainer.appendChild(resistorTitle); 
+  
+  });
+}
+
+function displayResistorTransistorSelection(resistorResults, transistorResults) {
+  var outputDiv = document.getElementById("output");
+  resistorResults.forEach(function (obj, index) {
     var card = document.createElement("div");
     card.classList.add("card", "mb-3");
 
