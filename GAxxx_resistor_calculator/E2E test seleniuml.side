@@ -1,0 +1,133 @@
+{
+  "id": "115bfd1c-2f64-448f-a9d9-677c872c5d4f",
+  "version": "2.0",
+  "name": "Resistor selection tool",
+  "url": "http://127.0.0.1:5500/GAxxx_resistor_calculator/breaking_resistor_selector.html",
+  "tests": [{
+    "id": "06f0a443-d4fc-4b87-9aa2-f7f2949b1738",
+    "name": "External transistor needed",
+    "commands": [{
+      "id": "e01ff691-98c6-4c75-b28b-30664cdbf430",
+      "comment": "",
+      "command": "open",
+      "target": "http://127.0.0.1:5500/GAxxx_resistor_calculator/breaking_resistor_selector.html",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c1e507bd-a951-4137-a316-d7bc231aca29",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1936x1056",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d5c35e9a-ec72-45ee-9b0d-cb05337c1aab",
+      "comment": "",
+      "command": "click",
+      "target": "id=driveSelect",
+      "targets": [
+        ["id=driveSelect", "id"],
+        ["css=#driveSelect", "css:finder"],
+        ["xpath=//select[@id='driveSelect']", "xpath:attributes"],
+        ["xpath=//form[@id='breakingDataInputForm']/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7067b6a6-2274-4bb8-af48-21f4e652b408",
+      "comment": "",
+      "command": "select",
+      "target": "id=driveSelect",
+      "targets": [],
+      "value": "label=GA70C4031BBA"
+    }, {
+      "id": "62081451-63e8-4e3d-a13f-c4ef78d9134d",
+      "comment": "",
+      "command": "click",
+      "target": "id=dutyCycle",
+      "targets": [
+        ["id=dutyCycle", "id"],
+        ["css=#dutyCycle", "css:finder"],
+        ["xpath=//input[@id='dutyCycle']", "xpath:attributes"],
+        ["xpath=//form[@id='breakingDataInputForm']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5eaca7b4-2acd-4f30-bc12-ff0c536a87ad",
+      "comment": "",
+      "command": "type",
+      "target": "id=dutyCycle",
+      "targets": [
+        ["id=dutyCycle", "id"],
+        ["css=#dutyCycle", "css:finder"],
+        ["xpath=//input[@id='dutyCycle']", "xpath:attributes"],
+        ["xpath=//form[@id='breakingDataInputForm']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "40"
+    }, {
+      "id": "83e67097-6da5-443d-8e73-7afb3b3bc361",
+      "comment": "",
+      "command": "type",
+      "target": "id=dutyCycleDuration",
+      "targets": [
+        ["id=dutyCycleDuration", "id"],
+        ["css=#dutyCycleDuration", "css:finder"],
+        ["xpath=//input[@id='dutyCycleDuration']", "xpath:attributes"],
+        ["xpath=//form[@id='breakingDataInputForm']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "100"
+    }, {
+      "id": "059adf31-f693-4784-9360-1bcc9c19948d",
+      "comment": "",
+      "command": "type",
+      "target": "id=peakPower",
+      "targets": [
+        ["id=peakPower", "id"],
+        ["css=#peakPower", "css:finder"],
+        ["xpath=//input[@id='peakPower']", "xpath:attributes"],
+        ["xpath=//form[@id='breakingDataInputForm']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "5"
+    }, {
+      "id": "1f27fdb5-c5a3-4504-807c-853e476d7837",
+      "comment": "",
+      "command": "type",
+      "target": "id=power",
+      "targets": [
+        ["id=power", "id"],
+        ["css=#power", "css:finder"],
+        ["xpath=//input[@id='power']", "xpath:attributes"],
+        ["xpath=//form[@id='breakingDataInputForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": "2"
+    }, {
+      "id": "9423586c-43ab-42f2-8679-3be5ed5242a3",
+      "comment": "",
+      "command": "click",
+      "target": "id=calculateResistorButton",
+      "targets": [
+        ["id=calculateResistorButton", "id"],
+        ["css=#calculateResistorButton", "css:finder"],
+        ["xpath=//button[@id='calculateResistorButton']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Calculate')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "fb4150e0-190c-4a98-8259-61c6c879427a",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["http://127.0.0.1:5500/"],
+  "plugins": []
+}
