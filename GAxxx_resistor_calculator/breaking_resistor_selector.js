@@ -132,16 +132,6 @@ function clearOutput() {
   outputDiv.innerHTML = "";
 }
 
-/**Show spinner animation to indicate loading. */
-function showSpinner() {
-  document.getElementById('spinner').style.display = 'block';
-}
-
-/**Hide spinner animation. */
-function hideSpinner() {
-  document.getElementById('spinner').style.display = 'none';
-}
-
 function getResistorGraphic(resistor) {
   if (resistor.resistorNetwork.length == 1) {
     switch (resistor.quantity) {
