@@ -47,40 +47,31 @@ function getMaxBreakTime(dutyCycle, dutyCycleDuration) {
 
 function performAndDisplayCalculations(minR, maxR, power, dutyCycle, dutyCycleDuration) {
   clearOutput();
-  showSpinner();
-
   if (getSelectedResistor(ga700_data).internalBrakeTransistor) {
     if (checkBrakingTorque(dutyCycle, getMaxBreakTime(dutyCycle, dutyCycleDuration), power, getSelectedResistor(ga700_data), ga700OLCurves, ga700OLLinear)) {
-      setTimeout(() => {
-        var resistorResults = calculateResistors(minR, maxR, power, dutyCycle, dutyCycleDuration);
-        hideSpinner();
-        if (resistorResults) {
-          displayResistorTransistorSelection(resistorResults, null);
-        }
-        else {
-          displayNoResistorFoundError(minR, maxR, power, null);
-        }
-      }, 20);
+      var resistorResults = calculateResistors(minR, maxR, power, dutyCycle, dutyCycleDuration);
+      if (resistorResults) {
+        displayResistorTransistorSelection(resistorResults, null);
+      }
+      else {
+        displayNoResistorFoundError(minR, maxR, power, null);
+      }
     }
     else {
       if (hasTheBiggerDriveABreakingTransistor(ga700_data)) {
         outputBreakingTransistorError()
-        hideSpinner();
       }
       else {
         var selectedCDBR = findCDBR(maxR, getMaxBreakTime(dutyCycle, dutyCycleDuration), getSelectedResistor(ga700_data).brakeActivationVoltage, dutyCycle)
         if (selectedCDBR) {
           outputSameDriveWithBreakingTransistor();
-          setTimeout(() => {
-            var resistorResults = calculateResistors(selectedCDBR.cdbr.minResistance, maxR, power, dutyCycle, dutyCycleDuration);
-            hideSpinner();
-            if (resistorResults) {
-              displayResistorTransistorSelection(resistorResults, selectedCDBR);
-            }
-            else {
-              displayNoResistorFoundError(minR, maxR, power, selectedCDBR);
-            }
-          }, 20);
+          var resistorResults = calculateResistors(selectedCDBR.cdbr.minResistance, maxR, power, dutyCycle, dutyCycleDuration);
+          if (resistorResults) {
+            displayResistorTransistorSelection(resistorResults, selectedCDBR);
+          }
+          else {
+            displayNoResistorFoundError(minR, maxR, power, selectedCDBR);
+          }
         }
         else {
           noTransistorFound();
@@ -92,16 +83,13 @@ function performAndDisplayCalculations(minR, maxR, power, dutyCycle, dutyCycleDu
     var selectedCDBR = findCDBR(maxR, getMaxBreakTime(dutyCycle, dutyCycleDuration), getSelectedResistor(ga700_data).brakeActivationVoltage, dutyCycle)
     if (selectedCDBR) {
       outputExternalBreakingTransistor()
-      setTimeout(() => {
-        var resistorResults = calculateResistors(selectedCDBR.cdbr.minResistance, maxR, power, dutyCycle, dutyCycleDuration);
-        hideSpinner();
-        if (resistorResults) {
-          displayResistorTransistorSelection(resistorResults, selectedCDBR);
-        }
-        else {
-          displayNoResistorFoundError(selectedCDBR.cdbr.minResistance, maxR, power, selectedCDBR);
-        }
-      }, 20);
+      var resistorResults = calculateResistors(selectedCDBR.cdbr.minResistance, maxR, power, dutyCycle, dutyCycleDuration);
+      if (resistorResults) {
+        displayResistorTransistorSelection(resistorResults, selectedCDBR);
+      }
+      else {
+        displayNoResistorFoundError(selectedCDBR.cdbr.minResistance, maxR, power, selectedCDBR);
+      }
     }
     else {
       noTransistorFound();
@@ -160,35 +148,35 @@ function getResistorGraphic(resistor) {
       case 1:
         return "./graphics/rn-S1.svg"
       case 2:
-        if (resistor.resistorNetwork[1].inSeries) {
+        if (resistor.resistorNetwork[0].inSeries) {
           return "./graphics/rn-S2.svg"
         }
         else {
           return "./graphics/rn-P2.svg"
         }
       case 3:
-        if (resistor.resistorNetwork[2].inSeries) {
+        if (resistor.resistorNetwork[0].inSeries) {
           return "./graphics/rn-S3.svg"
         }
         else {
           return "./graphics/rn-P3.svg"
         }
       case 4:
-        if (resistor.resistorNetwork[3].inSeries) {
+        if (resistor.resistorNetwork[0].inSeries) {
           return "./graphics/rn-S4.svg"
         }
         else {
           return "./graphics/rn-P4.svg"
         }
       case 5:
-        if (resistor.resistorNetwork[4].inSeries) {
+        if (resistor.resistorNetwork[0].inSeries) {
           return "./graphics/rn-S5.svg"
         }
         else {
           return "./graphics/rn-P5.svg"
         }
       case 6:
-        if (resistor.resistorNetwork[5].inSeries) {
+        if (resistor.resistorNetwork[0].inSeries) {
           return "./graphics/rn-S6.svg"
         }
         else {
@@ -237,7 +225,7 @@ function displayNoResistorFoundError(minR, maxR, power, transistorResults) {
   // Transistor container
   if (transistorResults) {
     var transistorContainer = document.createElement("div");
-    transistorContainer.style.marginTop = "20px"; // Adding some space between resistor and transistor details
+    transistorContainer.style.marginTop = "40px"; // Adding some space between resistor and transistor details
     var transistorTitle = document.createElement("h6");
     transistorTitle.classList.add("card-subtitle", "mb-2", "text-muted");
     transistorTitle.textContent = "External breaking transistor";
@@ -270,7 +258,7 @@ function displayResistorTransistorSelection(resistorResults, transistorResults) 
 
     var flexContainer = document.createElement("div");
     flexContainer.style.display = "flex";
-    flexContainer.style.justifyContent = "flex-start";
+    flexContainer.style.alignItems = "top";
     cardBody.appendChild(flexContainer);
 
     var resistorContainer = document.createElement("div");
@@ -286,10 +274,26 @@ function displayResistorTransistorSelection(resistorResults, transistorResults) 
 
     flexContainer.appendChild(resistorContainer);
 
+
+    let resistorImageFile = getResistorGraphic(obj);
+    // Add image next to the resistor details
+    if (resistorImageFile) {
+      var resistorImageContainer = document.createElement("div");
+      resistorImageContainer.style.marginLeft = "40px"; // Space between text and image
+      var resistorImage = document.createElement("img");
+      resistorImage.src = resistorImageFile; // Replace with the actual image URL
+      resistorImage.alt = "Resistor network";
+      resistorImage.style.width = "auto"; // Set the desired width
+      resistorImage.style.height = "auto"; // Maintain aspect ratio
+      resistorImageContainer.appendChild(resistorImage);
+
+      flexContainer.appendChild(resistorImageContainer);
+    }
+
     // Transistor container
     if (transistorResults) {
       var transistorContainer = document.createElement("div");
-      transistorContainer.style.marginLeft = "20px"; // Adding some space between resistor and transistor details
+      transistorContainer.style.marginTop = "20px"; // Adding some space between resistor and transistor details
       var transistorTitle = document.createElement("h6");
       transistorTitle.classList.add("card-subtitle", "mb-2", "text-muted");
       transistorTitle.textContent = "External breaking transistor";
@@ -299,7 +303,7 @@ function displayResistorTransistorSelection(resistorResults, transistorResults) 
       transistorDetail.innerHTML = `${transistorResults.qtty}x ${transistorResults.cdbr.type}`;
       transistorContainer.appendChild(transistorDetail);
 
-      flexContainer.appendChild(transistorContainer);
+      cardBody.appendChild(transistorContainer);
     }
 
     var detailButton = document.createElement("button");
@@ -312,7 +316,7 @@ function displayResistorTransistorSelection(resistorResults, transistorResults) 
         details.classList.add("mt-2");
         details.id = `details-${index}`;
         details.innerHTML = `
-                  <strong>Total Resistance:</strong> ${obj.totalResistance} Ω<br>
+                  <strong>Total Resistance:</strong> ${obj.totalResistance.toFixed(2)} Ω<br>
                   <strong>Total Power:</strong> ${obj.totalPower.toFixed(2)} kW<br>
                   <strong>Total Quantity:</strong> ${obj.quantity}
               `;
@@ -329,5 +333,3 @@ function displayResistorTransistorSelection(resistorResults, transistorResults) 
     outputDiv.appendChild(card);
   });
 }
-
-
