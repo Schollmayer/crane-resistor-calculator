@@ -23,7 +23,6 @@ function findUniqueCombinations(items, maxItemCount) {
             combination.pop();
         }
     }
-
     generateCombinations(0);
     return uniqueCombinations;
 }
