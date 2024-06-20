@@ -219,20 +219,13 @@ function displayResistorTransistorSelection(resistorResults, transistorResults) 
     var resistorContainer = document.createElement("div");
     var resistorTitle = document.createElement("h6");
     resistorTitle.classList.add("card-subtitle", "mb-2", "text-muted");
-    resistorTitle.textContent = obj.resistors.length > 1 ? "Breaking Resistors" : "Breaking Resistor";
+    resistorTitle.textContent = obj.qtty > 1 ? "Breaking Resistors" : "Breaking Resistor";
     resistorContainer.appendChild(resistorTitle);
 
     // Format resistors output
-    var resistorCount = {};
-    obj.resistors.forEach(resistor => {
-      resistorCount[resistor.type] = (resistorCount[resistor.type] || 0) + 1;
-    });
-
-    for (let [type, count] of Object.entries(resistorCount)) {
-      var resistorDetail = document.createElement("div");
-      resistorDetail.innerHTML = `${count}x ${type}`;
-      resistorContainer.appendChild(resistorDetail);
-    }
+    var resistorDetail = document.createElement("div");
+    resistorDetail.innerHTML = `${obj.quantity}x ${obj.resistor.type}`;
+    resistorContainer.appendChild(resistorDetail);
 
     flexContainer.appendChild(resistorContainer);
 
@@ -264,7 +257,7 @@ function displayResistorTransistorSelection(resistorResults, transistorResults) 
         details.innerHTML = `
                   <strong>Total Resistance:</strong> ${obj.totalResistance} Ω<br>
                   <strong>Total Power:</strong> ${obj.totalPower.toFixed(2)} kW<br>
-                  <strong>Total Quantity:</strong> ${obj.resistors.length}
+                  <strong>Total Quantity:</strong> ${obj.quantity}
               `;
         cardBody.appendChild(details);
         detailButton.textContent = "Show less";
