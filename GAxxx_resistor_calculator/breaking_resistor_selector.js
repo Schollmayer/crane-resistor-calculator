@@ -154,6 +154,63 @@ function hideSpinner() {
   document.getElementById('spinner').style.display = 'none';
 }
 
+function getResistorGraphic(resistor) {
+  if (resistor.resistorNetwork.length == 1) {
+    switch (resistor.quantity) {
+      case 1:
+        return "./graphics/rn-S1.svg"
+      case 2:
+        if (resistor.resistorNetwork[1].inSeries) {
+          return "./graphics/rn-S2.svg"
+        }
+        else {
+          return "./graphics/rn-P2.svg"
+        }
+      case 3:
+        if (resistor.resistorNetwork[2].inSeries) {
+          return "./graphics/rn-S3.svg"
+        }
+        else {
+          return "./graphics/rn-P3.svg"
+        }
+      case 4:
+        if (resistor.resistorNetwork[3].inSeries) {
+          return "./graphics/rn-S4.svg"
+        }
+        else {
+          return "./graphics/rn-P4.svg"
+        }
+      case 5:
+        if (resistor.resistorNetwork[4].inSeries) {
+          return "./graphics/rn-S5.svg"
+        }
+        else {
+          return "./graphics/rn-P5.svg"
+        }
+      case 6:
+        if (resistor.resistorNetwork[5].inSeries) {
+          return "./graphics/rn-S6.svg"
+        }
+        else {
+          return "./graphics/rn-P6.svg"
+        }
+      default: return null;
+    }
+  }
+  else if (resistor.resistorNetwork.length == 2) {
+    if (resistor.resistorNetwork.quantity == 2) {
+      return "./graphics/rn-P2S2.svg"
+    }
+    else {
+      return "./graphics/rn-P2S3.svg"
+    }
+  }
+  else if (resistor.resistorNetwork.length == 3) {
+    return "./graphics/rn-P3S2.svg"
+  }
+  return null;
+}
+
 function displayNoResistorFoundError(minR, maxR, power, transistorResults) {
   var outputDiv = document.getElementById("output");
   var card = document.createElement("div");
