@@ -3,64 +3,85 @@ import { breaking_resistor_data, getEDFilteredResistors } from "./breaking_resis
 //As all resistors in the portfolio have 10% tolerance, a fixed value will be used to reduce computation time
 const LowerResistorTolerance = 0.9;
 const UpperResistorTolerance = 1.1;
+const DEBUG = false;
 
-/**Create all possible combinations of resistors in porfolio.
-items expects a list of resistors created by the getEDFilteredResistors() function*/
+function calculateResistorNetworkValues(resistorArray) {
+    let totalQuantity = 0;
+    let totalPower = 0;
+    let totalResistance = 0;
+    let totalPrice = 0;
+    resistorArray.forEach(resistorBlock => {
+        totalQuantity += resistorBlock.quantity;
+        totalPower += resistorBlock.totalPower;
+        totalResistance += resistorBlock.totalResistance;
+        totalPrice += resistorBlock.totalPrice;
+    });
+
+    return {
+        quantity: totalQuantity,
+        resistor: resistorArray[0].resistor,
+        resistorNetwork: resistorArray,
+        totalResistance: totalResistance,
+        totalPower: totalPower,
+        totalPrice: totalPrice,
+    }
+}
+
 function findUniqueCombinations(items, maxItemCount) {
     const uniqueCombinations = [];
-    const combination = [];
+    //Add all resistors combinations for resistors in series
+    items.forEach(resistor => {
+        for (let i = 1; i < maxItemCount + 1; i++) {
+            const resistorBlocks = [];
+            let resistorInSeries = {
+                quantity: i,
+                resistor: resistor,
+                inSeries: true,
+                totalResistance: resistor.resistance * i,
+                totalPower: resistor.power * i,
+                totalPrice: resistor.price * i,
+            }
+            resistorBlocks.push(resistorInSeries);
+            uniqueCombinations.push(calculateResistorNetworkValues(resistorBlocks));
+        }
+    });
+    //Add all resistors combinations for resistors in parallel
+    items.forEach(resistor => {
+        for (let i = 2; i < maxItemCount + 1; i++) {
+            const resistorBlocks = [];
+            let resistorInParallel = {
+                quantity: i,
+                resistor: resistor,
+                inSeries: false,
+                totalResistance: resistor.resistance / i,
+                totalPower: resistor.power * i,
+                totalPrice: resistor.price * i,
+            }
+            resistorBlocks.push(resistorInParallel);
+            uniqueCombinations.push(calculateResistorNetworkValues(resistorBlocks));
+        }
+    });
 
-    function generateCombinations(startIndex) {
-        if (combination.length > 0 && combination.length <= maxItemCount) {
-            uniqueCombinations.push([...combination]);
+    uniqueCombinations.forEach(resistorNetwork => {
+        const resistorBlocks = [];
+        if (resistorNetwork.quantity == 2 && resistorNetwork.resistorNetwork[0].inSeries == false) {
+            resistorBlocks.push(resistorNetwork.resistorNetwork[0]);
+            resistorBlocks.push(resistorNetwork.resistorNetwork[0]);
+            uniqueCombinations.push(calculateResistorNetworkValues(resistorBlocks));
+            resistorBlocks.push(resistorNetwork.resistorNetwork[0]);
+            uniqueCombinations.push(calculateResistorNetworkValues(resistorBlocks));
         }
-        if (combination.length === maxItemCount) {
-            return;
+
+        const resistorBlocks2 = [];
+        if (resistorNetwork.quantity == 3 && resistorNetwork.resistorNetwork[0].inSeries == false) {
+            resistorBlocks2.push(resistorNetwork.resistorNetwork[0]);
+            resistorBlocks2.push(resistorNetwork.resistorNetwork[0]);
+            uniqueCombinations.push(calculateResistorNetworkValues(resistorBlocks2));
         }
-        for (let i = startIndex; i < items.length; i++) {
-            combination.push(items[i]);
-            generateCombinations(i); // Allow repetitions
-            combination.pop();
-        }
-    }
-    generateCombinations(0);
+    });
     return uniqueCombinations;
 }
 
-/**Repack list of resistor combinations into an object which has additional information.**/
-function addInformationToArr(combinations) {
-    return combinations.map(item => {
-        let totalResistance = 0.0;
-        let totalPower = 0.0;
-        let totalPrice = 0.0;
-        let powerResistorRatioAcceptable = true;
-
-        item.forEach(resistor => {
-            totalResistance += resistor.resistance;
-            totalPower += resistor.power;
-            totalPrice += resistor.price;
-        });
-
-        item.forEach(resistor => {
-            let resistorRatio = resistor.resistance / totalResistance;
-            let powerRatio = resistor.power / totalPower;
-            if (resistorRatio > powerRatio) {
-                powerResistorRatioAcceptable = false;
-            }
-        });
-
-        return {
-            totalResistance,
-            totalPower,
-            quantity: item.length,
-            resistors: item,
-            totalPrice,
-            powerResistorRatioAcceptable,
-        };
-    });
-}
-
-/**Filters and sorts the array of resistors to only include resistors which fit the specifications sort by cost effectiveness.*/
 function filterForResistorRequirements(resistors, minResistance, maxResistance, power) {
     const filteredResistors = resistors.filter(item => {
         if (item.totalResistance * LowerResistorTolerance < minResistance || item.totalResistance * UpperResistorTolerance > maxResistance) {
@@ -69,7 +90,7 @@ function filterForResistorRequirements(resistors, minResistance, maxResistance, 
         if (item.totalPower < power) {
             return false;
         }
-        return item.powerResistorRatioAcceptable;
+        return true;
     });
 
     if (filteredResistors.length == 0) {
@@ -87,7 +108,13 @@ function filterForResistorRequirements(resistors, minResistance, maxResistance, 
 
 export function calculateResistors(minR, maxR, power, dutyCycle, dutyCycleDuration) {
     const items = getEDFilteredResistors(breaking_resistor_data, dutyCycle, dutyCycleDuration);
-    const uniqueCombinations = findUniqueCombinations(items, 5);
-    const resistorsWithInformation = addInformationToArr(uniqueCombinations);
-    return filterForResistorRequirements(resistorsWithInformation, minR, maxR, power);
+    const uniqueCombinations = findUniqueCombinations(items, 6);
+    return filterForResistorRequirements(uniqueCombinations, minR, maxR, power);
+}
+
+if (DEBUG) {
+    const items = getEDFilteredResistors(breaking_resistor_data, 40, 100);
+    let uniqueCombinations = findUniqueCombinations(items, 6);
+    console.log(uniqueCombinations);
+    console.log(filterForResistorRequirements(uniqueCombinations, 8, 17, 35));
 }
