@@ -14,12 +14,12 @@
     <div class="container my-5">
         <h1>Resistor selection tool</h1>
         <p>Please input values.</p>
-        The calculator internally calculates the maximum breaking time by multiplying the duty cycle with the duty cycle
+        The calculator internally calculates the maximum braking time by multiplying the duty cycle with the duty cycle
         duration.
         <p>If this is not accurate for your application, please do not use this tool.</p>
         <p>The calculator displays the most cost effective selection first.</p>
         <div class="col-lg-4 px-0">
-            <form id="breakingDataInputForm">
+            <form id="brakingDataInputForm">
                 <label>Select drive model:</label>
                 <select class="driveSelect" id="driveSelect" required>
                     <option value="" selected>Select drive model</option>
@@ -36,22 +36,22 @@
                 </select>
                 <div class="form-group">
                     <label for="dutyCycle">Duty cycle [%]</label>
-                    <input type="number" class="form-control" id="dutyCycle" placeholder="Enter breaking duty cycle"
+                    <input type="number" class="form-control" id="dutyCycle" placeholder="Enter braking duty cycle"
                         min="1" max="100" required>
                 </div>
                 <div class="form-group">
                     <label for="dutyCycleDuration">Duty cycle duration [s]</label>
                     <input type="number" class="form-control" id="dutyCycleDuration"
-                        placeholder="Enter breaking duty cycle duration" min="1" required>
+                        placeholder="Enter braking duty cycle duration" min="1" required>
                 </div>
                 <div class="form-group">
-                    <label for="peakPower">Peak breaking power [kW]</label>
+                    <label for="peakPower">Peak braking power [kW]</label>
                     <input type="number" class="form-control" id="peakPower"
-                        placeholder="Enter peak breaking power in kW" min="0.01" step="any" required>
+                        placeholder="Enter peak braking power in kW" min="0.01" step="any" required>
                 </div>
                 <div class="form-group">
-                    <label for="power">Breaking power [kW]</label>
-                    <input type="number" class="form-control" id="power" placeholder="Enter breaking power in kW"
+                    <label for="power">Braking power [kW]</label>
+                    <input type="number" class="form-control" id="power" placeholder="Enter braking power in kW"
                         min="0.01" step="any" required>
                 </div>
             </form>
@@ -64,7 +64,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-    <script type="module" src="breaking_resistor_selector.js"></script>
+    <script type="module" src="braking_resistor_selector.js"></script>
 </body>
 
 </html>

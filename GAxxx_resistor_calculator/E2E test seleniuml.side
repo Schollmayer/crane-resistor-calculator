@@ -2,7 +2,7 @@
   "id": "115bfd1c-2f64-448f-a9d9-677c872c5d4f",
   "version": "2.0",
   "name": "Resistor selection tool",
-  "url": "http://127.0.0.1:5500/GAxxx_resistor_calculator/breaking_resistor_selector.html",
+  "url": "http://127.0.0.1:5500/GAxxx_resistor_calculator/braking_resistor_selector.html",
   "tests": [{
     "id": "06f0a443-d4fc-4b87-9aa2-f7f2949b1738",
     "name": "No external transistor needed",
@@ -10,7 +10,7 @@
       "id": "e01ff691-98c6-4c75-b28b-30664cdbf430",
       "comment": "",
       "command": "open",
-      "target": "http://127.0.0.1:5500/GAxxx_resistor_calculator/breaking_resistor_selector.html",
+      "target": "http://127.0.0.1:5500/GAxxx_resistor_calculator/braking_resistor_selector.html",
       "targets": [],
       "value": ""
     }, {
@@ -29,7 +29,7 @@
         ["id=driveSelect", "id"],
         ["css=#driveSelect", "css:finder"],
         ["xpath=//select[@id='driveSelect']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/select", "xpath:idRelative"],
+        ["xpath=//form[@id='brakingDataInputForm']/select", "xpath:idRelative"],
         ["xpath=//select", "xpath:position"]
       ],
       "value": ""
@@ -49,7 +49,7 @@
         ["id=dutyCycle", "id"],
         ["css=#dutyCycle", "css:finder"],
         ["xpath=//input[@id='dutyCycle']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/div/input", "xpath:idRelative"],
+        ["xpath=//form[@id='brakingDataInputForm']/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
       "value": ""
@@ -62,7 +62,7 @@
         ["id=dutyCycle", "id"],
         ["css=#dutyCycle", "css:finder"],
         ["xpath=//input[@id='dutyCycle']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/div/input", "xpath:idRelative"],
+        ["xpath=//form[@id='brakingDataInputForm']/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
       "value": "40"
@@ -75,7 +75,7 @@
         ["id=dutyCycleDuration", "id"],
         ["css=#dutyCycleDuration", "css:finder"],
         ["xpath=//input[@id='dutyCycleDuration']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[2]/input", "xpath:idRelative"],
         ["xpath=//div[2]/input", "xpath:position"]
       ],
       "value": "100"
@@ -88,7 +88,7 @@
         ["id=peakPower", "id"],
         ["css=#peakPower", "css:finder"],
         ["xpath=//input[@id='peakPower']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[3]/input", "xpath:idRelative"],
         ["xpath=//div[3]/input", "xpath:position"]
       ],
       "value": "5"
@@ -101,7 +101,7 @@
         ["id=power", "id"],
         ["css=#power", "css:finder"],
         ["xpath=//input[@id='power']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[4]/input", "xpath:idRelative"],
         ["xpath=//div[4]/input", "xpath:position"]
       ],
       "value": "2"
@@ -126,7 +126,7 @@
       "id": "c8456cb9-752b-4dd0-8132-d38545dbf4ca",
       "comment": "",
       "command": "open",
-      "target": "http://127.0.0.1:5500/GAxxx_resistor_calculator/breaking_resistor_selector.html",
+      "target": "http://127.0.0.1:5500/GAxxx_resistor_calculator/braking_resistor_selector.html",
       "targets": [],
       "value": ""
     }, {
@@ -145,7 +145,7 @@
         ["id=driveSelect", "id"],
         ["css=#driveSelect", "css:finder"],
         ["xpath=//select[@id='driveSelect']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/select", "xpath:idRelative"],
+        ["xpath=//form[@id='brakingDataInputForm']/select", "xpath:idRelative"],
         ["xpath=//select", "xpath:position"]
       ],
       "value": ""
@@ -165,7 +165,7 @@
         ["id=dutyCycle", "id"],
         ["css=#dutyCycle", "css:finder"],
         ["xpath=//input[@id='dutyCycle']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/div/input", "xpath:idRelative"],
+        ["xpath=//form[@id='brakingDataInputForm']/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
       "value": ""
@@ -178,7 +178,7 @@
         ["id=dutyCycle", "id"],
         ["css=#dutyCycle", "css:finder"],
         ["xpath=//input[@id='dutyCycle']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/div/input", "xpath:idRelative"],
+        ["xpath=//form[@id='brakingDataInputForm']/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
       "value": "40"
@@ -191,7 +191,7 @@
         ["id=dutyCycleDuration", "id"],
         ["css=#dutyCycleDuration", "css:finder"],
         ["xpath=//input[@id='dutyCycleDuration']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[2]/input", "xpath:idRelative"],
         ["xpath=//div[2]/input", "xpath:position"]
       ],
       "value": "100"
@@ -204,7 +204,7 @@
         ["id=peakPower", "id"],
         ["css=#peakPower", "css:finder"],
         ["xpath=//input[@id='peakPower']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[3]/input", "xpath:idRelative"],
         ["xpath=//div[3]/input", "xpath:position"]
       ],
       "value": "50"
@@ -217,7 +217,7 @@
         ["id=power", "id"],
         ["css=#power", "css:finder"],
         ["xpath=//input[@id='power']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[4]/input", "xpath:idRelative"],
         ["xpath=//div[4]/input", "xpath:position"]
       ],
       "value": "35"
@@ -242,7 +242,7 @@
       "id": "5ca3525b-39c9-48dd-9a8e-2c844de55eec",
       "comment": "",
       "command": "open",
-      "target": "http://127.0.0.1:5500/GAxxx_resistor_calculator/breaking_resistor_selector.html",
+      "target": "http://127.0.0.1:5500/GAxxx_resistor_calculator/braking_resistor_selector.html",
       "targets": [],
       "value": ""
     }, {
@@ -261,7 +261,7 @@
         ["id=driveSelect", "id"],
         ["css=#driveSelect", "css:finder"],
         ["xpath=//select[@id='driveSelect']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/select", "xpath:idRelative"],
+        ["xpath=//form[@id='brakingDataInputForm']/select", "xpath:idRelative"],
         ["xpath=//select", "xpath:position"]
       ],
       "value": ""
@@ -281,7 +281,7 @@
         ["id=dutyCycle", "id"],
         ["css=#dutyCycle", "css:finder"],
         ["xpath=//input[@id='dutyCycle']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/div/input", "xpath:idRelative"],
+        ["xpath=//form[@id='brakingDataInputForm']/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
       "value": ""
@@ -294,7 +294,7 @@
         ["id=dutyCycle", "id"],
         ["css=#dutyCycle", "css:finder"],
         ["xpath=//input[@id='dutyCycle']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/div/input", "xpath:idRelative"],
+        ["xpath=//form[@id='brakingDataInputForm']/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
       "value": "40"
@@ -307,7 +307,7 @@
         ["id=dutyCycleDuration", "id"],
         ["css=#dutyCycleDuration", "css:finder"],
         ["xpath=//input[@id='dutyCycleDuration']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[2]/input", "xpath:idRelative"],
         ["xpath=//div[2]/input", "xpath:position"]
       ],
       "value": "100"
@@ -320,7 +320,7 @@
         ["id=peakPower", "id"],
         ["css=#peakPower", "css:finder"],
         ["xpath=//input[@id='peakPower']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[3]/input", "xpath:idRelative"],
         ["xpath=//div[3]/input", "xpath:position"]
       ],
       "value": "20"
@@ -333,7 +333,7 @@
         ["id=power", "id"],
         ["css=#power", "css:finder"],
         ["xpath=//input[@id='power']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[4]/input", "xpath:idRelative"],
         ["xpath=//div[4]/input", "xpath:position"]
       ],
       "value": "15"
@@ -384,7 +384,7 @@
       "id": "1df5513c-64be-4619-8f61-a1f7725026ef",
       "comment": "",
       "command": "open",
-      "target": "http://127.0.0.1:5500/GAxxx_resistor_calculator/breaking_resistor_selector.html",
+      "target": "http://127.0.0.1:5500/GAxxx_resistor_calculator/braking_resistor_selector.html",
       "targets": [],
       "value": ""
     }, {
@@ -403,7 +403,7 @@
         ["id=driveSelect", "id"],
         ["css=#driveSelect", "css:finder"],
         ["xpath=//select[@id='driveSelect']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/select", "xpath:idRelative"],
+        ["xpath=//form[@id='brakingDataInputForm']/select", "xpath:idRelative"],
         ["xpath=//select", "xpath:position"]
       ],
       "value": ""
@@ -423,7 +423,7 @@
         ["id=dutyCycle", "id"],
         ["css=#dutyCycle", "css:finder"],
         ["xpath=//input[@id='dutyCycle']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/div/input", "xpath:idRelative"],
+        ["xpath=//form[@id='brakingDataInputForm']/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
       "value": ""
@@ -436,7 +436,7 @@
         ["id=dutyCycle", "id"],
         ["css=#dutyCycle", "css:finder"],
         ["xpath=//input[@id='dutyCycle']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/div/input", "xpath:idRelative"],
+        ["xpath=//form[@id='brakingDataInputForm']/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
       "value": "40"
@@ -449,7 +449,7 @@
         ["id=dutyCycleDuration", "id"],
         ["css=#dutyCycleDuration", "css:finder"],
         ["xpath=//input[@id='dutyCycleDuration']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[2]/input", "xpath:idRelative"],
         ["xpath=//div[2]/input", "xpath:position"]
       ],
       "value": "100"
@@ -462,7 +462,7 @@
         ["id=peakPower", "id"],
         ["css=#peakPower", "css:finder"],
         ["xpath=//input[@id='peakPower']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[3]/input", "xpath:idRelative"],
         ["xpath=//div[3]/input", "xpath:position"]
       ],
       "value": "60"
@@ -475,7 +475,7 @@
         ["id=power", "id"],
         ["css=#power", "css:finder"],
         ["xpath=//input[@id='power']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[4]/input", "xpath:idRelative"],
         ["xpath=//div[4]/input", "xpath:position"]
       ],
       "value": "40"
@@ -526,7 +526,7 @@
       "id": "78c697e5-7da6-4838-baf7-94ef803ed478",
       "comment": "",
       "command": "open",
-      "target": "http://127.0.0.1:5500/GAxxx_resistor_calculator/breaking_resistor_selector.html",
+      "target": "http://127.0.0.1:5500/GAxxx_resistor_calculator/braking_resistor_selector.html",
       "targets": [],
       "value": ""
     }, {
@@ -545,7 +545,7 @@
         ["id=driveSelect", "id"],
         ["css=#driveSelect", "css:finder"],
         ["xpath=//select[@id='driveSelect']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/select", "xpath:idRelative"],
+        ["xpath=//form[@id='brakingDataInputForm']/select", "xpath:idRelative"],
         ["xpath=//select", "xpath:position"]
       ],
       "value": ""
@@ -565,7 +565,7 @@
         ["id=dutyCycle", "id"],
         ["css=#dutyCycle", "css:finder"],
         ["xpath=//input[@id='dutyCycle']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/div/input", "xpath:idRelative"],
+        ["xpath=//form[@id='brakingDataInputForm']/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
       "value": ""
@@ -578,7 +578,7 @@
         ["id=dutyCycle", "id"],
         ["css=#dutyCycle", "css:finder"],
         ["xpath=//input[@id='dutyCycle']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/div/input", "xpath:idRelative"],
+        ["xpath=//form[@id='brakingDataInputForm']/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
       "value": "40"
@@ -591,7 +591,7 @@
         ["id=dutyCycleDuration", "id"],
         ["css=#dutyCycleDuration", "css:finder"],
         ["xpath=//input[@id='dutyCycleDuration']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[2]/input", "xpath:idRelative"],
         ["xpath=//div[2]/input", "xpath:position"]
       ],
       "value": "100"
@@ -604,7 +604,7 @@
         ["id=peakPower", "id"],
         ["css=#peakPower", "css:finder"],
         ["xpath=//input[@id='peakPower']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[3]/input", "xpath:idRelative"],
         ["xpath=//div[3]/input", "xpath:position"]
       ],
       "value": "300"
@@ -617,7 +617,7 @@
         ["id=power", "id"],
         ["css=#power", "css:finder"],
         ["xpath=//input[@id='power']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[4]/input", "xpath:idRelative"],
         ["xpath=//div[4]/input", "xpath:position"]
       ],
       "value": "200"
@@ -670,6 +670,6 @@
     "timeout": 300,
     "tests": []
   }],
-  "urls": ["http://127.0.0.1:5500/", "http://127.0.0.1:5500/GAxxx_resistor_calculator/breaking_resistor_selector.html"],
+  "urls": ["http://127.0.0.1:5500/", "http://127.0.0.1:5500/GAxxx_resistor_calculator/braking_resistor_selector.html"],
   "plugins": []
 }

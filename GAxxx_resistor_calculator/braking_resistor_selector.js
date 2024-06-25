@@ -1,5 +1,5 @@
-import { calculateResistors } from "./breaking_resistor_calculations.js";
-import { checkBrakingTorque, findCDBR } from "./breaking_transistor_calculations.js";
+import { calculateResistors } from "./braking_resistor_calculations.js";
+import { checkBrakingTorque, findCDBR } from "./braking_transistor_calculations.js";
 import { ga700_data, ga700OLCurves, ga700OLLinear } from "./ga700_data.js";
 import { cdbr_data } from "./cdbr_data.js";
 
@@ -11,7 +11,7 @@ const dutyCycleDuration = document.getElementById('dutyCycleDuration');
 const driveSelect = document.getElementById('driveSelect');
 
 calculateResistorButton.addEventListener('click', function () {
-  var form = document.getElementById('breakingDataInputForm');
+  var form = document.getElementById('brakingDataInputForm');
   if (form.checkValidity()) {
     calculate();
   }
@@ -38,7 +38,7 @@ function getSelectedResistor(driveData) {
   return driveData[driveSelect.selectedIndex];
 }
 
-function hasTheBiggerDriveABreakingTransistor(driveData) {
+function hasTheBiggerDriveABrakingTransistor(driveData) {
   return driveData[driveSelect.selectedIndex + 1].internalBrakeTransistor;
 }
 
@@ -75,13 +75,13 @@ function performAndDisplayCalculations(minR, maxR, power, dutyCycle, dutyCycleDu
       }
     }
     else {
-      if (hasTheBiggerDriveABreakingTransistor(ga700_data)) {
-        outputBreakingTransistorError()
+      if (hasTheBiggerDriveABrakingTransistor(ga700_data)) {
+        outputBrakingTransistorError()
       }
       else {
         var selectedCDBR = findCDBR(cdbr_data, maxR, getMaxBreakTime(dutyCycle, dutyCycleDuration), getSelectedResistor(ga700_data).brakeActivationVoltage, dutyCycle)
         if (selectedCDBR) {
-          outputSameDriveWithBreakingTransistor();
+          outputSameDriveWithBrakingTransistor();
           var resistorResults = calculateResistors(selectedCDBR.cdbr.minResistance, selectedCDBR.maxResistance, power, dutyCycle, dutyCycleDuration);
           if (resistorResults) {
             displayResistorTransistorSelection(resistorResults, selectedCDBR);
@@ -111,7 +111,7 @@ function performAndDisplayCalculations(minR, maxR, power, dutyCycle, dutyCycleDu
   else {
     var selectedCDBR = findCDBR(cdbr_data, maxR, getMaxBreakTime(dutyCycle, dutyCycleDuration), getSelectedResistor(ga700_data).brakeActivationVoltage, dutyCycle)
     if (selectedCDBR) {
-      outputExternalBreakingTransistor()
+      outputExternalBrakingTransistor()
       var resistorResults = calculateResistors(selectedCDBR.cdbr.minResistance, selectedCDBR.maxResistance, power, dutyCycle, dutyCycleDuration);
       if (resistorResults) {
         displayResistorTransistorSelection(resistorResults, selectedCDBR);
@@ -145,25 +145,25 @@ function noTransistorFound() {
   <h4>Unfortunately there is no product in our catalog which matches the desired specifications.</h4>`
 }
 
-function outputSameDriveWithBreakingTransistor() {
+function outputSameDriveWithBrakingTransistor() {
   var outputDiv = document.getElementById("output");
   outputDiv.innerHTML = `
-  <h3>The internal breaking transistor is not sufficient for desired breaking power.</h3>
-  <h4>The next higher dimensioned drive does not have an internal breaking transistor.
-  Please use an external breaking transistor with the suggested resistor combination.</h4>`
+  <h3>The internal braking transistor is not sufficient for desired braking power.</h3>
+  <h4>The next higher dimensioned drive does not have an internal braking transistor.
+  Please use an external braking transistor with the suggested resistor combination.</h4>`
 }
 
-function outputExternalBreakingTransistor() {
+function outputExternalBrakingTransistor() {
   var outputDiv = document.getElementById("output");
   outputDiv.innerHTML = `
-  <h3>The selected drive does not have a integrated breaking transistor.</h3>
-  <h4>Please use an external breaking transistor with the suggested resistor combination.</h4>`
+  <h3>The selected drive does not have a integrated braking transistor.</h3>
+  <h4>Please use an external braking transistor with the suggested resistor combination.</h4>`
 }
 
-function outputBreakingTransistorError() {
+function outputBrakingTransistorError() {
   var outputDiv = document.getElementById("output");
   outputDiv.innerHTML = `
-  <h3>Internal breaking transistor not sufficient for desired breaking power.</h3>
+  <h3>Internal braking transistor not sufficient for desired braking power.</h3>
   <h4>Please pick a higher dimensioned drive.</h4>`
 }
 
@@ -259,13 +259,13 @@ function displayNoResistorFoundError(minR, maxR, power, transistorResults) {
     transistorContainer.style.marginTop = "40px"; // Adding some space between resistor and transistor details
     var transistorTitle = document.createElement("h6");
     transistorTitle.classList.add("card-subtitle", "mb-2", "text-muted");
-    transistorTitle.textContent = "External breaking transistor";
+    transistorTitle.textContent = "External braking transistor";
     transistorContainer.appendChild(transistorTitle);
 
     var transistorDetail = document.createElement("div");
     transistorDetail.innerHTML = `${transistorResults.qtty}x ${transistorResults.cdbr.type}`;
     if (transistorResults.qtty>1){
-      transistorDetail.innerHTML += '<br>Please use the displayed resistor values for each breaking transistor.'
+      transistorDetail.innerHTML += '<br>Please use the displayed resistor values for each braking transistor.'
     }
     transistorContainer.appendChild(transistorDetail);
 
@@ -298,7 +298,7 @@ function displayResistorTransistorSelection(resistorResults, transistorResults) 
     var resistorContainer = document.createElement("div");
     var resistorTitle = document.createElement("h6");
     resistorTitle.classList.add("card-subtitle", "mb-2", "text-muted");
-    resistorTitle.textContent = obj.qtty > 1 ? "Breaking Resistors" : "Breaking Resistor";
+    resistorTitle.textContent = obj.qtty > 1 ? "Braking Resistors" : "Braking Resistor";
     resistorContainer.appendChild(resistorTitle);
 
     // Format resistors output
@@ -330,14 +330,14 @@ function displayResistorTransistorSelection(resistorResults, transistorResults) 
       transistorContainer.style.marginTop = "20px"; // Adding some space between resistor and transistor details
       var transistorTitle = document.createElement("h6");
       transistorTitle.classList.add("card-subtitle", "mb-2", "text-muted");
-      transistorTitle.textContent = "External breaking transistor";
+      transistorTitle.textContent = "External braking transistor";
       transistorContainer.appendChild(transistorTitle);
 
       var transistorDetail = document.createElement("div");
       transistorDetail.innerHTML = `${transistorResults.qtty}x ${transistorResults.cdbr.type}`;
       transistorContainer.appendChild(transistorDetail);
       if (transistorResults.qtty>1){
-        transistorDetail.innerHTML += '<br>Please use the displayed resistor network for each breaking transistor.'
+        transistorDetail.innerHTML += '<br>Please use the displayed resistor network for each braking transistor.'
       }
 
       cardBody.appendChild(transistorContainer);

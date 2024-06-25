@@ -1,4 +1,4 @@
-import { breaking_resistor_data, getEDFilteredResistors } from "./breaking_resistor_data.js";
+import { braking_resistor_data, getEDFilteredResistors } from "./braking_resistor_data.js";
 
 //As all resistors in the portfolio have 10% tolerance, a fixed value will be used to reduce computation time
 const LowerResistorTolerance = 0.9;
@@ -86,7 +86,7 @@ function filterForResistorRequirements(resistors, minResistance, maxResistance, 
 }
 
 export function calculateResistors(minR, maxR, power, dutyCycle, dutyCycleDuration) {
-    const items = getEDFilteredResistors(breaking_resistor_data, dutyCycle, dutyCycleDuration);
+    const items = getEDFilteredResistors(braking_resistor_data, dutyCycle, dutyCycleDuration);
     const uniqueCombinations = findUniqueCombinations(items, 5);
     const resistorsWithInformation = addInformationToArr(uniqueCombinations);
     return filterForResistorRequirements(resistorsWithInformation, minR, maxR, power);
