@@ -1,5 +1,5 @@
 // Function to determine if the allowable braking torque at the ed/brakeTime operation point for the selected CR700 is higher than application requirements
-import { cdbr_data, ed_interpolate } from "./cdbr_data.js";
+import { ed_interpolate } from "./cdbr_data.js";
 
 export function checkBrakingTorque(ed, brakeTime, brakePower, driveObject, driveCurves, driveCurvesLinearAprox) {
     let tbLineAbove;
@@ -35,7 +35,7 @@ export function checkBrakingTorque(ed, brakeTime, brakePower, driveObject, drive
   }
 
   // Function to select one or more CDBR braking units according to application requirements
-export function findCDBR  (maxBrakeResistance, maxBrakeTime, brakeActivationV, dutyCycle) {
+export function findCDBR  (cdbr_data, maxBrakeResistance, maxBrakeTime, brakeActivationV, dutyCycle) {
   let selectedCDBR;
   let selectedEDCurve;
   let maxBrakingCurrent;

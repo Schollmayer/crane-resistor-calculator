@@ -1,6 +1,7 @@
 import { calculateResistors } from "./breaking_resistor_calculations.js";
 import { checkBrakingTorque, findCDBR } from "./breaking_transistor_calculations.js";
 import { ga700_data, ga700OLCurves, ga700OLLinear } from "./ga700_data.js";
+import { cdbr_data } from "./cdbr_data.js";
 
 const calculateResistorButton = document.getElementById('calculateResistorButton');
 const dutyCycle = document.getElementById('dutyCycle');
@@ -45,6 +46,22 @@ function getMaxBreakTime(dutyCycle, dutyCycleDuration) {
   return ((dutyCycle / 100) * dutyCycleDuration);
 }
 
+function getBiggerCDBR(cdbr, cdbr_data) {
+  // Find the index of the target element
+  const index = cdbr_data.indexOf(cdbr.cdbr);
+  // Check if the target element is found and if there is a next element
+  if (index !== -1 && index < cdbr_data.length - 1) {
+    return {
+      cdbr: cdbr_data[index + 1],
+      qtty: 1,
+      maxResistance: cdbr.maxBrakeResistance
+    };
+  } else {
+    return null;
+  }
+}
+
+
 function performAndDisplayCalculations(minR, maxR, power, dutyCycle, dutyCycleDuration) {
   clearOutput();
   if (getSelectedResistor(ga700_data).internalBrakeTransistor) {
@@ -62,15 +79,27 @@ function performAndDisplayCalculations(minR, maxR, power, dutyCycle, dutyCycleDu
         outputBreakingTransistorError()
       }
       else {
-        var selectedCDBR = findCDBR(maxR, getMaxBreakTime(dutyCycle, dutyCycleDuration), getSelectedResistor(ga700_data).brakeActivationVoltage, dutyCycle)
+        var selectedCDBR = findCDBR(cdbr_data, maxR, getMaxBreakTime(dutyCycle, dutyCycleDuration), getSelectedResistor(ga700_data).brakeActivationVoltage, dutyCycle)
         if (selectedCDBR) {
           outputSameDriveWithBreakingTransistor();
-          var resistorResults = calculateResistors(selectedCDBR.cdbr.minResistance, maxR, power, dutyCycle, dutyCycleDuration);
+          var resistorResults = calculateResistors(selectedCDBR.cdbr.minResistance, selectedCDBR.maxResistance, power, dutyCycle, dutyCycleDuration);
           if (resistorResults) {
             displayResistorTransistorSelection(resistorResults, selectedCDBR);
           }
           else {
-            displayNoResistorFoundError(minR, maxR, power, selectedCDBR);
+            var biggerCDBR = getBiggerCDBR(selectedCDBR, cdbr_data);
+            if (biggerCDBR) {
+              resistorResults = calculateResistors(biggerCDBR.cdbr.minResistance, selectedCDBR.maxResistance, power, dutyCycle, dutyCycleDuration);
+              if (resistorResults) {
+                displayResistorTransistorSelection(resistorResults, biggerCDBR);
+              }
+              else {
+                displayNoResistorFoundError(selectedCDBR.cdbr.minResistance, selectedCDBR.maxResistance, power, selectedCDBR);
+              }
+            }
+            else {
+              displayNoResistorFoundError(selectedCDBR.cdbr.minResistance, selectedCDBR.maxResistance, power, selectedCDBR);
+            }
           }
         }
         else {
@@ -80,15 +109,27 @@ function performAndDisplayCalculations(minR, maxR, power, dutyCycle, dutyCycleDu
     }
   }
   else {
-    var selectedCDBR = findCDBR(maxR, getMaxBreakTime(dutyCycle, dutyCycleDuration), getSelectedResistor(ga700_data).brakeActivationVoltage, dutyCycle)
+    var selectedCDBR = findCDBR(cdbr_data, maxR, getMaxBreakTime(dutyCycle, dutyCycleDuration), getSelectedResistor(ga700_data).brakeActivationVoltage, dutyCycle)
     if (selectedCDBR) {
       outputExternalBreakingTransistor()
-      var resistorResults = calculateResistors(selectedCDBR.cdbr.minResistance, maxR, power, dutyCycle, dutyCycleDuration);
+      var resistorResults = calculateResistors(selectedCDBR.cdbr.minResistance, selectedCDBR.maxResistance, power, dutyCycle, dutyCycleDuration);
       if (resistorResults) {
         displayResistorTransistorSelection(resistorResults, selectedCDBR);
       }
       else {
-        displayNoResistorFoundError(selectedCDBR.cdbr.minResistance, maxR, power, selectedCDBR);
+        var biggerCDBR = getBiggerCDBR(selectedCDBR, cdbr_data);
+        if (biggerCDBR) {
+          resistorResults = calculateResistors(biggerCDBR.cdbr.minResistance, selectedCDBR.maxResistance, power, dutyCycle, dutyCycleDuration);
+          if (resistorResults) {
+            displayResistorTransistorSelection(resistorResults, biggerCDBR);
+          }
+          else {
+            displayNoResistorFoundError(selectedCDBR.cdbr.minResistance, selectedCDBR.maxResistance, power, selectedCDBR);
+          }
+        }
+        else {
+          displayNoResistorFoundError(selectedCDBR.cdbr.minResistance, selectedCDBR.maxResistance, power, selectedCDBR);
+        }
       }
     }
     else {
@@ -223,6 +264,9 @@ function displayNoResistorFoundError(minR, maxR, power, transistorResults) {
 
     var transistorDetail = document.createElement("div");
     transistorDetail.innerHTML = `${transistorResults.qtty}x ${transistorResults.cdbr.type}`;
+    if (transistorResults.qtty>1){
+      transistorDetail.innerHTML += '<br>Please use the displayed resistor values for each breaking transistor.'
+    }
     transistorContainer.appendChild(transistorDetail);
 
     cardBody.appendChild(transistorContainer);
@@ -292,6 +336,9 @@ function displayResistorTransistorSelection(resistorResults, transistorResults) 
       var transistorDetail = document.createElement("div");
       transistorDetail.innerHTML = `${transistorResults.qtty}x ${transistorResults.cdbr.type}`;
       transistorContainer.appendChild(transistorDetail);
+      if (transistorResults.qtty>1){
+        transistorDetail.innerHTML += '<br>Please use the displayed resistor network for each breaking transistor.'
+      }
 
       cardBody.appendChild(transistorContainer);
     }
