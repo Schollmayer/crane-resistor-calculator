@@ -1,6 +1,6 @@
 import { calculateResistors } from "./braking_resistor_calculations.js";
 import { checkBrakingTorque, findCDBR } from "./braking_transistor_calculations.js";
-import { ga700_data, ga700OLCurves, ga700OLLinear } from "./ga700_data.js";
+import { ga700_data, ga700OLCurves_higher_0_75_kW, ga700OLLinear, ga700OLCurves_smaller_0_75_kW, ga700OLLinear_smaller_0_75_kW } from "./ga700_data.js";
 import { cdbr_data } from "./cdbr_data.js";
 
 const calculateResistorButton = document.getElementById('calculateResistorButton');
@@ -25,17 +25,34 @@ function calculate() {
 }
 
 function calculateRmax(driveData) {
-  const Rmax = (getSelectedResistor(driveData).brakeActivationVoltage * getSelectedResistor(driveData).brakeActivationVoltage) / (peakPower.value * 1000);
+  const Rmax = (getSelectedDrive(driveData).brakeActivationVoltage * getSelectedDrive(driveData).brakeActivationVoltage) / (peakPower.value * 1000);
   return Rmax;
 }
 
 function getRmin(driveData) {
-  const Rmin = getSelectedResistor(driveData).minBrakeResistance;
+  const Rmin = getSelectedDrive(driveData).minBrakeResistance;
   return Rmin;
 }
 
-function getSelectedResistor(driveData) {
-  return driveData[driveSelect.selectedIndex];
+function getSelectedDrive(driveData) {
+  return driveData[driveSelect.selectedIndex - 1];
+}
+
+function getTransistorCurves(outputPower) {
+  if (outputPower < 0.75) {
+    return ga700OLCurves_smaller_0_75_kW;
+  }
+
+  else {return ga700OLCurves_higher_0_75_kW;} 
+}
+
+function getTransistorLinearCurves (outputPower){
+  if (outputPower < 0.75) { 
+    return ga700OLLinear_smaller_0_75_kW;
+  }
+  else {
+    return ga700OLLinear;
+  }
 }
 
 function hasTheBiggerDriveABrakingTransistor(driveData) {
@@ -64,8 +81,11 @@ function getBiggerCDBR(cdbr, cdbr_data) {
 
 function performAndDisplayCalculations(minR, maxR, power, dutyCycle, dutyCycleDuration) {
   clearOutput();
-  if (getSelectedResistor(ga700_data).internalBrakeTransistor) {
-    if (checkBrakingTorque(dutyCycle, getMaxBreakTime(dutyCycle, dutyCycleDuration), power, getSelectedResistor(ga700_data), ga700OLCurves, ga700OLLinear)) {
+  var gaCurves = getTransistorCurves(getSelectedDrive(ga700_data).hdPower);
+  var gaLinearCurves = getTransistorLinearCurves(getSelectedDrive(ga700_data).hdPower);
+
+  if (getSelectedDrive(ga700_data).internalBrakeTransistor) {
+    if (checkBrakingTorque(dutyCycle, getMaxBreakTime(dutyCycle, dutyCycleDuration), power, getSelectedDrive(ga700_data), gaCurves, gaLinearCurves)) {
       var resistorResults = calculateResistors(minR, maxR, power, dutyCycle, dutyCycleDuration);
       if (resistorResults) {
         displayResistorTransistorSelection(resistorResults, null);
@@ -79,7 +99,7 @@ function performAndDisplayCalculations(minR, maxR, power, dutyCycle, dutyCycleDu
         outputBrakingTransistorError()
       }
       else {
-        var selectedCDBR = findCDBR(cdbr_data, maxR, getMaxBreakTime(dutyCycle, dutyCycleDuration), getSelectedResistor(ga700_data).brakeActivationVoltage, dutyCycle)
+        var selectedCDBR = findCDBR(cdbr_data, maxR, getMaxBreakTime(dutyCycle, dutyCycleDuration), getSelectedDrive(ga700_data).brakeActivationVoltage, dutyCycle)
         if (selectedCDBR) {
           outputSameDriveWithBrakingTransistor();
           var resistorResults = calculateResistors(selectedCDBR.cdbr.minResistance, selectedCDBR.maxResistance, power, dutyCycle, dutyCycleDuration);
@@ -109,7 +129,7 @@ function performAndDisplayCalculations(minR, maxR, power, dutyCycle, dutyCycleDu
     }
   }
   else {
-    var selectedCDBR = findCDBR(cdbr_data, maxR, getMaxBreakTime(dutyCycle, dutyCycleDuration), getSelectedResistor(ga700_data).brakeActivationVoltage, dutyCycle)
+    var selectedCDBR = findCDBR(cdbr_data, maxR, getMaxBreakTime(dutyCycle, dutyCycleDuration), getSelectedDrive(ga700_data).brakeActivationVoltage, dutyCycle)
     if (selectedCDBR) {
       outputExternalBrakingTransistor()
       var resistorResults = calculateResistors(selectedCDBR.cdbr.minResistance, selectedCDBR.maxResistance, power, dutyCycle, dutyCycleDuration);

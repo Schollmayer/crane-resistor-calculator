@@ -661,6 +661,148 @@
       ],
       "value": ""
     }]
+  }, {
+    "id": "0f47788d-f039-4401-ae0f-410c74320a08",
+    "name": "<0,75kW",
+    "commands": [{
+      "id": "537eb54e-ed03-429e-b7d6-b1f5308a31e8",
+      "comment": "",
+      "command": "open",
+      "target": "http://127.0.0.1:5500/GAxxx_resistor_calculator/braking_resistor_selector.html",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "bdc6aba6-604e-4964-a9bc-53d7d7f8bf52",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1233x664",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "87da2624-e89d-47b3-932f-4d06cd4e2dcd",
+      "comment": "",
+      "command": "click",
+      "target": "id=driveSelect",
+      "targets": [
+        ["id=driveSelect", "id"],
+        ["css=#driveSelect", "css:finder"],
+        ["xpath=//select[@id='driveSelect']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "02888f5b-47d2-4a45-811d-9011733da1b4",
+      "comment": "",
+      "command": "select",
+      "target": "id=driveSelect",
+      "targets": [],
+      "value": "label=GA70C4002BBA"
+    }, {
+      "id": "5083fa0f-602a-434f-82ac-32d7502db527",
+      "comment": "",
+      "command": "click",
+      "target": "id=dutyCycle",
+      "targets": [
+        ["id=dutyCycle", "id"],
+        ["css=#dutyCycle", "css:finder"],
+        ["xpath=//input[@id='dutyCycle']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "890cf02b-1016-4244-a37c-d474a0bab32d",
+      "comment": "",
+      "command": "type",
+      "target": "id=dutyCycle",
+      "targets": [
+        ["id=dutyCycle", "id"],
+        ["css=#dutyCycle", "css:finder"],
+        ["xpath=//input[@id='dutyCycle']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "40"
+    }, {
+      "id": "e22ac134-37ce-4c92-88ff-6138ac066047",
+      "comment": "",
+      "command": "type",
+      "target": "id=dutyCycleDuration",
+      "targets": [
+        ["id=dutyCycleDuration", "id"],
+        ["css=#dutyCycleDuration", "css:finder"],
+        ["xpath=//input[@id='dutyCycleDuration']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "100"
+    }, {
+      "id": "7a47bf5d-9624-4f6e-b7f4-5812770e8cf4",
+      "comment": "",
+      "command": "type",
+      "target": "id=peakPower",
+      "targets": [
+        ["id=peakPower", "id"],
+        ["css=#peakPower", "css:finder"],
+        ["xpath=//input[@id='peakPower']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "0.68"
+    }, {
+      "id": "dd9f4aa7-a9c3-4576-a493-ab7ca7898e19",
+      "comment": "",
+      "command": "type",
+      "target": "id=power",
+      "targets": [
+        ["id=power", "id"],
+        ["css=#power", "css:finder"],
+        ["xpath=//input[@id='power']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": "0.5"
+    }, {
+      "id": "849baff2-8abf-4c9e-bb90-8f83f0c9f5c6",
+      "comment": "",
+      "command": "click",
+      "target": "id=calculateResistorButton",
+      "targets": [
+        ["id=calculateResistorButton", "id"],
+        ["css=#calculateResistorButton", "css:finder"],
+        ["xpath=//button[@id='calculateResistorButton']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Calculate')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c5524fdd-f153-4aa9-abaf-50d6b0c84527",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "id=calculateResistorButton",
+      "targets": [
+        ["id=calculateResistorButton", "id"],
+        ["css=#calculateResistorButton", "css:finder"],
+        ["xpath=//button[@id='calculateResistorButton']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Calculate')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c395a876-dfb8-4c71-8044-551495e021b4",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "id=calculateResistorButton",
+      "targets": [
+        ["id=calculateResistorButton", "id"],
+        ["css=#calculateResistorButton", "css:finder"],
+        ["xpath=//button[@id='calculateResistorButton']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Calculate')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
   }],
   "suites": [{
     "id": "fb4150e0-190c-4a98-8259-61c6c879427a",
