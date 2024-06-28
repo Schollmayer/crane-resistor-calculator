@@ -8,25 +8,24 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link rel="stylesheet" href="../GAxxx_resistor_calculator/styles.css">
+  <link href=https://yeu-frontend.yaskawa.eu/assets/css/yaskstyle.css rel="stylesheet">
 </head>
 
 <body>
   <div class="container my-5">
     <h1>Crane hoist breaking transistor and resistor selection tool</h1>
-    <h2>Power considerations</h2>
     <p> Please input values.</p>
-    <div class="row">
       <div class="col-lg-4 px-0">
         <form>
           <div class="form-group">
             <label for="motorRatedCurrentInput">Motor rated current [A]</label>
             <input type="number" class="form-control" id="motorRatedCurrentInput"
-              placeholder="Enter motor rated current" min ="1" max = "605" required>
+              placeholder="Enter motor rated current" min="1" max="605" required>
           </div>
           <div class="form-group">
             <label for="avMechPowerInput">Average mechanical power [kW]</label>
-            <input type="number" class="form-control" id="avMechPowerInput"
-              placeholder="Enter average mechanical power" min ="1" max = "315" required>
+            <input type="number" class="form-control" id="avMechPowerInput" placeholder="Enter average mechanical power"
+              min="1" max="315" required>
           </div>
           <div class="form-group">
             <label for="gearboxEffInput">Gearbox effiency</label>
@@ -36,8 +35,9 @@
           <div class="form-group">
             <label for="motorEffInput">Motor effiency</label>
             <input type="number" class="form-control" id="motorEffInput" placeholder="Enter motor effiency [%](e.g. 90)"
-            min="70" max="99" required>
+              min="70" max="99" required>
           </div>
+          <!--
           <div>
             <label>Select voltage class:</label><br />
             <input type="radio" id="400V" name="voltageClass" value="400" checked />
@@ -45,116 +45,32 @@
             <input type="radio" id="200V" name="voltageClass" value="200" />
             <label for="voltageClass">200V</label>
           </div>
-          <br />
-          <h2>Break time considerations</h2>
-          <div class="form-group">
+          -->
+    
+          <h2 class="mt-4">Break time considerations</h2>
+          <div class="form-group mt-2">
             <label for="ed%Input">Regenerative percentage [%]</label>
             <input type="number" class="form-control" id="ed%Input"
               placeholder="Enter regenerative percentage (e.g. 40)" min="10" max="50" required>
           </div>
-          <div class="form-group">
+          <div class="form-group mt-2">
             <label for="hoistHeigthInput">Hoist height [m]</label>
             <input type="number" class="form-control" id="hoistHeigthInput" placeholder="Enter hoist height (e.g. 20)"
-              min="1" max = 200 required>
+              min="1" max=200 required>
           </div>
-          <div class="form-group">
+          <div class="form-group mt-2">
             <label for="hoistLinSpeedInput">Hoist linear speed [m/min]</label>
             <input type="number" class="form-control" id="hoistLinSpeedInput"
-              placeholder="Enter hoist linear speed (e.g. 10)" min="1" max ="50" required>
+              placeholder="Enter hoist linear speed (e.g. 10)" min="1" max="50" required>
           </div>
-          <br />
-          <button type="button" class="btn btn-primary" id="calculateButton">Calculate</button>
-        </form>
-      </div>
-      <div class="col-lg-4">
-        <form>
-          <div class="form-group">
-            <label for="avBrakingPowerOutput">Average breaking power [kW]</label>
-            <input class="form-control" type="number" id="avBrakingPowerOutput" placeholder="" readonly>
-          </div>
-          <div class="form-group">
-            <label for="maxBrakingPowerOutput">Maximum breaking power [kW]</label>
-            <input class="form-control" type="number" id="maxBrakingPowerOutput" placeholder="" readonly>
-          </div>
-          <div class="form-group">
-            <label for="maxBrakingResOutput">Maximum breaking resistence [Ω]</label>
-            <input class="form-control" type="number" id="maxBrakingResOutput" placeholder="" readonly>
-          </div>
-          <br \>
-          <br \>
-          <br \>
-          <br \>
-          <br \>
-          <div class="form-group">
-            <label for="maxContBreakTimeOutput">Maximum continous breaking time [s]</label>
-            <input class="form-control" type="number" id="maxContBreakTimeOutput" placeholder="" readonly>
-          </div>
+          <button type="button" class="btn btn-yask-blue" id="calculateButton">Calculate</button>
         </form>
       </div>
     </div>
-    <br \>
-    <h2>Part recommendation</h2>
-    <h4>CDBR</h4>
-    <div class="form-group">
-      <label for="cdbrOutput1">External CDBR</label>
-      <input class="form-control flex-grow-1 me-2" type="text" id="cdbrOutput1" placeholder="" readonly>
-    </div>
-    <div class="form-group">
-      <label for="cdbrOutputQuantity1">Quantity</label>
-      <input class="form-control flex-grow-1" type="text" id="cdbrOutputQuantity1" placeholder="" readonly>
-    </div>
-    <h4>Breaking resistor</h4>
-    <div class="form-group">
-      <label for="minResOutput1">Minimum resistance [Ω]</label>
-      <input class="form-control flex-grow-1" type="number" id="minResOutput1" placeholder="" readonly>
-    </div>
-    <div class="form-group">
-      <label for="minResOutput1">Maxiumum resistance [Ω]</label>
-      <input class="form-control flex-grow-1" type="number" id="maxResOutput1" placeholder="" readonly>
-    </div>
-    <div class="form-group">
-      <label for="ResTypOutput1">Resistor model</label>
-      <input class="form-control flex-grow-1" type="number" id="ResTypOutput1" placeholder="" readonly>
-    </div>
-    <div class="form-group">
-      <label for="ResQuantityOutput1">Quantity</label>
-      <input class="form-control flex-grow-1" type="number" id="ResQuantityOutput1" placeholder="" readonly>
-    </div>
 
-    <h3>Alternative part recommendation</h3>
+  <br \>
 
-    <h4>CDBR</h4>
-    <div class="form-group">
-      <label for="cdbrOutput2">External CDBR</label>
-      <input class="form-control flex-grow-1 me-2" type="text" id="cdbrOutput2" placeholder="" readonly>
-    </div>
-    <div class="form-group">
-      <label for="cdbrOutputQuantity1">Quantity</label>
-      <input class="form-control flex-grow-1" type="text" id="cdbrOutputQuantity2" placeholder="" readonly>
-    </div>
-    <h4>Breaking resistor</h4>
-    <div class="form-group">
-      <label for="minResOutput2">Minimum resistance [Ω]</label>
-      <input class="form-control flex-grow-1" type="number" id="minResOutput2" placeholder="" readonly>
-    </div>
-    <div class="form-group">
-      <label for="minResOutput2">Maxiumum resistance [Ω]</label>
-      <input class="form-control flex-grow-1" type="number" id="maxResOutput2" placeholder="" readonly>
-    </div>
-    <div class="form-group">
-      <label for="ResTypOutput2">Resistor model</label>
-      <input class="form-control flex-grow-1" type="number" id="ResTypOutput2" placeholder="" readonly>
-    </div>
-    <div class="form-group">
-      <label for="ResQuantityOutput2">Quantity</label>
-      <input class="form-control flex-grow-1" type="number" id="ResQuantityOutput2" placeholder="" readonly>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-      crossorigin="anonymous"></script>
-
-    <script type="module" src="calulator.js"></script>
+  <script type="module" src="calulator.js"></script>
 
 </body>
 

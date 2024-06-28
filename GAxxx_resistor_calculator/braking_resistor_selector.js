@@ -364,7 +364,7 @@ function displayResistorTransistorSelection(resistorResults, transistorResults) 
     }
 
     var detailButton = document.createElement("button");
-    detailButton.classList.add("btn", "btn-primary", "mt-3");
+    detailButton.classList.add("btn", "btn-yask-blue", "mt-3");
     detailButton.textContent = "Show details";
     detailButton.addEventListener("click", function () {
       var details = document.getElementById(`details-${index}`);
