@@ -1,7 +1,7 @@
-import { calculateResistors } from "./braking_resistor_calculations.js";
+import { calculateResistors } from "../sharedFiles/braking_resistor_calculations.js";
 import { checkBrakingTorque, findCDBR } from "./braking_transistor_calculations.js";
 import { ga700_data, ga700OLCurves_higher_0_75_kW, ga700OLLinear, ga700OLCurves_smaller_0_75_kW, ga700OLLinear_smaller_0_75_kW } from "./ga700_data.js";
-import { cdbr_data } from "./cdbr_data.js";
+import { cdbr_data } from "../sharedFiles/cdbr_data.js";
 
 const calculateResistorButton = document.getElementById('calculateResistorButton');
 const dutyCycle = document.getElementById('dutyCycle');
@@ -194,58 +194,59 @@ function clearOutput() {
 }
 
 function getResistorGraphic(resistor) {
+  let picturePath="../sharedFiles/graphics/"
   if (resistor.resistorNetwork.length == 1) {
     switch (resistor.quantity) {
       case 1:
-        return "./graphics/rn-S1.svg"
+        return picturePath + "rn-S1.svg"
       case 2:
         if (resistor.resistorNetwork[0].inSeries) {
-          return "./graphics/rn-S2.svg"
+          return picturePath + "rn-S2.svg"
         }
         else {
           return "./graphics/rn-P2.svg"
         }
       case 3:
         if (resistor.resistorNetwork[0].inSeries) {
-          return "./graphics/rn-S3.svg"
+          return picturePath +"rn-S3.svg"
         }
         else {
-          return "./graphics/rn-P3.svg"
+          return picturePath +"rn-P3.svg"
         }
       case 4:
         if (resistor.resistorNetwork[0].inSeries) {
-          return "./graphics/rn-S4.svg"
+          return picturePath +"rn-S4.svg"
         }
         else {
-          return "./graphics/rn-P4.svg"
+          return picturePath +"rn-P4.svg"
         }
       case 5:
         if (resistor.resistorNetwork[0].inSeries) {
-          return "./graphics/rn-S5.svg"
+          return picturePath +"rn-S5.svg"
         }
         else {
-          return "./graphics/rn-P5.svg"
+          return picturePath +"rn-P5.svg"
         }
       case 6:
         if (resistor.resistorNetwork[0].inSeries) {
-          return "./graphics/rn-S6.svg"
+          return picturePath +"rn-S6.svg"
         }
         else {
-          return "./graphics/rn-P6.svg"
+          return picturePath +"rn-P6.svg"
         }
       default: return null;
     }
   }
   else if (resistor.resistorNetwork.length == 2) {
     if (resistor.resistorNetwork.quantity == 2) {
-      return "./graphics/rn-P2S2.svg"
+      return picturePath +"rn-P2S2.svg"
     }
     else {
-      return "./graphics/rn-P2S3.svg"
+      return picturePath +"rn-P2S3.svg"
     }
   }
   else if (resistor.resistorNetwork.length == 3) {
-    return "./graphics/rn-P3S2.svg"
+    return picturePath +"rn-P3S2.svg"
   }
   return null;
 }

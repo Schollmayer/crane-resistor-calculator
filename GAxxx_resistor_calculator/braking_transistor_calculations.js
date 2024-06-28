@@ -1,5 +1,5 @@
 // Function to determine if the allowable braking torque at the ed/brakeTime operation point for the selected CR700 is higher than application requirements
-import { ed_interpolate } from "./cdbr_data.js";
+import { ed_interpolate } from "../sharedFiles/cdbr_data.js";
 
 export function checkBrakingTorque(ed, brakeTime, brakePower, driveObject, driveCurves, driveCurvesLinearAprox) {
     let tbLineAbove;

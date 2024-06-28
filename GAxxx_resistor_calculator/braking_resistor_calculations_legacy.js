@@ -1,4 +1,4 @@
-import { braking_resistor_data, getEDFilteredResistors } from "./braking_resistor_data.js";
+import { braking_resistor_data, getEDFilteredResistors } from "../sharedFiles/braking_resistor_data.js";
 
 //As all resistors in the portfolio have 10% tolerance, a fixed value will be used to reduce computation time
 const LowerResistorTolerance = 0.9;
