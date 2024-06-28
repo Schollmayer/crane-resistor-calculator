@@ -43,11 +43,11 @@ function getTransistorCurves(outputPower) {
     return ga700OLCurves_smaller_0_75_kW;
   }
 
-  else {return ga700OLCurves_higher_0_75_kW;} 
+  else { return ga700OLCurves_higher_0_75_kW; }
 }
 
-function getTransistorLinearCurves (outputPower){
-  if (outputPower < 0.75) { 
+function getTransistorLinearCurves(outputPower) {
+  if (outputPower < 0.75) {
     return ga700OLLinear_smaller_0_75_kW;
   }
   else {
@@ -284,7 +284,7 @@ function displayNoResistorFoundError(minR, maxR, power, transistorResults) {
 
     var transistorDetail = document.createElement("div");
     transistorDetail.innerHTML = `${transistorResults.qtty}x ${transistorResults.cdbr.type}`;
-    if (transistorResults.qtty>1){
+    if (transistorResults.qtty > 1) {
       transistorDetail.innerHTML += '<br>Please use the displayed resistor values for each braking transistor.'
     }
     transistorContainer.appendChild(transistorDetail);
@@ -333,16 +333,22 @@ function displayResistorTransistorSelection(resistorResults, transistorResults) 
     // Add image next to the resistor details
     if (resistorImageFile) {
       var resistorImageContainer = document.createElement("div");
-      resistorImageContainer.style.marginLeft = "40px"; // Space between text and image
+      resistorImageContainer.style.marginLeft = "20px"; // Adjust the space between text and image
+
       var resistorImage = document.createElement("img");
       resistorImage.src = resistorImageFile; // Replace with the actual image URL
       resistorImage.alt = "Resistor network";
-      resistorImage.style.width = "auto"; // Set the desired width
+      resistorImage.style.maxWidth = "100%"; // Set maximum width to ensure it fits within the container
       resistorImage.style.height = "auto"; // Maintain aspect ratio
-      resistorImageContainer.appendChild(resistorImage);
 
+      // Optionally, you can limit the maximum height of the image
+      resistorImage.style.maxHeight = "200px"; // Adjust the max height as per your design
+
+      resistorImageContainer.appendChild(resistorImage);
       flexContainer.appendChild(resistorImageContainer);
     }
+
+
 
     // Transistor container
     if (transistorResults) {
@@ -356,7 +362,7 @@ function displayResistorTransistorSelection(resistorResults, transistorResults) 
       var transistorDetail = document.createElement("div");
       transistorDetail.innerHTML = `${transistorResults.qtty}x ${transistorResults.cdbr.type}`;
       transistorContainer.appendChild(transistorDetail);
-      if (transistorResults.qtty>1){
+      if (transistorResults.qtty > 1) {
         transistorDetail.innerHTML += '<br>Please use the displayed resistor network for each braking transistor.'
       }
 
