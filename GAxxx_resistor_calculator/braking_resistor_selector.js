@@ -88,7 +88,7 @@ function performAndDisplayCalculations(minR, maxR, power, dutyCycle, dutyCycleDu
     if (checkBrakingTorque(dutyCycle, getMaxBreakTime(dutyCycle, dutyCycleDuration), power, getSelectedDrive(ga700_data), gaCurves, gaLinearCurves)) {
       var resistorResults = calculateResistors(minR, maxR, power, dutyCycle, dutyCycleDuration);
       if (resistorResults) {
-        displayResistorTransistorSelection(resistorResults, null);
+        displayResistorTransistorSelection(resistorResults, null, minR, maxR, power);
       }
       else {
         displayNoResistorFoundError(minR, maxR, power, null);
@@ -104,14 +104,14 @@ function performAndDisplayCalculations(minR, maxR, power, dutyCycle, dutyCycleDu
           outputSameDriveWithBrakingTransistor();
           var resistorResults = calculateResistors(selectedCDBR.cdbr.minResistance, selectedCDBR.maxResistance, power, dutyCycle, dutyCycleDuration);
           if (resistorResults) {
-            displayResistorTransistorSelection(resistorResults, selectedCDBR);
+            displayResistorTransistorSelection(resistorResults, selectedCDBR, selectedCDBR.cdbr.minResistance, selectedCDBR.maxResistance, power);
           }
           else {
             var biggerCDBR = getBiggerCDBR(selectedCDBR, cdbr_data);
             if (biggerCDBR) {
               resistorResults = calculateResistors(biggerCDBR.cdbr.minResistance, selectedCDBR.maxResistance, power, dutyCycle, dutyCycleDuration);
               if (resistorResults) {
-                displayResistorTransistorSelection(resistorResults, biggerCDBR);
+                displayResistorTransistorSelection(resistorResults, biggerCDBR, biggerCDBR.cdbr.minResistance, selectedCDBR.maxResistance, power);
               }
               else {
                 displayNoResistorFoundError(selectedCDBR.cdbr.minResistance, selectedCDBR.maxResistance, power, selectedCDBR);
@@ -134,14 +134,14 @@ function performAndDisplayCalculations(minR, maxR, power, dutyCycle, dutyCycleDu
       outputExternalBrakingTransistor()
       var resistorResults = calculateResistors(selectedCDBR.cdbr.minResistance, selectedCDBR.maxResistance, power, dutyCycle, dutyCycleDuration);
       if (resistorResults) {
-        displayResistorTransistorSelection(resistorResults, selectedCDBR);
+        displayResistorTransistorSelection(resistorResults, selectedCDBR,selectedCDBR.cdbr.minResistance, selectedCDBR.maxResistance, power);
       }
       else {
         var biggerCDBR = getBiggerCDBR(selectedCDBR, cdbr_data);
         if (biggerCDBR) {
           resistorResults = calculateResistors(biggerCDBR.cdbr.minResistance, selectedCDBR.maxResistance, power, dutyCycle, dutyCycleDuration);
           if (resistorResults) {
-            displayResistorTransistorSelection(resistorResults, biggerCDBR);
+            displayResistorTransistorSelection(resistorResults, biggerCDBR,biggerCDBR.cdbr.minResistance, selectedCDBR.maxResistance, power);
           }
           else {
             displayNoResistorFoundError(selectedCDBR.cdbr.minResistance, selectedCDBR.maxResistance, power, selectedCDBR);
@@ -297,7 +297,7 @@ function displayNoResistorFoundError(minR, maxR, power, transistorResults) {
   outputDiv.appendChild(card);
 }
 
-function displayResistorTransistorSelection(resistorResults, transistorResults) {
+function displayResistorTransistorSelection(resistorResults, transistorResults, minR, maxR, power) {
   var outputDiv = document.getElementById("output");
   resistorResults.forEach(function (obj, index) {
     var card = document.createElement("div");
@@ -308,6 +308,7 @@ function displayResistorTransistorSelection(resistorResults, transistorResults) 
 
     var cardTitle = document.createElement("h5");
     cardTitle.classList.add("card-title");
+    cardTitle.style.fontWeight = "bold";
     cardTitle.textContent = `Option ${index + 1}`;
     cardBody.appendChild(cardTitle);
 
@@ -377,13 +378,22 @@ function displayResistorTransistorSelection(resistorResults, transistorResults) 
       var details = document.getElementById(`details-${index}`);
       if (!details) {
         details = document.createElement("div");
-        details.classList.add("mt-2");
+        details.classList.add("mt-3", "d-flex", "justify-content-left");
         details.id = `details-${index}`;
         details.innerHTML = `
-                  <strong>Total Resistance:</strong> ${obj.totalResistance.toFixed(2)} Ω<br>
-                  <strong>Total Power:</strong> ${obj.totalPower.toFixed(2)} kW<br>
-                  <strong>Total Quantity:</strong> ${obj.quantity}
-              `;
+          <div style="margin-right: 20px;">
+            <strong style = "font-size: 1.1em">Option details:</strong><br>
+            <strong>Rtotal:</strong> ${obj.totalResistance.toFixed(2)} Ω<br>
+            <strong>Total Power:</strong> ${obj.totalPower.toFixed(2)} kW<br>
+            <strong>Total Quantity:</strong> ${obj.quantity}<br>
+          </div>
+          <div>
+            <strong style = "font-size: 1.1em">Resistor requirements:</strong><br>
+            <strong>Rmin:</strong> ${minR.toFixed(2)}&#8486;<br>
+            <strong>Rmax:</strong> ${maxR.toFixed(2)}&#8486;<br>
+            <strong>Power:</strong> ${power}kW
+          </div>
+        `;
         cardBody.appendChild(details);
         detailButton.textContent = "Show less";
       } else {
@@ -391,6 +401,7 @@ function displayResistorTransistorSelection(resistorResults, transistorResults) 
         detailButton.textContent = "Show details";
       }
     });
+    
     cardBody.appendChild(detailButton);
 
     card.appendChild(cardBody);
