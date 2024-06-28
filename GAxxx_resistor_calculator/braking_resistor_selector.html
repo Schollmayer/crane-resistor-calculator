@@ -8,60 +8,60 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href=https://yeu-frontend.yaskawa.eu/assets/css/yaskstyle.css rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
 
 <body>
     <div class="container my-5">
-        <h1 style="color: var(--yask-blue)">Resistor selection tool</h1>
-        <p>Please input values.</p>
-        The calculator internally calculates the maximum braking time by multiplying the duty cycle with the duty cycle
-        duration.
-        <p>If this is not accurate for your application, please do not use this tool.</p>
-        <p>The calculator displays the most cost effective selection first.</p>
-        <div class="col-lg-4 px-0">
+        <div class="col-lg-6 px-0 ">
+            <h1>Resistor selection tool</h1>
+            <p>Please input values.</p>
+            The calculator internally calculates the maximum braking time by multiplying the duty cycle with the duty
+            cycle
+            duration.
+            <p>If this is not accurate for your application, please do not use this tool.</p>
+            <p>The calculator displays the most cost effective selection first.</p>
             <form id="brakingDataInputForm">
-                <label>Select drive model:</label>
-                <select class="driveSelect" id="driveSelect" required>
-                    <option value="" selected>Select drive model</option>
-                    <script type="module">
-                        import { ga700_data } from "./ga700_data.js"
-                        const selectElement = document.getElementById('driveSelect');
-                        ga700_data.forEach((drive, index) => {
-                            const option = document.createElement('option');
-                            option.text = drive.type;
-                            option.value = drive;
-                            selectElement.appendChild(option);
-                        });
-                    </script>
-                </select>
-                <div class="form-group mt-3">
-                    <label for="dutyCycle">Duty cycle [%]</label>
+                <div class="mt-3">
+                    <label for="driveSelect" class="form-label">Select drive model:</label>
+                    <select class="form-select" id="driveSelect" required>s
+                        <option value="" selected>Select drive model</option>
+                        <script type="module">
+                            import { ga700_data } from "./ga700_data.js";
+                            const selectElement = document.getElementById('driveSelect');
+                            ga700_data.forEach((drive, index) => {
+                                const option = document.createElement('option');
+                                option.text = drive.type;
+                                option.value = drive;
+                                selectElement.appendChild(option);
+                            });
+                        </script>
+                    </select>
+                </div>
+                <div class="form-group mt-2">
+                    <label for="dutyCycle" class="form-label">Duty cycle [%]</label>
                     <input type="number" class="form-control" id="dutyCycle" placeholder="Enter braking duty cycle in %"
                         min="1" max="100" required>
                 </div>
                 <div class="form-group mt-2">
-                    <label for="dutyCycleDuration">Duty cycle duration [s]</label>
+                    <label for="dutyCycleDuration" class="form-label">Duty cycle duration [s]</label>
                     <input type="number" class="form-control" id="dutyCycleDuration"
                         placeholder="Enter braking duty cycle duration in s" min="1" required>
                 </div>
                 <div class="form-group mt-2">
-                    <label for="peakPower">Peak braking power [kW]</label>
+                    <label for="peakPower" class="form-label">Peak braking power [kW]</label>
                     <input type="number" class="form-control" id="peakPower"
                         placeholder="Enter peak braking power in kW" min="0.01" step="any" required>
                 </div>
                 <div class="form-group mt-2">
-                    <label for="power">Braking power [kW]</label>
+                    <label for="power" class="form-label">Braking power [kW]</label>
                     <input type="number" class="form-control" id="power" placeholder="Enter braking power in kW"
                         min="0.01" step="any" required>
                 </div>
             </form>
             <button type="button" class="btn btn-yask-blue mt-3" id="calculateResistorButton">Calculate</button>
+            <div id="output" class="mt-4"></div>
         </div>
-        <br>
-        <div id="output"></div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
     <script type="module" src="braking_resistor_selector.js"></script>
 </body>
 

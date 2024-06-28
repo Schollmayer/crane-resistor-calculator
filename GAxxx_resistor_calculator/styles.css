@@ -1,7 +1,23 @@
 /*
  * Custom CSS
  */
+ body {
+  background-color: var(--yask-super-light-gray);
+}
 
-:root {
-  --bs-body-bg: var(--bs-gray-100);
+h1 {
+  color: var(--yask-blue);
+  font-weight: bold;
+}
+
+
+.form-label {
+  font-weight: bold;
+}
+
+.container {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }

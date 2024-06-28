@@ -253,7 +253,7 @@ function getResistorGraphic(resistor) {
 function displayNoResistorFoundError(minR, maxR, power, transistorResults) {
   var outputDiv = document.getElementById("output");
   var card = document.createElement("div");
-  card.classList.add("card", "mb-3");
+  card.classList.add("card", "mb-3", "col-12");
 
   var cardBody = document.createElement("div");
   cardBody.classList.add("card-body");
