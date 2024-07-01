@@ -2,118 +2,215 @@
   "id": "115bfd1c-2f64-448f-a9d9-677c872c5d4f",
   "version": "2.0",
   "name": "Resistor selection tool",
-  "url": "http://127.0.0.1:5500",
+  "url": "http://127.0.0.1:5500/CR700_calculator/index.html",
   "tests": [{
-    "id": "c032e69e-957d-46f6-993a-b53b433de353",
-    "name": "External transistor needed",
+    "id": "53aa5c92-b293-49b8-8c50-f189705313f3",
+    "name": "50A",
     "commands": [{
-      "id": "ad8a9198-e153-407b-ab25-b0b656a35c18",
+      "id": "9094f015-eaa5-441c-b8a2-2351e388d3e2",
       "comment": "",
       "command": "open",
-      "target": "/frontend/breaking_resistor_selector.html",
+      "target": "http://127.0.0.1:5500/CR700_calculator/index.html",
       "targets": [],
       "value": ""
     }, {
-      "id": "160e6539-655c-44d4-8dec-28811a5d2663",
+      "id": "aaaa4ac3-f2f7-470b-90ee-298113289eae",
       "comment": "",
       "command": "setWindowSize",
-      "target": "1540x828",
+      "target": "1233x664",
       "targets": [],
       "value": ""
     }, {
-      "id": "7b0b933c-5d4d-4041-bfe5-9caa1d0a0c49",
+      "id": "ea33dcfe-538a-4271-b224-c82dd9188288",
       "comment": "",
       "command": "click",
-      "target": "id=driveSelect",
+      "target": "id=motorRatedCurrentInput",
       "targets": [
-        ["id=driveSelect", "id"],
-        ["css=#driveSelect", "css:finder"],
-        ["xpath=//select[@id='driveSelect']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/select", "xpath:idRelative"],
-        ["xpath=//select", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "0f294583-f6fa-45ac-a571-18cc85d1602d",
-      "comment": "",
-      "command": "select",
-      "target": "id=driveSelect",
-      "targets": [],
-      "value": "label=GA70C4140BBA"
-    }, {
-      "id": "11601c68-e9dc-459e-a501-3cc79c6f9fbf",
-      "comment": "",
-      "command": "click",
-      "target": "id=dutyCycle",
-      "targets": [
-        ["id=dutyCycle", "id"],
-        ["css=#dutyCycle", "css:finder"],
-        ["xpath=//input[@id='dutyCycle']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/div/input", "xpath:idRelative"],
+        ["id=motorRatedCurrentInput", "id"],
+        ["css=#motorRatedCurrentInput", "css:finder"],
+        ["xpath=//input[@id='motorRatedCurrentInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
       "value": ""
     }, {
-      "id": "e44aa6b2-a1aa-4c1f-be31-7ee7cdca4eda",
+      "id": "64bb323e-6d13-46e1-8bca-7c1f130d63df",
       "comment": "",
       "command": "type",
-      "target": "id=dutyCycle",
+      "target": "id=motorRatedCurrentInput",
       "targets": [
-        ["id=dutyCycle", "id"],
-        ["css=#dutyCycle", "css:finder"],
-        ["xpath=//input[@id='dutyCycle']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/div/input", "xpath:idRelative"],
+        ["id=motorRatedCurrentInput", "id"],
+        ["css=#motorRatedCurrentInput", "css:finder"],
+        ["xpath=//input[@id='motorRatedCurrentInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
+      ],
+      "value": "50"
+    }, {
+      "id": "855813ca-b38b-447d-82f3-6283c82c983c",
+      "comment": "",
+      "command": "click",
+      "target": "id=avMechPowerInput",
+      "targets": [
+        ["id=avMechPowerInput", "id"],
+        ["css=#avMechPowerInput", "css:finder"],
+        ["xpath=//input[@id='avMechPowerInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0aa184b7-cb49-4e61-8c61-95eec94b40e6",
+      "comment": "",
+      "command": "type",
+      "target": "id=avMechPowerInput",
+      "targets": [
+        ["id=avMechPowerInput", "id"],
+        ["css=#avMechPowerInput", "css:finder"],
+        ["xpath=//input[@id='avMechPowerInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "80"
+    }, {
+      "id": "d1faaca4-2eb5-4f96-a6b7-b51ea1c04128",
+      "comment": "",
+      "command": "click",
+      "target": "id=gearboxEffInput",
+      "targets": [
+        ["id=gearboxEffInput", "id"],
+        ["css=#gearboxEffInput", "css:finder"],
+        ["xpath=//input[@id='gearboxEffInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "89da41d6-fe62-4843-9da5-61e78bc067d4",
+      "comment": "",
+      "command": "type",
+      "target": "id=gearboxEffInput",
+      "targets": [
+        ["id=gearboxEffInput", "id"],
+        ["css=#gearboxEffInput", "css:finder"],
+        ["xpath=//input[@id='gearboxEffInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "88"
+    }, {
+      "id": "4b6c93ef-7790-4062-9c17-fad1d9db2f18",
+      "comment": "",
+      "command": "click",
+      "target": "id=motorEffInput",
+      "targets": [
+        ["id=motorEffInput", "id"],
+        ["css=#motorEffInput", "css:finder"],
+        ["xpath=//input[@id='motorEffInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5da71eb1-b4b3-4c71-bd9c-2630b18b89a3",
+      "comment": "",
+      "command": "type",
+      "target": "id=motorEffInput",
+      "targets": [
+        ["id=motorEffInput", "id"],
+        ["css=#motorEffInput", "css:finder"],
+        ["xpath=//input[@id='motorEffInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": "88"
+    }, {
+      "id": "db161843-d40d-4669-9901-802a1c7f99cb",
+      "comment": "",
+      "command": "click",
+      "target": "id=ed%Input",
+      "targets": [
+        ["id=ed%Input", "id"],
+        ["css=#ed\\%Input", "css:finder"],
+        ["xpath=//input[@id='ed%Input']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[5]/input", "xpath:idRelative"],
+        ["xpath=//div[5]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "549343ed-70ec-4dbf-a043-2768f43013eb",
+      "comment": "",
+      "command": "type",
+      "target": "id=ed%Input",
+      "targets": [
+        ["id=ed%Input", "id"],
+        ["css=#ed\\%Input", "css:finder"],
+        ["xpath=//input[@id='ed%Input']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[5]/input", "xpath:idRelative"],
+        ["xpath=//div[5]/input", "xpath:position"]
       ],
       "value": "40"
     }, {
-      "id": "1413752e-7abd-47c1-a571-38378e044e40",
+      "id": "ba29fba1-14d7-4f12-8a0e-876ba3e7e2a4",
       "comment": "",
-      "command": "type",
-      "target": "id=dutyCycleDuration",
+      "command": "click",
+      "target": "id=hoistHeigthInput",
       "targets": [
-        ["id=dutyCycleDuration", "id"],
-        ["css=#dutyCycleDuration", "css:finder"],
-        ["xpath=//input[@id='dutyCycleDuration']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/div[2]/input", "xpath:idRelative"],
-        ["xpath=//div[2]/input", "xpath:position"]
+        ["id=hoistHeigthInput", "id"],
+        ["css=#hoistHeigthInput", "css:finder"],
+        ["xpath=//input[@id='hoistHeigthInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[6]/input", "xpath:idRelative"],
+        ["xpath=//div[6]/input", "xpath:position"]
       ],
-      "value": "100"
+      "value": ""
     }, {
-      "id": "f2e11aac-c6f9-4b9b-bda2-a207210b19ef",
+      "id": "6880e68b-3e09-48fb-87dc-14e5dc0c8068",
       "comment": "",
       "command": "type",
-      "target": "id=peakPower",
+      "target": "id=hoistHeigthInput",
       "targets": [
-        ["id=peakPower", "id"],
-        ["css=#peakPower", "css:finder"],
-        ["xpath=//input[@id='peakPower']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/div[3]/input", "xpath:idRelative"],
-        ["xpath=//div[3]/input", "xpath:position"]
+        ["id=hoistHeigthInput", "id"],
+        ["css=#hoistHeigthInput", "css:finder"],
+        ["xpath=//input[@id='hoistHeigthInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[6]/input", "xpath:idRelative"],
+        ["xpath=//div[6]/input", "xpath:position"]
+      ],
+      "value": "50"
+    }, {
+      "id": "9f548d60-3f2b-41f0-bda7-fd3a8100e6eb",
+      "comment": "",
+      "command": "click",
+      "target": "id=hoistLinSpeedInput",
+      "targets": [
+        ["id=hoistLinSpeedInput", "id"],
+        ["css=#hoistLinSpeedInput", "css:finder"],
+        ["xpath=//input[@id='hoistLinSpeedInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[7]/input", "xpath:idRelative"],
+        ["xpath=//div[7]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "03c1a3a9-a958-4475-93fc-40b321a325a7",
+      "comment": "",
+      "command": "type",
+      "target": "id=hoistLinSpeedInput",
+      "targets": [
+        ["id=hoistLinSpeedInput", "id"],
+        ["css=#hoistLinSpeedInput", "css:finder"],
+        ["xpath=//input[@id='hoistLinSpeedInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[7]/input", "xpath:idRelative"],
+        ["xpath=//div[7]/input", "xpath:position"]
       ],
       "value": "5"
     }, {
-      "id": "464d72d7-7a01-4af7-8977-b1b8356f49b0",
-      "comment": "",
-      "command": "type",
-      "target": "id=power",
-      "targets": [
-        ["id=power", "id"],
-        ["css=#power", "css:finder"],
-        ["xpath=//input[@id='power']", "xpath:attributes"],
-        ["xpath=//form[@id='breakingDataInputForm']/div[4]/input", "xpath:idRelative"],
-        ["xpath=//div[4]/input", "xpath:position"]
-      ],
-      "value": "2"
-    }, {
-      "id": "a39d478a-7044-4b1d-b1ab-2d5100d299f4",
+      "id": "31963241-3842-4f67-bf8d-edf4506c010f",
       "comment": "",
       "command": "click",
-      "target": "id=calculateResistorButton",
+      "target": "id=calculateButton",
       "targets": [
-        ["id=calculateResistorButton", "id"],
-        ["css=#calculateResistorButton", "css:finder"],
-        ["xpath=//button[@id='calculateResistorButton']", "xpath:attributes"],
+        ["id=calculateButton", "id"],
+        ["css=#calculateButton", "css:finder"],
+        ["xpath=//button[@id='calculateButton']", "xpath:attributes"],
         ["xpath=//button", "xpath:position"],
         ["xpath=//button[contains(.,'Calculate')]", "xpath:innerText"]
       ],
@@ -128,6 +225,6 @@
     "timeout": 300,
     "tests": []
   }],
-  "urls": ["http://127.0.0.1:5500/"],
+  "urls": ["http://127.0.0.1:5500/", "http://127.0.0.1:5500/CR700_calculator/index.html"],
   "plugins": []
 }

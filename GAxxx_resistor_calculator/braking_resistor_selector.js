@@ -1,6 +1,7 @@
 import { calculateResistors } from "../sharedFiles/braking_resistor_calculations.js";
 import { checkBrakingTorque, findCDBR } from "./braking_transistor_calculations.js";
-import { ga700_data, ga700OLCurves_higher_0_75_kW, ga700OLLinear, ga700OLCurves_smaller_0_75_kW, ga700OLLinear_smaller_0_75_kW } from "./ga700_data.js";
+import { ga700_data } from "./ga700_data.js";
+import { drive_OLCurves_higher_0_75_kW, drive_OLLinear_higher_0_75_kW, drive_OLCurves_smaller_0_75_kW, drive_OLLinear_smaller_0_75_kW } from "../sharedFiles/internal_breaking_transistor_data.js";
 import { cdbr_data } from "../sharedFiles/cdbr_data.js";
 
 const calculateResistorButton = document.getElementById('calculateResistorButton');
@@ -40,18 +41,18 @@ function getSelectedDrive(driveData) {
 
 function getTransistorCurves(outputPower) {
   if (outputPower < 0.75) {
-    return ga700OLCurves_smaller_0_75_kW;
+    return drive_OLCurves_smaller_0_75_kW;
   }
 
-  else { return ga700OLCurves_higher_0_75_kW; }
+  else { return drive_OLCurves_higher_0_75_kW; }
 }
 
 function getTransistorLinearCurves(outputPower) {
   if (outputPower < 0.75) {
-    return ga700OLLinear_smaller_0_75_kW;
+    return drive_OLLinear_smaller_0_75_kW;
   }
   else {
-    return ga700OLLinear;
+    return drive_OLLinear_higher_0_75_kW;
   }
 }
 
