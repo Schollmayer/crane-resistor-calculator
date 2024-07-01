@@ -118,3 +118,61 @@ if (DEBUG) {
     console.log(uniqueCombinations);
     console.log(filterForResistorRequirements(uniqueCombinations, 8, 17, 35));
 }
+
+export function getResistorGraphic(resistor) {
+    let picturePath="../sharedFiles/graphics/"
+    if (resistor.resistorNetwork.length == 1) {
+      switch (resistor.quantity) {
+        case 1:
+          return picturePath + "rn-S1.svg"
+        case 2:
+          if (resistor.resistorNetwork[0].inSeries) {
+            return picturePath + "rn-S2.svg"
+          }
+          else {
+            return "./graphics/rn-P2.svg"
+          }
+        case 3:
+          if (resistor.resistorNetwork[0].inSeries) {
+            return picturePath +"rn-S3.svg"
+          }
+          else {
+            return picturePath +"rn-P3.svg"
+          }
+        case 4:
+          if (resistor.resistorNetwork[0].inSeries) {
+            return picturePath +"rn-S4.svg"
+          }
+          else {
+            return picturePath +"rn-P4.svg"
+          }
+        case 5:
+          if (resistor.resistorNetwork[0].inSeries) {
+            return picturePath +"rn-S5.svg"
+          }
+          else {
+            return picturePath +"rn-P5.svg"
+          }
+        case 6:
+          if (resistor.resistorNetwork[0].inSeries) {
+            return picturePath +"rn-S6.svg"
+          }
+          else {
+            return picturePath +"rn-P6.svg"
+          }
+        default: return null;
+      }
+    }
+    else if (resistor.resistorNetwork.length == 2) {
+      if (resistor.resistorNetwork.quantity == 2) {
+        return picturePath +"rn-P2S2.svg"
+      }
+      else {
+        return picturePath +"rn-P2S3.svg"
+      }
+    }
+    else if (resistor.resistorNetwork.length == 3) {
+      return picturePath +"rn-P3S2.svg"
+    }
+    return null;
+  }

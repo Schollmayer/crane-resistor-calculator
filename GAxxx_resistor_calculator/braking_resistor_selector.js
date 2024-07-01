@@ -1,7 +1,7 @@
-import { calculateResistors } from "../sharedFiles/braking_resistor_calculations.js";
+import { calculateResistors, getResistorGraphic } from "../sharedFiles/braking_resistor_calculations.js";
 import { checkBrakingTorque, findCDBR } from "./braking_transistor_calculations.js";
 import { ga700_data } from "./ga700_data.js";
-import { drive_OLCurves_higher_0_75_kW, drive_OLLinear_higher_0_75_kW, drive_OLCurves_smaller_0_75_kW, drive_OLLinear_smaller_0_75_kW } from "../sharedFiles/internal_breaking_transistor_data.js";
+import { drive_OLCurves_higher_0_75_kW, drive_OLLinear_higher_0_75_kW, drive_OLCurves_smaller_0_75_kW, drive_OLLinear_smaller_0_75_kW } from "../sharedFiles/internal_braking_transistor_data.js";
 import { cdbr_data } from "../sharedFiles/cdbr_data.js";
 
 const calculateResistorButton = document.getElementById('calculateResistorButton');
@@ -192,64 +192,6 @@ function clearOutput() {
   var outputDiv = document.getElementById("output");
   // Clear previous output
   outputDiv.innerHTML = "";
-}
-
-function getResistorGraphic(resistor) {
-  let picturePath="../sharedFiles/graphics/"
-  if (resistor.resistorNetwork.length == 1) {
-    switch (resistor.quantity) {
-      case 1:
-        return picturePath + "rn-S1.svg"
-      case 2:
-        if (resistor.resistorNetwork[0].inSeries) {
-          return picturePath + "rn-S2.svg"
-        }
-        else {
-          return "./graphics/rn-P2.svg"
-        }
-      case 3:
-        if (resistor.resistorNetwork[0].inSeries) {
-          return picturePath +"rn-S3.svg"
-        }
-        else {
-          return picturePath +"rn-P3.svg"
-        }
-      case 4:
-        if (resistor.resistorNetwork[0].inSeries) {
-          return picturePath +"rn-S4.svg"
-        }
-        else {
-          return picturePath +"rn-P4.svg"
-        }
-      case 5:
-        if (resistor.resistorNetwork[0].inSeries) {
-          return picturePath +"rn-S5.svg"
-        }
-        else {
-          return picturePath +"rn-P5.svg"
-        }
-      case 6:
-        if (resistor.resistorNetwork[0].inSeries) {
-          return picturePath +"rn-S6.svg"
-        }
-        else {
-          return picturePath +"rn-P6.svg"
-        }
-      default: return null;
-    }
-  }
-  else if (resistor.resistorNetwork.length == 2) {
-    if (resistor.resistorNetwork.quantity == 2) {
-      return picturePath +"rn-P2S2.svg"
-    }
-    else {
-      return picturePath +"rn-P2S3.svg"
-    }
-  }
-  else if (resistor.resistorNetwork.length == 3) {
-    return picturePath +"rn-P3S2.svg"
-  }
-  return null;
 }
 
 function displayNoResistorFoundError(minR, maxR, power, transistorResults) {

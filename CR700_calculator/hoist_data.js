@@ -1,7 +1,7 @@
 // Imports
 import { cdbr_data, ed_interpolate } from "../sharedFiles/cdbr_data.js";
 import { cr700_data} from "./cr700_data.js";
-import { drive_OLCurves_higher_0_75_kW, drive_OLLinear_higher_0_75_kW, drive_OLCurves_smaller_0_75_kW, drive_OLLinear_smaller_0_75_kW } from "../sharedFiles/internal_breaking_transistor_data.js";
+import { drive_OLCurves_higher_0_75_kW, drive_OLLinear_higher_0_75_kW, drive_OLCurves_smaller_0_75_kW, drive_OLLinear_smaller_0_75_kW } from "../sharedFiles/internal_braking_transistor_data.js";
 import { pointBelowLine } from "./helpers.js";
 
 export class HoistFrontend {
