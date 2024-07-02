@@ -9,12 +9,14 @@
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link href=https://yeu-frontend.yaskawa.eu/assets/css/yaskstyle.css rel="stylesheet">
   <link rel="stylesheet" href="../sharedFiles/styles.css">
+</head>
 
 <body>
   <div class="container my-5">
-    <div class="col-lg-6 px-0 ">
+    <div class="col-lg-7 px-0 ">
       <h1>Crane hoist selection tool</h1>
       <p>Please input values.</p>
+      <h2 class="mt-4">Power considerations</h2>
       <form id="brakingDataInputForm">
         <div class="form-group mt-2">
           <label class="form-label" for="motorRatedCurrentInput">Motor rated current [A]</label>
@@ -27,13 +29,13 @@
             min="1" max="315" required>
         </div>
         <div class="form-group mt-2">
-          <label class="form-label" for="gearboxEffInput">Gearbox effiency</label>
+          <label class="form-label" for="gearboxEffInput">Gearbox efficiency</label>
           <input type="number" class="form-control" id="gearboxEffInput"
-            placeholder="Enter gearbox effiency [%](e.g. 90)" min="70" max="99" required>
+            placeholder="Enter gearbox efficiency [%](e.g. 90)" min="70" max="99" required>
         </div>
         <div class="form-group mt-2">
-          <label class="form-label" for="motorEffInput">Motor effiency</label>
-          <input type="number" class="form-control" id="motorEffInput" placeholder="Enter motor effiency [%](e.g. 90)"
+          <label class="form-label" for="motorEffInput">Motor efficiency</label>
+          <input type="number" class="form-control" id="motorEffInput" placeholder="Enter motor efficiency [%](e.g. 90)"
             min="70" max="99" required>
         </div>
         <h2 class="mt-4">Brake time considerations</h2>

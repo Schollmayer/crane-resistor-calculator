@@ -5,7 +5,7 @@
   "url": "http://127.0.0.1:5500/CR700_calculator/index.html",
   "tests": [{
     "id": "53aa5c92-b293-49b8-8c50-f189705313f3",
-    "name": "50A",
+    "name": "80A",
     "commands": [{
       "id": "9094f015-eaa5-441c-b8a2-2351e388d3e2",
       "comment": "",
@@ -45,7 +45,7 @@
         ["xpath=//form[@id='brakingDataInputForm']/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "50"
+      "value": "80"
     }, {
       "id": "855813ca-b38b-447d-82f3-6283c82c983c",
       "comment": "",
@@ -71,7 +71,7 @@
         ["xpath=//form[@id='brakingDataInputForm']/div[2]/input", "xpath:idRelative"],
         ["xpath=//div[2]/input", "xpath:position"]
       ],
-      "value": "80"
+      "value": "16"
     }, {
       "id": "d1faaca4-2eb5-4f96-a6b7-b51ea1c04128",
       "comment": "",
@@ -175,7 +175,7 @@
         ["xpath=//form[@id='brakingDataInputForm']/div[6]/input", "xpath:idRelative"],
         ["xpath=//div[6]/input", "xpath:position"]
       ],
-      "value": "50"
+      "value": "20"
     }, {
       "id": "9f548d60-3f2b-41f0-bda7-fd3a8100e6eb",
       "comment": "",
@@ -201,7 +201,7 @@
         ["xpath=//form[@id='brakingDataInputForm']/div[7]/input", "xpath:idRelative"],
         ["xpath=//div[7]/input", "xpath:position"]
       ],
-      "value": "5"
+      "value": "10"
     }, {
       "id": "31963241-3842-4f67-bf8d-edf4506c010f",
       "comment": "",

@@ -130,7 +130,7 @@ export function getResistorGraphic(resistor) {
             return picturePath + "rn-S2.svg"
           }
           else {
-            return "./graphics/rn-P2.svg"
+            return picturePath + "rn-P2.svg"
           }
         case 3:
           if (resistor.resistorNetwork[0].inSeries) {
