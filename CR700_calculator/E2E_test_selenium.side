@@ -216,6 +216,219 @@
       ],
       "value": ""
     }]
+  }, {
+    "id": "eff42096-8c56-4978-86cb-54b300d10864",
+    "name": "CBDR",
+    "commands": [{
+      "id": "c87ba119-074f-4555-8a85-9190e065c043",
+      "comment": "",
+      "command": "open",
+      "target": "http://127.0.0.1:5500/CR700_calculator/index.html",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "faf2ed7f-284e-4b08-81b2-9c01e480d3d1",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1233x664",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b727c5c3-05c7-4754-b39d-79b4d2e9c5f0",
+      "comment": "",
+      "command": "click",
+      "target": "id=motorRatedCurrentInput",
+      "targets": [
+        ["id=motorRatedCurrentInput", "id"],
+        ["css=#motorRatedCurrentInput", "css:finder"],
+        ["xpath=//input[@id='motorRatedCurrentInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2b978f61-c0ff-4a50-837e-4d8b47a1485e",
+      "comment": "",
+      "command": "type",
+      "target": "id=motorRatedCurrentInput",
+      "targets": [
+        ["id=motorRatedCurrentInput", "id"],
+        ["css=#motorRatedCurrentInput", "css:finder"],
+        ["xpath=//input[@id='motorRatedCurrentInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "155"
+    }, {
+      "id": "4db9a893-af81-4508-a77b-a170a4d4b3e7",
+      "comment": "",
+      "command": "click",
+      "target": "id=avMechPowerInput",
+      "targets": [
+        ["id=avMechPowerInput", "id"],
+        ["css=#avMechPowerInput", "css:finder"],
+        ["xpath=//input[@id='avMechPowerInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3b85d274-ab4a-4509-8ef9-8d5233e2c738",
+      "comment": "",
+      "command": "type",
+      "target": "id=avMechPowerInput",
+      "targets": [
+        ["id=avMechPowerInput", "id"],
+        ["css=#avMechPowerInput", "css:finder"],
+        ["xpath=//input[@id='avMechPowerInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "62"
+    }, {
+      "id": "a2b66195-eab9-4a6b-af93-b29bd7728da2",
+      "comment": "",
+      "command": "click",
+      "target": "id=gearboxEffInput",
+      "targets": [
+        ["id=gearboxEffInput", "id"],
+        ["css=#gearboxEffInput", "css:finder"],
+        ["xpath=//input[@id='gearboxEffInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "afe9613d-6b34-4f8d-888b-332adee06665",
+      "comment": "",
+      "command": "type",
+      "target": "id=gearboxEffInput",
+      "targets": [
+        ["id=gearboxEffInput", "id"],
+        ["css=#gearboxEffInput", "css:finder"],
+        ["xpath=//input[@id='gearboxEffInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "90"
+    }, {
+      "id": "187b7a69-aeef-4faf-8764-1b3707baec29",
+      "comment": "",
+      "command": "click",
+      "target": "id=motorEffInput",
+      "targets": [
+        ["id=motorEffInput", "id"],
+        ["css=#motorEffInput", "css:finder"],
+        ["xpath=//input[@id='motorEffInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b77a1cb0-ec7c-4a3e-81d9-4680ed67f621",
+      "comment": "",
+      "command": "type",
+      "target": "id=motorEffInput",
+      "targets": [
+        ["id=motorEffInput", "id"],
+        ["css=#motorEffInput", "css:finder"],
+        ["xpath=//input[@id='motorEffInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": "90"
+    }, {
+      "id": "ebdac920-5936-4ada-9d05-39b9a23377a6",
+      "comment": "",
+      "command": "click",
+      "target": "id=ed%Input",
+      "targets": [
+        ["id=ed%Input", "id"],
+        ["css=#ed\\%Input", "css:finder"],
+        ["xpath=//input[@id='ed%Input']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[5]/input", "xpath:idRelative"],
+        ["xpath=//div[5]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e1733731-1ea2-42c9-adc4-a635c125bedc",
+      "comment": "",
+      "command": "type",
+      "target": "id=ed%Input",
+      "targets": [
+        ["id=ed%Input", "id"],
+        ["css=#ed\\%Input", "css:finder"],
+        ["xpath=//input[@id='ed%Input']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[5]/input", "xpath:idRelative"],
+        ["xpath=//div[5]/input", "xpath:position"]
+      ],
+      "value": "40"
+    }, {
+      "id": "ec0ddf99-93d3-45d4-b49e-e4995d76021e",
+      "comment": "",
+      "command": "click",
+      "target": "id=hoistHeigthInput",
+      "targets": [
+        ["id=hoistHeigthInput", "id"],
+        ["css=#hoistHeigthInput", "css:finder"],
+        ["xpath=//input[@id='hoistHeigthInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[6]/input", "xpath:idRelative"],
+        ["xpath=//div[6]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "473c8ac0-47cf-4746-81e5-23872b5f7e8b",
+      "comment": "",
+      "command": "type",
+      "target": "id=hoistHeigthInput",
+      "targets": [
+        ["id=hoistHeigthInput", "id"],
+        ["css=#hoistHeigthInput", "css:finder"],
+        ["xpath=//input[@id='hoistHeigthInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[6]/input", "xpath:idRelative"],
+        ["xpath=//div[6]/input", "xpath:position"]
+      ],
+      "value": "50"
+    }, {
+      "id": "c6066f4f-0f74-4d44-bc78-b6112a6798f4",
+      "comment": "",
+      "command": "click",
+      "target": "id=hoistLinSpeedInput",
+      "targets": [
+        ["id=hoistLinSpeedInput", "id"],
+        ["css=#hoistLinSpeedInput", "css:finder"],
+        ["xpath=//input[@id='hoistLinSpeedInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[7]/input", "xpath:idRelative"],
+        ["xpath=//div[7]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "72968824-dd5a-425d-acb2-d7f4d3cd106d",
+      "comment": "",
+      "command": "type",
+      "target": "id=hoistLinSpeedInput",
+      "targets": [
+        ["id=hoistLinSpeedInput", "id"],
+        ["css=#hoistLinSpeedInput", "css:finder"],
+        ["xpath=//input[@id='hoistLinSpeedInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[7]/input", "xpath:idRelative"],
+        ["xpath=//div[7]/input", "xpath:position"]
+      ],
+      "value": "10"
+    }, {
+      "id": "29e121c5-47b8-49f7-a17c-9e5bec679e69",
+      "comment": "",
+      "command": "click",
+      "target": "id=calculateButton",
+      "targets": [
+        ["id=calculateButton", "id"],
+        ["css=#calculateButton", "css:finder"],
+        ["xpath=//button[@id='calculateButton']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Calculate')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
   }],
   "suites": [{
     "id": "fb4150e0-190c-4a98-8259-61c6c879427a",
