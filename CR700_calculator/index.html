@@ -1,63 +1,117 @@
 <!doctype html>
 <html lang="en">
-
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Resistor Calculator</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-  <link href=https://yeu-frontend.yaskawa.eu/assets/css/yaskstyle.css rel="stylesheet">
-  <link rel="stylesheet" href="../sharedFiles/styles.css">
-
-<body>
-  <div class="container my-5">
-    <div class="col-lg-6 px-0 ">
-      <h1>Crane hoist selection tool</h1>
-      <p>Please input values.</p>
-      <form id="brakingDataInputForm">
-        <div class="form-group mt-2">
-          <label class="form-label yask-blue" for="motorRatedCurrentInput">Motor rated current [A]</label>
-          <input type="number" class="form-control" id="motorRatedCurrentInput" placeholder="Enter motor rated current"
-            min="1" max="605" required>
-        </div>
-        <div class="form-group mt-2">
-          <label class="form-label yask-blue" for="avMechPowerInput">Average mechanical power [kW]</label>
-          <input type="number" class="form-control" id="avMechPowerInput" placeholder="Enter average mechanical power"
-            min="1" max="315" required>
-        </div>
-        <div class="form-group mt-2">
-          <label class="form-label yask-blue" for="gearboxEffInput">Gearbox effiency</label>
-          <input type="number" class="form-control" id="gearboxEffInput"
-            placeholder="Enter gearbox effiency [%](e.g. 90)" min="70" max="99" required>
-        </div>
-        <div class="form-group mt-2">
-          <label class="form-label yask-blue" for="motorEffInput">Motor effiency</label>
-          <input type="number" class="form-control" id="motorEffInput" placeholder="Enter motor effiency [%](e.g. 90)"
-            min="70" max="99" required>
-        </div>
-        <h2 class="yask-blue pt-4 pb-4 ">Brake time considerations</h2>
-        <div class="form-group mt-2">
-          <label class="form-label yask-blue" for="ed%Input">Regenerative percentage [%]</label>
-          <input type="number" class="form-control" id="ed%Input" placeholder="Enter regenerative percentage (e.g. 40)"
-            min="10" max="50" required>
-        </div>
-        <div class="form-group mt-2">
-          <label class="form-label yask-blue" for="hoistHeigthInput">Hoist height [m]</label>
-          <input type="number" class="form-control" id="hoistHeigthInput" placeholder="Enter hoist height (e.g. 20)"
-            min="1" max=200 required>
-        </div>
-        <div class="form-group mt-2">
-          <label class="form-label yask-blue" for="hoistLinSpeedInput">Hoist linear speed [m/min]</label>
-          <input type="number" class="form-control" id="hoistLinSpeedInput"
-            placeholder="Enter hoist linear speed (e.g. 10)" min="1" max="50" required>
-        </div>
-      </form>
-      <button type="button" class="btn btn-yask-blue mt-3" id="calculateButton">Calculate</button>
-      <div id="output" class="mt-4"></div>
-    </div>
-  </div>
-  <script type="module" src="CR700_calculator.js"></script>
-</body>
-
+    
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>
+          Crane hoist selection tool
+        </title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+        crossorigin="anonymous">
+        <link href=https://yeu-frontend.yaskawa.eu/assets/css/yaskstyle.css rel="stylesheet">
+        <link rel="stylesheet" href="../sharedFiles/styles.css">
+        
+        <body>
+            <div class="container my-5 max-auto">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <img src="https://www.yaskawa.eu.com/assets/images/logo.png" alt="Yaskawa logo">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon">
+                        </span>
+                    </button>
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link yask-blue" href="../GAxxx_resistor_calculator/braking_resistor_selector.html">
+                                Braking Resistor Selector
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link yask-blue" href="../CR700_calculator/index.html">
+                                Crane hoist selection tool
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="col-lg-6 px-0 ">
+                  <h3 class="yask-blue pt-4 pb-4 ">
+                        Crane hoist selection tool
+                    </h3>
+                    <p class="yask-dark-gray">
+                        Please input values.
+                    </p>
+                    <form id="brakingDataInputForm">
+                        <div class="form-group mt-2">
+                            <label class="form-label yask-blue" for="motorRatedCurrentInput">
+                                Motor rated current [A]
+                            </label>
+                            <input type="number" class="form-control" id="motorRatedCurrentInput"
+                            placeholder="Enter motor rated current" min="1" max="605" required>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label class="form-label yask-blue" for="avMechPowerInput">
+                                Average mechanical power [kW]
+                            </label>
+                            <input type="number" class="form-control" id="avMechPowerInput" placeholder="Enter average mechanical power"
+                            min="1" max="315" required>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label class="form-label yask-blue" for="gearboxEffInput">
+                                Gearbox effiency
+                            </label>
+                            <input type="number" class="form-control" id="gearboxEffInput" placeholder="Enter gearbox effiency [%](e.g. 90)"
+                            min="70" max="99" required>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label class="form-label yask-blue" for="motorEffInput">
+                                Motor effiency
+                            </label>
+                            <input type="number" class="form-control" id="motorEffInput" placeholder="Enter motor effiency [%](e.g. 90)"
+                            min="70" max="99" required>
+                        </div>
+                        <h3 class="yask-blue pt-4 pb-4 ">
+                            Brake time considerations
+                        </h3>
+                        <div class="form-group mt-2">
+                            <label class="form-label yask-blue" for="ed%Input">
+                                Regenerative percentage [%]
+                            </label>
+                            <input type="number" class="form-control" id="ed%Input" placeholder="Enter regenerative percentage (e.g. 40)"
+                            min="10" max="50" required>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label class="form-label yask-blue" for="hoistHeigthInput">
+                                Hoist height [m]
+                            </label>
+                            <input type="number" class="form-control" id="hoistHeigthInput" placeholder="Enter hoist height (e.g. 20)"
+                            min="1" max=200 required>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label class="form-label yask-blue" for="hoistLinSpeedInput">
+                                Hoist linear speed [m/min]
+                            </label>
+                            <input type="number" class="form-control" id="hoistLinSpeedInput" placeholder="Enter hoist linear speed (e.g. 10)"
+                            min="1" max="50" required>
+                        </div>
+                    </form>
+                    <button type="button" class="btn btn-yask-blue mt-3" id="calculateButton">
+                        Calculate
+                    </button>
+                    <div id="output" class="mt-4">
+                    </div>
+                </div>
+            </div>
+            <script type="module" src="CR700_calculator.js">
+            </script>
+             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+             integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+             crossorigin="anonymous"></script>
+             <script type="javascript" src="https://yeu-frontend.yaskawa.eu/assets/js/core/jquery-3.7.1.min.js"></script>
+             <script type="javascript" src="https://yeu-frontend.yaskawa.eu/assets/js/core/popper.min.js"></script>
+             <script type="javascript" src="https://yeu-frontend.yaskawa.eu/assets/js/core/bootstrap.min.js"></script>
+             <script type="javascript" src="https://yeu-frontend.yaskawa.eu/assets/js/custom.js"></script>
+             <script type="javascript" src="https://yeu-frontend.yaskawa.eu/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+        </body>
 </html>
