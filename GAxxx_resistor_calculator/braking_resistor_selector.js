@@ -25,14 +25,14 @@ calculateResistorButton.addEventListener('click', function () {
 document.addEventListener('DOMContentLoaded', function () {
   var tooltipTrigger = document.getElementById('tooltipLabel');
   var tooltip = new bootstrap.Tooltip(tooltipTrigger, {
-    title: "<img src='../sharedFiles/graphics/dutyCycle.svg' alt='Duty circle explanation' />",
+    title: "<img src='../sharedFiles/graphics/rn-dutyCycle.svg' alt='Duty circle explanation' />",
     html: true,
     placement: 'top' // You can change the placement as needed
   });
 
   var tooltipTrigger2 = document.getElementById('tooltipLabel2');
   var tooltip2 = new bootstrap.Tooltip(tooltipTrigger2, {
-    title: "<img src='../sharedFiles/graphics/dutyCycle.svg' alt='Duty circle explanation' />",
+    title: "<img src='../sharedFiles/graphics/rn-dutyCycle.svg' alt='Duty circle explanation' />",
     html: true,
     placement: 'top' // You can change the placement as needed
   });
