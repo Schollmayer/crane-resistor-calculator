@@ -45,3 +45,9 @@ h1 {
 .tooltip.show {
   opacity: 1;
 }
+
+.well {
+  margin-bottom: 0px;
+}
+
+

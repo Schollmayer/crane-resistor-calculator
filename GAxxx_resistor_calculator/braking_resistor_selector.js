@@ -153,14 +153,14 @@ function performAndDisplayCalculations(minR, maxR, power, dutyCycle, dutyCycleDu
       outputExternalBrakingTransistor()
       var resistorResults = calculateResistors(selectedCDBR.cdbr.minResistance, selectedCDBR.maxResistance, power, dutyCycle, dutyCycleDuration);
       if (resistorResults) {
-        displayResistorTransistorSelection(resistorResults, selectedCDBR,selectedCDBR.cdbr.minResistance, selectedCDBR.maxResistance, power);
+        displayResistorTransistorSelection(resistorResults, selectedCDBR, selectedCDBR.cdbr.minResistance, selectedCDBR.maxResistance, power);
       }
       else {
         var biggerCDBR = getBiggerCDBR(selectedCDBR, cdbr_data);
         if (biggerCDBR) {
           resistorResults = calculateResistors(biggerCDBR.cdbr.minResistance, selectedCDBR.maxResistance, power, dutyCycle, dutyCycleDuration);
           if (resistorResults) {
-            displayResistorTransistorSelection(resistorResults, biggerCDBR,biggerCDBR.cdbr.minResistance, selectedCDBR.maxResistance, power);
+            displayResistorTransistorSelection(resistorResults, biggerCDBR, biggerCDBR.cdbr.minResistance, selectedCDBR.maxResistance, power);
           }
           else {
             displayNoResistorFoundError(selectedCDBR.cdbr.minResistance, selectedCDBR.maxResistance, power, selectedCDBR);
@@ -260,6 +260,7 @@ function displayNoResistorFoundError(minR, maxR, power, transistorResults) {
 
 function displayResistorTransistorSelection(resistorResults, transistorResults, minR, maxR, power) {
   var outputDiv = document.getElementById("output");
+
   resistorResults.forEach(function (obj, index) {
     var card = document.createElement("div");
     card.classList.add("card", "mb-3");
@@ -275,7 +276,7 @@ function displayResistorTransistorSelection(resistorResults, transistorResults, 
 
     var flexContainer = document.createElement("div");
     flexContainer.style.display = "flex";
-    flexContainer.style.alignItems = "top";
+    flexContainer.style.flexDirection = "column"; // Display children in column
     cardBody.appendChild(flexContainer);
 
     var resistorContainer = document.createElement("div");
@@ -288,15 +289,13 @@ function displayResistorTransistorSelection(resistorResults, transistorResults, 
     var resistorDetail = document.createElement("div");
     resistorDetail.innerHTML = `${obj.quantity}x ${obj.resistor.type}`;
     resistorContainer.appendChild(resistorDetail);
-
     flexContainer.appendChild(resistorContainer);
-
 
     let resistorImageFile = getResistorGraphic(obj);
     // Add image next to the resistor details
     if (resistorImageFile) {
       var resistorImageContainer = document.createElement("div");
-      resistorImageContainer.style.marginLeft = "20px"; // Adjust the space between text and image
+      resistorImageContainer.style.marginTop = "10px"; // Adjust the space between text and image
 
       var resistorImage = document.createElement("img");
       resistorImage.src = resistorImageFile; // Replace with the actual image URL
@@ -311,8 +310,6 @@ function displayResistorTransistorSelection(resistorResults, transistorResults, 
       flexContainer.appendChild(resistorImageContainer);
     }
 
-
-
     // Transistor container
     if (transistorResults) {
       var transistorContainer = document.createElement("div");
@@ -326,46 +323,69 @@ function displayResistorTransistorSelection(resistorResults, transistorResults, 
       transistorDetail.innerHTML = `${transistorResults.qtty}x ${transistorResults.cdbr.type}`;
       transistorContainer.appendChild(transistorDetail);
       if (transistorResults.qtty > 1) {
-        transistorDetail.innerHTML += '<br>Please use the displayed resistor network for each braking transistor.'
+        transistorDetail.innerHTML += '<br>Please use the displayed resistor network for each braking transistor.';
       }
 
-      cardBody.appendChild(transistorContainer);
+      flexContainer.appendChild(transistorContainer);
     }
 
-    var detailButton = document.createElement("button");
-    detailButton.classList.add("btn", "btn-yask-blue", "mt-3");
-    detailButton.textContent = "Show details";
-    detailButton.addEventListener("click", function () {
-      var details = document.getElementById(`details-${index}`);
-      if (!details) {
-        details = document.createElement("div");
-        details.classList.add("mt-3", "d-flex", "justify-content-left");
-        details.id = `details-${index}`;
-        details.innerHTML = `
-          <div style="margin-right: 20px;">
-            <strong style = "font-size: 1.1em">Option details:</strong><br>
-            <strong>Rtotal:</strong> ${obj.totalResistance.toFixed(2)} Ω<br>
-            <strong>Total Power:</strong> ${obj.totalPower.toFixed(2)} kW<br>
-            <strong>Total Quantity:</strong> ${obj.quantity}<br>
-          </div>
-          <div>
-            <strong style = "font-size: 1.1em">Resistor requirements:</strong><br>
-            <strong>Rmin:</strong> ${minR.toFixed(2)}&#8486;<br>
-            <strong>Rmax:</strong> ${maxR.toFixed(2)}&#8486;<br>
-            <strong>Power:</strong> ${power}kW
-          </div>
-        `;
-        cardBody.appendChild(details);
-        detailButton.textContent = "Show less";
-      } else {
-        cardBody.removeChild(details);
-        detailButton.textContent = "Show details";
-      }
-    });
-    
-    cardBody.appendChild(detailButton);
+// Details section
+var detailsContainer = document.createElement("div");
+detailsContainer.classList.add("collapse"); // Add the "well" class here
+detailsContainer.id = `details-${index}`;
 
-    card.appendChild(cardBody);
-    outputDiv.appendChild(card);
+// Create a wrapper div with margin inside detailsContainer
+var detailsContent = document.createElement("div");
+detailsContent.classList.add("mt-3");
+detailsContent.innerHTML = `
+  <div style="display: flex; justify-content: left; margin: 0; padding: 0;">
+    <div style="margin-right: 20px; padding: 0;">
+      <strong style="font-size: 1.1em">Option details:</strong><br>
+      <strong>Rtotal:</strong> ${obj.totalResistance.toFixed(2)} Ω<br>
+      <strong>Total Power:</strong> ${obj.totalPower.toFixed(2)} kW<br>
+      <strong>Total Quantity:</strong> ${obj.quantity}<br>
+    </div>
+    <div style="margin: 0; padding: 0;">
+      <strong style="font-size: 1.1em">Resistor requirements:</strong><br>
+      <strong>Rmin:</strong> ${minR.toFixed(2)}&#8486;<br>
+      <strong>Rmax:</strong> ${maxR.toFixed(2)}&#8486;<br>
+      <strong>Power:</strong> ${power} kW
+    </div>
+  </div>
+`;
+
+detailsContainer.appendChild(detailsContent); // Append detailsContent (with margin) inside detailsContainer
+
+var detailButton = document.createElement("button");
+detailButton.classList.add("btn", "btn-yask-blue", "mt-3");
+detailButton.setAttribute("type", "button");
+detailButton.setAttribute("data-bs-toggle", "collapse");
+detailButton.setAttribute("data-bs-target", `#details-${index}`);
+detailButton.setAttribute("aria-expanded", "false");
+detailButton.setAttribute("aria-controls", `details-${index}`);
+detailButton.textContent = "Show details";
+
+// Event listener for Bootstrap collapse events
+detailsContainer.addEventListener("show.bs.collapse", function () {
+  detailButton.textContent = "Show less";
+});
+
+detailsContainer.addEventListener("hide.bs.collapse", function () {
+  detailButton.textContent = "Show details";
+});
+
+cardBody.appendChild(detailButton);
+cardBody.appendChild(detailsContainer); // Append detailsContainer (with collapsible content) to cardBody
+
+card.appendChild(cardBody);
+outputDiv.appendChild(card);
+
   });
 }
+
+
+
+
+
+
+
