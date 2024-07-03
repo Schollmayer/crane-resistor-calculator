@@ -182,33 +182,51 @@ function displayResistorTransistorSelection(cr700Result, transistorResults, resi
 
       }
 
-      var detailButton = document.createElement("button");
-      detailButton.classList.add("btn", "btn-yask-blue", "mt-3");
-      detailButton.textContent = "Show details";
-      detailButton.addEventListener("click", function () {
-        var details = document.getElementById(`details-${index}`);
-        if (!details) {
-          details = document.createElement("div");
-          details.classList.add("mt-3", "d-flex", "justify-content-left");
-          details.id = `details-${index}`;
-          details.innerHTML = `
-      <div>
-        <strong style = "font-size: 1.1em">Option details:</strong><br>
-        <strong>Rtotal:</strong> ${obj.totalResistance.toFixed(2)} Ω<br>
-        <strong>Total Power:</strong> ${obj.totalPower.toFixed(2)} kW<br>
-        <strong>Total Quantity:</strong> ${obj.quantity}<br></div>`;
-          cardBody.appendChild(details);
-          detailButton.textContent = "Show less";
-        } else {
-          cardBody.removeChild(details);
-          detailButton.textContent = "Show details";
-        }
+// Details section
+var detailsContainer = document.createElement("div");
+detailsContainer.classList.add("collapse"); // Add the "well" class here
+detailsContainer.id = `details-${index}`;
 
-      });
-      cardBody.appendChild(detailButton);
+// Create a wrapper div with margin inside detailsContainer
+var detailsContent = document.createElement("div");
+detailsContent.classList.add("mt-3");
+detailsContent.innerHTML = `
+  <div style="display: flex; justify-content: left; margin: 0; padding: 0;">
+    <div style="margin-right: 20px; padding: 0;"> 
+      <strong style="font-size: 1.1em">Option details:</strong><br>
+      <strong>Rtotal:</strong> ${obj.totalResistance.toFixed(2)} Ω<br>
+      <strong>Total Power:</strong> ${obj.totalPower.toFixed(2)} kW<br>
+      <strong>Total Quantity:</strong> ${obj.quantity}<br>
+    </div>
+  </div>
+`;
 
-      card.appendChild(cardBody);
-      outputDiv.appendChild(card);
+detailsContainer.appendChild(detailsContent); // Append detailsContent (with margin) inside detailsContainer
+
+var detailButton = document.createElement("button");
+detailButton.classList.add("btn", "btn-yask-blue", "mt-3");
+detailButton.setAttribute("type", "button");
+detailButton.setAttribute("data-bs-toggle", "collapse");
+detailButton.setAttribute("data-bs-target", `#details-${index}`);
+detailButton.setAttribute("aria-expanded", "false");
+detailButton.setAttribute("aria-controls", `details-${index}`);
+detailButton.textContent = "Show details";
+
+// Event listener for Bootstrap collapse events
+detailsContainer.addEventListener("show.bs.collapse", function () {
+  detailButton.textContent = "Show less";
+});
+
+detailsContainer.addEventListener("hide.bs.collapse", function () {
+  detailButton.textContent = "Show details";
+});
+
+cardBody.appendChild(detailButton);
+cardBody.appendChild(detailsContainer); // Append detailsContainer (with collapsible content) to cardBody
+
+card.appendChild(cardBody);
+outputDiv.appendChild(card);
+
     });
   }
 
