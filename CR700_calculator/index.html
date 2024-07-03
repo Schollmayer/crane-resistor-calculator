@@ -7,6 +7,9 @@
   <title>Resistor Calculator</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
   <link href=https://yeu-frontend.yaskawa.eu/assets/css/yaskstyle.css rel="stylesheet">
   <link rel="stylesheet" href="../sharedFiles/styles.css">
 </head>
@@ -32,8 +35,8 @@
         </div>
         <div class="form-group mt-2">
           <label class="form-label" for="gearboxEffInput">Gearbox efficiency [%]:</label>
-          <input type="number" class="form-control" id="gearboxEffInput"
-            placeholder="Enter gearbox efficiency [%]" min="70" max="99" required>
+          <input type="number" class="form-control" id="gearboxEffInput" placeholder="Enter gearbox efficiency [%]"
+            min="70" max="99" required>
         </div>
         <div class="form-group mt-2">
           <label class="form-label" for="motorEffInput">Motor efficiency [%]:</label>
@@ -42,9 +45,10 @@
         </div>
         <h2 class="mt-4">Brake time considerations</h2>
         <div class="form-group mt-2">
-          <label class="form-label" for="ed%Input">Regenerative percentage [%]:</label>
+          <label class="form-label" id="tooltipLabel" for="ed%Input">Regenerative percentage [%]:</label>
           <input type="number" class="form-control" id="ed%Input" placeholder="Enter regenerative percentage [%]">
         </div>
+
         <div class="form-group mt-2">
           <label class="form-label" for="hoistHeigthInput">Hoist height [m]:</label>
           <input type="number" class="form-control" id="hoistHeigthInput" placeholder="Enter hoist height [m]" min="1"

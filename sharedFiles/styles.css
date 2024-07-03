@@ -1,7 +1,7 @@
 /*
  * Custom CSS
  */
- body {
+body {
   background-color: var(--yask-super-light-gray);
 }
 
@@ -20,4 +20,28 @@ h1 {
   padding: 30px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom styles for the tooltip */
+.tooltip-inner {
+  max-width: none; /* Allows the tooltip to be larger than the default max-width */
+  padding: 4; /* Removes default padding */
+  background-color: var(--yask-super-light-gray); 
+  border: 2px solid var(--yask-blue);
+  opacity: 1;
+}
+.tooltip.right .tooltip-arrow {
+  color: var(--yask-blue); 
+  border-bottom-color: var(--yask-blue)!important;
+  border-top-color: var(--yask-blue)!important;
+  border-right-color: var(--yask-blue)!important;
+  border-left-color: var(--yask-blue)!important;
+}
+.tooltip-inner img {
+  display: block;
+  max-width: 100%; /* Ensures the image fits within the tooltip */
+}
+
+.tooltip.show {
+  opacity: 1;
 }

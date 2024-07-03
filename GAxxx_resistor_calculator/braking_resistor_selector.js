@@ -21,6 +21,24 @@ calculateResistorButton.addEventListener('click', function () {
   }
 });
 
+//Tooltip
+document.addEventListener('DOMContentLoaded', function () {
+  var tooltipTrigger = document.getElementById('tooltipLabel');
+  var tooltip = new bootstrap.Tooltip(tooltipTrigger, {
+    title: "<img src='../sharedFiles/graphics/dutyCycle.svg' alt='Duty circle explanation' />",
+    html: true,
+    placement: 'top' // You can change the placement as needed
+  });
+
+  var tooltipTrigger2 = document.getElementById('tooltipLabel2');
+  var tooltip2 = new bootstrap.Tooltip(tooltipTrigger2, {
+    title: "<img src='../sharedFiles/graphics/dutyCycle.svg' alt='Duty circle explanation' />",
+    html: true,
+    placement: 'top' // You can change the placement as needed
+  });
+});
+
+
 function calculate() {
   performAndDisplayCalculations(getRmin(ga700_data), calculateRmax(ga700_data), power.value, dutyCycle.value, dutyCycleDuration.value);
 }
