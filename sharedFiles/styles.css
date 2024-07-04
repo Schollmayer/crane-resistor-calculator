@@ -60,3 +60,19 @@ h1 {
   border-color:var(--yask-blue);
   border-width: "2 px";
 }
+
+.form-group {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+
+
+/*Changes to be consistent with Yaskawa style.css*/
+.form-select {
+  padding-top: 0.6rem;
+  padding-right: 1rem;
+  padding-bottom: 0.6rem;
+  padding-left: 1rem;
+  border-width: 2px;
+}
