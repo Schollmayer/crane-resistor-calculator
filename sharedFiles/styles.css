@@ -50,4 +50,13 @@ h1 {
   margin-bottom: 0px;
 }
 
+.accordion-button:not(.collapsed) {
+  color: white; /* Text color */
+  background-color: var(--yask-blue); /* Background color */
+  box-shadow: none;
+}
 
+.accordion-button {
+  border-color:var(--yask-blue);
+  border-width: "2 px";
+}

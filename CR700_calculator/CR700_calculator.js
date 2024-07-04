@@ -128,7 +128,49 @@ function displayResistorTransistorSelection(cr700Result, transistorResults, resi
 
   outputDiv.appendChild(cardGroup);
 
+//Display calculated application data in accordion
+var accordion = document.createElement("div");
+accordion.classList.add("accordion", "mb-3");
 
+var accordionCard = document.createElement("div");
+accordionCard.classList.add("accordion-item");
+
+var accordionHeader = document.createElement("h3");
+accordionHeader.classList.add("accordion-header");
+
+var headerButton = document.createElement("button");
+headerButton.classList.add("accordion-button", "collapsed");  // Start with collapsed
+headerButton.style.outline = "none";
+headerButton.setAttribute("type", "button");
+headerButton.setAttribute("data-bs-toggle", "collapse");
+headerButton.setAttribute("data-bs-target", "#resistorAccordion");
+headerButton.setAttribute("aria-expanded", "false");
+headerButton.setAttribute("aria-controls", "resistorAccordion");
+
+// Make the text bold and increase the font size
+headerButton.innerHTML = `<strong style="font-size: 1.1rem;">Calculated application values.</strong>`;
+
+accordionHeader.appendChild(headerButton);
+accordionCard.appendChild(accordionHeader);
+
+var accordionCollapse = document.createElement("div");
+accordionCollapse.classList.add("accordion-collapse", "collapse");  // Start with collapse
+accordionCollapse.id = "resistorAccordion";
+
+var accordionBody = document.createElement("div");
+accordionBody.classList.add("accordion-body");
+accordionBody.innerHTML = `<strong>Rmin:</strong> ${minR.toFixed(2)} Ω<br>
+<strong>Rmax:</strong> ${maxR.toFixed(2)} Ω<br>
+<strong>Power:</strong> ${power.toFixed(2)} kW`;
+
+accordionCollapse.appendChild(accordionBody);
+accordionCard.appendChild(accordionCollapse);
+accordion.appendChild(accordionCard);
+
+outputDiv.appendChild(accordion);
+
+
+//Display resistor network options
   if (resistorResults) {
     resistorResults.forEach(function (obj, index) {
       var card = document.createElement("div");
