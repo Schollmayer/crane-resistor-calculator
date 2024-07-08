@@ -1,123 +1,39 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Resistor calculator</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://yeu-frontend.yaskawa.eu/assets/css/plugins.css">
-    <link rel="stylesheet" href="https://yeu-frontend.yaskawa.eu/assets/css/style.css">
-    <link rel="stylesheet" href="https://yeu-frontend.yaskawa.eu/assets/css/yaskstyle.css">
-    <link rel="stylesheet" href="https://yeu-frontend.yaskawa.eu/assets/css/fonts.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar Example</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../sharedFiles/styles.css">
 </head>
-
 <body>
-    <div class="container my-5 max-auto">
+    <div class="container my-5">
         <!-- Image and text -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <img src="https://www.yaskawa.eu.com/assets/images/logo.png" alt="Yaskawa logo">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon">
-                </span>
+            <a class="navbar-brand" href="#">
+                <img src="../sharedFiles/graphics/logo_blue.png" alt="Yaskawa logo" style="height: 40px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
             </button>
-            <ul class="navbar-nav">
-                <li class="nav-item pl-10">
-                    <a class="nav-link yask-blue " href="braking_resistor_selector.html">
-                        Braking resistor selector
-                    </a>
-                </li>
-                <li class="nav-item pd-5">
-                    <a class="nav-link yask-blue pl-10" href="../CR700_calculator/index.html">
-                        Crane hoist selection tool
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <div class="col-lg-6 px-0 " id="mainDIV">
-            <h2 class="yask-blue pt-4 pb-4 ">
-                Braking resistor selection tool
-            </h2>
-            <span class="yask-dark-gray body-font">
-                Please input values.
-            </span>
-            <p class="yask-dark-gray">
-                The calculator internally calculates the maximum braking time by multiplying
-                the duty cycle with the duty cycle duration. <br>
-                If this is not accurate for your application, please do not use this tool.
-            </p>
-            <p class="yask-dark-gray">
-                The calculator displays the most cost effective selection first.
-            </p>
-
-            <form id="brakingDataInputForm">
-                <div>
-                    <label for="driveSelect" class="form-label yask-blue">
-                        Select drive model:
-                    </label>
-                    <select class="form-select" id="driveSelect" required style="color: #636669">
-                        <option value="" style="color: #636669" selected>
-                            Select drive model
-                        </option>
-                    </select>
-                    <script type="module">
-                        import { ga700_data } from "./ga700_data.js";
-                        const selectElement = document.getElementById('driveSelect');
-                        ga700_data.forEach((drive, index) => {
-                            const option = document.createElement('option');
-                            option.text = drive.type;
-                            option.value = drive;
-                            selectElement.appendChild(option);
-                        });
-                    </script>
-                </div>
-                <div class="form-group pt-3">
-                    <label for="dutyCycle" class="form-label yask-blue" id="tooltipLabel">
-                        Duty cycle [%]
-                    </label>
-                    <input type="number" class="form-control" id="dutyCycle"
-                        placeholder="Enter braking duty cycle in %" min="1" max="100" required>
-                </div>
-                <div class="form-group">
-                    <label for="dutyCycleDuration" class="form-label yask-blue" id="tooltipLabel2">
-                        Duty cycle duration [s]
-                    </label>
-                    <input type="number" class="form-control" id="dutyCycleDuration"
-                        placeholder="Enter braking duty cycle duration in s" min="1" required>
-                </div>
-                <div class="form-group">
-                    <label for="peakPower" class="form-label yask-blue">
-                        Peak braking power [kW]
-                    </label>
-                    <input type="number" class="form-control" id="peakPower"
-                        placeholder="Enter peak braking power in kW" min="0.01" step="any" required>
-                </div>
-                <div class="form-group">
-                    <label for="power" class="form-label yask-blue">
-                        Braking power [kW]
-                    </label>
-                    <input type="number" class="form-control" id="power"
-                        placeholder="Enter braking power in kW" min="0.01" step="any" required>
-                </div>
-            </form>
-            <button type="button" class="btn btn-yask-blue mt-3" id="calculateResistorButton">
-                Calculate
-            </button>
-            <div id="output" class="mt-4">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link yask-blue" href="../GAxxx_resistor_calculator/braking_resistor_selector.html">Braking resistor selector</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link yask-blue" href="../CR700_calculator/index.html">Crane hoist selection tool</a>
+                    </li>
+                </ul>
             </div>
-        </div>
+        </nav>
     </div>
-    <script type="module" src="braking_resistor_selector.js"></script>
-    <script type="text/javascript" src="https://yeu-frontend.yaskawa.eu/assets/js/core/jquery-3.7.1.min.js"></script>
-    <script type="text/javascript" src="https://yeu-frontend.yaskawa.eu/assets/js/core/popper.min.js"></script>
-    <script type="text/javascript" src="https://yeu-frontend.yaskawa.eu/assets/js/core/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://yeu-frontend.yaskawa.eu/assets/js/custom.js"></script>
-    <script type="text/javascript"
-        src="https://yeu-frontend.yaskawa.eu/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
 
+    <!-- jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-
 </html>
