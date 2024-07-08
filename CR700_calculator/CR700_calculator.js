@@ -93,6 +93,9 @@ function displayResistorTransistorSelection(cr700Result, transistorResults, resi
     transistorFlexContainer.style.flexDirection = "column"; // Ensure column direction for line breaks
     transistorFlexContainer.innerHTML = `<strong>Type:</strong> ${transistorResults.cdbr.type} <br>
                                        <strong>Quantity:</strong> ${transistorResults.qtty}`;
+    if (transistorResults.qtty>1){
+      transistorFlexContainer.innerHTML += `<br><br><strong>Please select the displayed resistor values for each braking transistor. `
+    }
     transistorCardBody.appendChild(transistorFlexContainer);
 
     transistorCard.appendChild(transistorCardBody);
