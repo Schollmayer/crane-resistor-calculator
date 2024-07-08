@@ -1065,7 +1065,7 @@ const RH_6000W022_UL_T = {
 }
 
 const RH_7500W023 = {
-  type: "RH_7500W023",
+  type: "RH-7500W023",
   resistance: 23,
   tolerance: 0.1,
   contPower: 7.200,
