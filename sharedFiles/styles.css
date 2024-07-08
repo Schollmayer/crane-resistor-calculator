@@ -64,6 +64,7 @@ h1 {
 .form-group {
   padding-left: 0;
   padding-right: 0;
+  padding-bottom: 0;
 }
 
 
@@ -75,4 +76,10 @@ h1 {
   padding-bottom: 0.6rem;
   padding-left: 1rem;
   border-width: 2px;
+}
+
+.body-font {
+  font-size: 1.07rem;
+  line-height: 1.82;
+  margin-bottom: 1rem;
 }
