@@ -70,16 +70,51 @@ h1 {
 
 
 /*Changes to be consistent with Yaskawa style.css*/
-.form-select {
+/*.form-select {
   padding-top: 0.6rem;
   padding-right: 1rem;
   padding-bottom: 0.6rem;
   padding-left: 1rem;
   border-width: 2px;
+  color: #636669;
+}
+*/
+.form-select {
+  padding-top: 0.4rem;
+  padding-right: 0.6rem;
+  padding-bottom: 0.3rem;
+  padding-left: 0.6rem;
+  border-width: 2px;
+  color: #636669;
+}
+
+
+.form-control {
+  padding-top: 0.4rem;
+  padding-right: 0.6rem;
+  padding-bottom: 0.3rem;
+  padding-left: 0.6rem;
+}
+
+.form-select option {
+  color: #636669; 
 }
 
 .body-font {
   font-size: 1.07rem;
   line-height: 1.82;
   margin-bottom: 1rem;
+}
+
+#driveSelect{
+  border:var(--bs-border-width) solid #ebedf2;
+  border-radius: var(--bs-border-radius);
+  line-height: 1.5;
+  color: var(--bs-body-color);
+  border-width: 2px;
+}
+
+#mainDIV{
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
 }

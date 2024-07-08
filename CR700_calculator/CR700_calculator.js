@@ -35,7 +35,7 @@ function clearOutput() {
   // Clear previous output
   outputDiv.innerHTML = "";
 }
-function displayResistorTransistorSelection(cr700Result, transistorResults, resistorResults, minR, maxR, power) {
+function displayResistorTransistorSelection(cr700Result, transistorResults, resistorResults, minR, maxR, power, hoist) {
   var outputDiv = document.getElementById("output");
 
   // Clear previous content
@@ -159,9 +159,9 @@ accordionCollapse.id = "resistorAccordion";
 
 var accordionBody = document.createElement("div");
 accordionBody.classList.add("accordion-body");
-accordionBody.innerHTML = `<strong>Rmin:</strong> ${minR.toFixed(2)} Ω<br>
-<strong>Rmax:</strong> ${maxR.toFixed(2)} Ω<br>
-<strong>Power:</strong> ${power.toFixed(2)} kW`;
+accordionBody.innerHTML = `<strong>Average braking power:</strong> ${hoist.averageBrakePower().toFixed(2)} kW<br>
+<strong>Maximum braking power:</strong> ${hoist.maxBrakePower().toFixed(2)} kW<br>
+<strong>Maximum continuous braking time:</strong> ${hoist.maxBrakeTime().toFixed(2)} s`;
 
 accordionCollapse.appendChild(accordionBody);
 accordionCard.appendChild(accordionCollapse);
@@ -294,12 +294,12 @@ function calculateResult() {
   if (CR700selection) {
     if (useInternalbrakingTransistor) {
       let resistorResults = calculateResistors(CR700selection.minBrakeResistance, hoist.maxBrakeResistance(), hoist.averageBrakePower(), hoist.dutyCycle, getdutyCyleTime(hoist.maxBrakePower()))
-      displayResistorTransistorSelection(CR700selection, null, resistorResults, CR700selection.minBrakeResistance, hoist.maxBrakeResistance(), hoist.averageBrakePower());
+      displayResistorTransistorSelection(CR700selection, null, resistorResults, CR700selection.minBrakeResistance, hoist.maxBrakeResistance(), hoist.averageBrakePower(),hoist);
     }
 
     else {
       let resistorResults = calculateResistors(hoist.selectedCDBR().cdbr.minResistance, hoist.maxBrakeResistance(), hoist.averageBrakePower(), hoist.dutyCycle, getdutyCyleTime(hoist.maxBrakePower()))
-      displayResistorTransistorSelection(CR700selection, hoist.selectedCDBR(), resistorResults, hoist.selectedCDBR().cdbr.minResistance, hoist.maxBrakeResistance(), hoist.averageBrakePower());
+      displayResistorTransistorSelection(CR700selection, hoist.selectedCDBR(), resistorResults, hoist.selectedCDBR().cdbr.minResistance, hoist.maxBrakeResistance(), hoist.averageBrakePower(),hoist);
     }
   }
   else {
