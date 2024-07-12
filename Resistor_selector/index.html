@@ -55,13 +55,13 @@
                         Rmin [Ω]:
                     </label>
                     <input type="number" class="form-control" id="Rmin"
-                        placeholder="Enter average mechanical power in kW" min="0.01" step = "any" required>
+                        placeholder="Enter Rmin in Ω" min="0.01" step = "any" required>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="Rmax">
                         Rmax [Ω]:
                     </label>
-                    <input type="number" class="form-control" id="Rmax" placeholder="Enter Rmax in %" step = "any" min="0.01"
+                    <input type="number" class="form-control" id="Rmax" placeholder="Enter Rmax in Ω" step = "any" min="0.01"
                         required>
                 </div>
                 <div class="form-group">
@@ -75,7 +75,7 @@
                     <label for="dutyCycle" class="form-label yask-blue" id="tooltipLabel2">
                         Duty cycle [%]
                     </label>
-                    <input type="number" class="form-control" id="dutyCycle" placeholder="Enter braking duty cycle in %"
+                    <input type="number" class="form-control" id="dutyCycle" placeholder="Enter duty cycle in %"
                         min="1" max="100" step = "any" required>
                 </div>
                 <div class="form-group">
@@ -83,7 +83,7 @@
                         Duty cycle duration [s]
                     </label>
                     <input type="number" class="form-control" id="dutyCycleDuration" step = "any"
-                        placeholder="Enter braking duty cycle duration in s" min="1" required>
+                        placeholder="Enter duty cycle duration in s" min="1" required>
                 </div>
             </form>
             <button type="button" class="btn btn-yask-blue mt-3" id="calculateButton">
