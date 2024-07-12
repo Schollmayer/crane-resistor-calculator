@@ -35,10 +35,14 @@
                         <a class="nav-link yask-blue" href="../CR700_calculator/index.html">Crane hoist selection
                             tool</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link yask-blue" href="../Resistor_selector/index.html">Resistor picker
+                            tool</a>
+                    </li>
                 </ul>
             </div>
         </nav>
-        <div class="col-lg-6 px-0 " id="mainDIV">
+        <div class="col-lg-6 px-0 mobilePadding" id="mainDIV">
             <h2 class="yask-blue pt-4 pb-4 ">
                 Braking resistor selection tool
             </h2>
@@ -83,14 +87,14 @@
                         Duty cycle [%]
                     </label>
                     <input type="number" class="form-control" id="dutyCycle" placeholder="Enter braking duty cycle in %"
-                        min="1" max="100" required>
+                        min="1" max="100" step = "any" required>
                 </div>
                 <div class="form-group">
                     <label for="dutyCycleDuration" class="form-label yask-blue" id="tooltipLabel2">
                         Duty cycle duration [s]
                     </label>
                     <input type="number" class="form-control" id="dutyCycleDuration"
-                        placeholder="Enter braking duty cycle duration in s" min="1" required>
+                        placeholder="Enter braking duty cycle duration in s" min="1" step = "any" required>
                 </div>
                 <div class="form-group">
                     <label for="peakPower" class="form-label yask-blue">

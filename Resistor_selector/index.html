@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> Crane hoist selection tool </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://yeu-frontend.yaskawa.eu/assets/css/plugins.css">
+    <link rel="stylesheet" href="https://yeu-frontend.yaskawa.eu/assets/css/style.css">
+    <link rel="stylesheet" href="https://yeu-frontend.yaskawa.eu/assets/css/yaskstyle.css">
+    <link rel="stylesheet" href="https://yeu-frontend.yaskawa.eu/assets/css/fonts.min.css">
+    <link rel="stylesheet" href="../sharedFiles/styles.css">
+
+<body>
+    <div class="container my-5 max-auto">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">
+                <img src="../sharedFiles/graphics/logo_blue.png" alt="Yaskawa logo" style="height: 40px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link yask-blue"
+                            href="../GAxxx_resistor_calculator/braking_resistor_selector.html">Braking resistor
+                            selector</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link yask-blue" href="../CR700_calculator/index.html">Crane hoist selection
+                            tool</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link yask-blue" href="index.html">Resistor picker
+                            tool</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="col-lg-6 px-0 mobilePadding" id="mainDIV">
+            <h2 class="yask-blue pt-4 pb-3 ">
+                Resistor picker
+            </h2>
+            <p class="yask-dark-gray">
+                Please input values.
+            </p>
+            <form id="brakingDataInputForm">
+                <div class="form-group">
+                    <label class="form-label yask-blue" for="Rmin">
+                        Rmin [Ω]:
+                    </label>
+                    <input type="number" class="form-control" id="Rmin"
+                        placeholder="Enter average mechanical power in kW" min="0.01" step = "any" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label yask-blue" for="Rmax">
+                        Rmax [Ω]:
+                    </label>
+                    <input type="number" class="form-control" id="Rmax" placeholder="Enter Rmax in %" step = "any" min="0.01"
+                        required>
+                </div>
+                <div class="form-group">
+                    <label for="power" class="form-label yask-blue">
+                        Power [kW]
+                    </label>
+                    <input type="number" class="form-control" id="power" placeholder="Enter power in kW" step = "any" min="0.01"
+                        step="any" required>
+                </div>
+                <div class="form-group pt-3">
+                    <label for="dutyCycle" class="form-label yask-blue" id="tooltipLabel2">
+                        Duty cycle [%]
+                    </label>
+                    <input type="number" class="form-control" id="dutyCycle" placeholder="Enter braking duty cycle in %"
+                        min="1" max="100" step = "any" required>
+                </div>
+                <div class="form-group">
+                    <label for="dutyCycleDuration" class="form-label yask-blue" id="tooltipLabel">
+                        Duty cycle duration [s]
+                    </label>
+                    <input type="number" class="form-control" id="dutyCycleDuration" step = "any"
+                        placeholder="Enter braking duty cycle duration in s" min="1" required>
+                </div>
+            </form>
+            <button type="button" class="btn btn-yask-blue mt-3" id="calculateButton">
+                Calculate
+            </button>
+            <div id="output" class="mt-3">
+            </div>
+        </div>
+    </div>
+    <script type="module" src="resistor_picker.js">
+    </script>
+    <script type="text/javascript" src="https://yeu-frontend.yaskawa.eu/assets/js/core/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="https://yeu-frontend.yaskawa.eu/assets/js/core/popper.min.js"></script>
+    <script type="text/javascript" src="https://yeu-frontend.yaskawa.eu/assets/js/core/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://yeu-frontend.yaskawa.eu/assets/js/custom.js"></script>
+    <script type="text/javascript"
+        src="https://yeu-frontend.yaskawa.eu/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+</body>
+
+</html>

@@ -22,6 +22,10 @@ h1 {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.mobilePadding {
+  padding-bottom: 30px;
+}
+
 /* Custom styles for the tooltip */
 .tooltip-inner {
   max-width: none; /* Allows the tooltip to be larger than the default max-width */
