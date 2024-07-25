@@ -87,8 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       }
 
-
-      var selectedDrive = ga700_data;
+      selectedDrive = ga700_data;
       if (selectedValue == "GA700") {
         selectedDrive = ga700_data;
       }
@@ -120,10 +119,7 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
   });
-
-
 });
-
 
 function calculate() {
   performAndDisplayCalculations(getRmin(ga700_data), calculateRmax(ga700_data), power.value, dutyCycle.value, dutyCycleDuration.value);
@@ -143,20 +139,33 @@ function getSelectedDrive(driveData) {
   return driveData[driveSelect.selectedIndex - 1];
 }
 
-function getTransistorCurves(outputPower) {
-  if (outputPower < 0.75) {
-    return drive_OLCurves_smaller_0_75_kW;
+function getTransistorCurves(outputPower, selectedDrive) {
+  if (selectedDrive === ga700_data || selectedDrive === cr700_data) {
+    if (outputPower < 0.75) {
+      return drive_OLCurves_smaller_0_75_kW;
+    }
+    else { return drive_OLCurves_higher_0_75_kW; }
   }
-
-  else { return drive_OLCurves_higher_0_75_kW; }
+  else if (selectedDrive === ga500_data || selectedDrive === la500_data) {
+    if (outputPower < 0.4) {
+      return drive_OLCurves_smaller_0_75_kW;
+    }
+    else { return drive_OLCurves_higher_0_75_kW; }
+  }
 }
 
-function getTransistorLinearCurves(outputPower) {
-  if (outputPower < 0.75) {
-    return drive_OLLinear_smaller_0_75_kW;
+function getTransistorLinearCurves(outputPower, selectedDrive) {
+  if (selectedDrive === ga700_data || selectedDrive === cr700_data) {
+    if (outputPower < 0.75) {
+      return drive_OLLinear_smaller_0_75_kW;
+    }
+    else { return drive_OLLinear_higher_0_75_kW; }
   }
-  else {
-    return drive_OLLinear_higher_0_75_kW;
+  else if (selectedDrive === ga500_data || selectedDrive === la500_data) {
+    if (outputPower < 0.4) {
+      return drive_OLLinear_smaller_0_75_kW;
+    }
+    else { return drive_OLLinear_higher_0_75_kW; }
   }
 }
 
@@ -183,14 +192,14 @@ function getBiggerCDBR(cdbr, cdbr_data) {
   }
 }
 
-
 function performAndDisplayCalculations(minR, maxR, power, dutyCycle, dutyCycleDuration) {
   clearOutput();
-  var gaCurves = getTransistorCurves(getSelectedDrive(ga700_data).hdPower);
-  var gaLinearCurves = getTransistorLinearCurves(getSelectedDrive(ga700_data).hdPower);
 
-  if (getSelectedDrive(ga700_data).internalBrakeTransistor) {
-    if (checkBrakingTorque(dutyCycle, getMaxBreakTime(dutyCycle, dutyCycleDuration), power, getSelectedDrive(ga700_data), gaCurves, gaLinearCurves)) {
+  var gaCurves = getTransistorCurves(getSelectedDrive(selectedDrive).hdPower, selectedDrive);
+  var gaLinearCurves = getTransistorLinearCurves(getSelectedDrive(selectedDrive).hdPower, selectedDrive);
+
+  if (getSelectedDrive(selectedDrive).internalBrakeTransistor) {
+    if (checkBrakingTorque(dutyCycle, getMaxBreakTime(dutyCycle, dutyCycleDuration), power, getSelectedDrive(selectedDrive), gaCurves, gaLinearCurves)) {
       var resistorResults = calculateResistors(minR, maxR, power, dutyCycle, dutyCycleDuration);
       if (resistorResults) {
         displayResistorTransistorSelection(resistorResults, null, minR, maxR, power);
@@ -200,11 +209,11 @@ function performAndDisplayCalculations(minR, maxR, power, dutyCycle, dutyCycleDu
       }
     }
     else {
-      if (hasTheBiggerDriveABrakingTransistor(ga700_data)) {
+      if (hasTheBiggerDriveABrakingTransistor(selectedDrive)) {
         outputBrakingTransistorError()
       }
       else {
-        var selectedCDBR = findCDBR(cdbr_data, maxR, getMaxBreakTime(dutyCycle, dutyCycleDuration), getSelectedDrive(ga700_data).brakeActivationVoltage, dutyCycle)
+        var selectedCDBR = findCDBR(cdbr_data, maxR, getMaxBreakTime(dutyCycle, dutyCycleDuration), getSelectedDrive(selectedDrive).brakeActivationVoltage, dutyCycle)
         if (selectedCDBR) {
           outputSameDriveWithBrakingTransistor();
           var resistorResults = calculateResistors(selectedCDBR.cdbr.minResistance, selectedCDBR.maxResistance, power, dutyCycle, dutyCycleDuration);
@@ -234,7 +243,7 @@ function performAndDisplayCalculations(minR, maxR, power, dutyCycle, dutyCycleDu
     }
   }
   else {
-    var selectedCDBR = findCDBR(cdbr_data, maxR, getMaxBreakTime(dutyCycle, dutyCycleDuration), getSelectedDrive(ga700_data).brakeActivationVoltage, dutyCycle)
+    var selectedCDBR = findCDBR(cdbr_data, maxR, getMaxBreakTime(dutyCycle, dutyCycleDuration), getSelectedDrive(selectedDrive).brakeActivationVoltage, dutyCycle)
     if (selectedCDBR) {
       outputExternalBrakingTransistor()
       var resistorResults = calculateResistors(selectedCDBR.cdbr.minResistance, selectedCDBR.maxResistance, power, dutyCycle, dutyCycleDuration);

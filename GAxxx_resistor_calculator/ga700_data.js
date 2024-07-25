@@ -1,7 +1,7 @@
 //GA700 drive data
 
 const ga700_4002 = {
-  type: "GA70C4002BBA",
+  type: "GA70C4002",
   voltageClass: 400,
   internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 0.55,                  // Heavy duty output power rating in [kW]
@@ -13,7 +13,7 @@ const ga700_4002 = {
 };
 
 const ga700_4004 = {
-  type: "GA70C4004BBA",
+  type: "GA70C4004",
   voltageClass: 400,
   internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 1.1,                  // Heavy duty output power rating in [kW]
@@ -25,7 +25,7 @@ const ga700_4004 = {
 };
 
 const ga700_4005 = {
-  type: "GA70C4005BBA",
+  type: "GA70C4005",
   voltageClass: 400,
   internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 1.5,                  // Heavy duty output power rating in [kW]
@@ -37,7 +37,7 @@ const ga700_4005 = {
 };
 
 const ga700_4007 = {
-  type: "GA70C4007BBA",
+  type: "GA70C4007",
   voltageClass: 400,
   internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 2.2,                  // Heavy duty output power rating in [kW]
@@ -49,7 +49,7 @@ const ga700_4007 = {
 };
 
 const ga700_4009 = {
-  type: "GA70C4009BBA",
+  type: "GA70C4009",
   voltageClass: 400,
   internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 3.0,                  // Heavy duty output power rating in [kW]
@@ -61,7 +61,7 @@ const ga700_4009 = {
 };
 
 const ga700_4012 = {
-  type: "GA70C4012BBA",
+  type: "GA70C4012",
   voltageClass: 400,
   internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 4.0,                  // Heavy duty output power rating in [kW]
@@ -73,7 +73,7 @@ const ga700_4012 = {
 };
 
 const ga700_4018 = {
-  type: "GA70C4018BBA",
+  type: "GA70C4018",
   voltageClass: 400,
   internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 5.5,                  // Heavy duty output power rating in [kW]
@@ -85,7 +85,7 @@ const ga700_4018 = {
 };
 
 const ga700_4023 = {
-  type: "GA70C4023BBA",
+  type: "GA70C4023",
   voltageClass: 400,
   internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 7.5,                  // Heavy duty output power rating in [kW]
@@ -97,7 +97,7 @@ const ga700_4023 = {
 };
 
 const ga700_4031 = {
-  type: "GA70C4031BBA",
+  type: "GA70C4031",
   voltageClass: 400,
   internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 11,                  // Heavy duty output power rating in [kW]
@@ -109,7 +109,7 @@ const ga700_4031 = {
 };
 
 const ga700_4038 = {
-  type: "GA70C4038BBA",
+  type: "GA70C4038",
   voltageClass: 400,
   internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 15,                  // Heavy duty output power rating in [kW]
@@ -121,7 +121,7 @@ const ga700_4038 = {
 };
 
 const ga700_4044 = {
-  type: "GA70C4044BBA",
+  type: "GA70C4044",
   voltageClass: 400,
   internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 18.5,                  // Heavy duty output power rating in [kW]
@@ -133,7 +133,7 @@ const ga700_4044 = {
 };
 
 const ga700_4060 = {
-  type: "GA70C4060BBA",
+  type: "GA70C4060",
   voltageClass: 400,
   internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 22.0,                  // Heavy duty output power rating in [kW]
@@ -145,7 +145,7 @@ const ga700_4060 = {
 };
 
 const ga700_4075 = {
-  type: "GA70C4075BBA",
+  type: "GA70C4075",
   voltageClass: 400,
   internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 30.0,                  // Heavy duty output power rating in [kW]
@@ -157,7 +157,7 @@ const ga700_4075 = {
 };
 
 const ga700_4089 = {
-  type: "GA70C4089BBA",
+  type: "GA70C4089",
   voltageClass: 400,
   internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 37.0,                  // Heavy duty output power rating in [kW]
@@ -169,7 +169,7 @@ const ga700_4089 = {
 }
 
 const ga700_4103 = {
-  type: "GA70C4103BBA",
+  type: "GA70C4103",
   voltageClass: 400,
   internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 45.0,                  // Heavy duty output power rating in [kW]
@@ -181,7 +181,7 @@ const ga700_4103 = {
 }
 
 const ga700_4140 = {
-  type: "GA70C4140BBA",
+  type: "GA70C4140",
   voltageClass: 400,
   internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 55.0,                  // Heavy duty output power rating in [kW]
@@ -193,7 +193,7 @@ const ga700_4140 = {
 }
 
 const ga700_4168 = {
-  type: "GA70C4168BBA",
+  type: "GA70C4168",
   voltageClass: 400,
   internalBrakeTransistor: true, // Internal braking transistor
   hdPower: 45.0,                  // Heavy duty output power rating in [kW]
@@ -205,7 +205,7 @@ const ga700_4168 = {
 }
 
 const ga700_4208 = {
-  type: "GA70C4208BBA",
+  type: "GA70C4208",
   voltageClass: 400,
   internalBrakeTransistor: false, // Internal braking transistor
   hdPower: 90.0,                  // Heavy duty output power rating in [kW]
@@ -216,7 +216,7 @@ const ga700_4208 = {
 }
 
 const ga700_4250 = {
-  type: "GA70C4250BBA",
+  type: "GA70C4250",
   voltageClass: 400,
   internalBrakeTransistor: false, // Internal braking transistor
   hdPower: 110.0,                  // Heavy duty output power rating in [kW]
@@ -227,7 +227,7 @@ const ga700_4250 = {
 }
 
 const ga700_4296 = {
-  type: "GA70C4296BBA",
+  type: "GA70C4296",
   voltageClass: 400,
   internalBrakeTransistor: false, // Internal braking transistor
   hdPower: 132.0,                  // Heavy duty output power rating in [kW]
@@ -238,7 +238,7 @@ const ga700_4296 = {
 }
 
 const ga700_4371 = {
-  type: "GA70C4371BBA",
+  type: "GA70C4371",
   voltageClass: 400,
   internalBrakeTransistor: false, // Internal braking transistor
   hdPower: 160.0,                  // Heavy duty output power rating in [kW]
@@ -249,7 +249,7 @@ const ga700_4371 = {
 }
 
 const ga700_4389 = {
-  type: "GA70C4389BBA",
+  type: "GA70C4389",
   voltageClass: 400,
   internalBrakeTransistor: false, // Internal braking transistor
   hdPower: 373.0,                  // Heavy duty output power rating in [kW]
@@ -260,7 +260,7 @@ const ga700_4389 = {
 }
 
 const ga700_4453 = {
-  type: "GA70C4453BBA",
+  type: "GA70C4453",
   voltageClass: 400,
   internalBrakeTransistor: false, // Internal braking transistor
   hdPower: 220.0,                  // Heavy duty output power rating in [kW]
@@ -271,7 +271,7 @@ const ga700_4453 = {
 }
 
 const ga700_4568 = {
-  type: "GA70C4371BBA",
+  type: "GA70C4371",
   voltageClass: 400,
   internalBrakeTransistor: false, // Internal braking transistor
   hdPower: 250.0,                  // Heavy duty output power rating in [kW]
@@ -282,7 +282,7 @@ const ga700_4568 = {
 }
 
 const ga700_4675 = {
-  type: "GA70C4675BBA",
+  type: "GA70C4675",
   voltageClass: 400,
   internalBrakeTransistor: false, // Internal braking transistor
   hdPower: 315.0,                  // Heavy duty output power rating in [kW]
@@ -293,7 +293,7 @@ const ga700_4675 = {
 }
 
 const ga700_4810 = {
-  type: "GA70C4810BBA",
+  type: "GA70C4810",
   voltageClass: 400,
   internalBrakeTransistor: false, // Internal braking transistor
   hdPower: 400.0,                  // Heavy duty output power rating in [kW]
@@ -304,7 +304,7 @@ const ga700_4810 = {
 }
 
 const ga700_4930 = {
-  type: "GA70C4930BBA",
+  type: "GA70C4930",
   voltageClass: 400,
   internalBrakeTransistor: false, // Internal braking transistor
   hdPower: 450.0,                  // Heavy duty output power rating in [kW]
@@ -315,7 +315,7 @@ const ga700_4930 = {
 }
 
 const ga700_C4H11 = {
-  type: "GA70C4H11BAA",
+  type: "GA70C4H11",
   voltageClass: 400,
   internalBrakeTransistor: false, // Internal braking transistor
   hdPower: 500.0,                  // Heavy duty output power rating in [kW]
@@ -327,7 +327,7 @@ const ga700_C4H11 = {
 
 
 const ga700_C4H12 = {
-  type: "GA70C4H12BAA",
+  type: "GA70C4H12",
   voltageClass: 400,
   internalBrakeTransistor: false, // Internal braking transistor
   hdPower: 560.0,                  // Heavy duty output power rating in [kW]
