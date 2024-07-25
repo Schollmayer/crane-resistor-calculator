@@ -142,3 +142,21 @@ h1 {
   margin-bottom: 5px;
 }
 
+.form-check-inline {
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0;
+  padding-bottom: 0;
+  padding-top: 0; 
+}
+
+@media (max-width: 576px) {
+  .form-check-inline {
+      display: inline-block;
+      margin-right: 0;
+  }
+}
+
+.form-check-label{
+  color: var(--yask-dark-gray) !important;
+}
