@@ -9,7 +9,7 @@ const la500_4009 = {
   }
 
   const la500_4015 = {
-    type: "LA50_4015",
+    type: "LA50C4015",
     voltageClass: 400,
     internalBrakeTransistor: true, // Internal braking transistor
     hdPower: 5.5,                  // Heavy duty output power rating in [kW]
@@ -67,3 +67,6 @@ const la500_4009 = {
     brakeActivationVoltage: 788,   // Braking transistor activation voltage in [Vdc]
     minBrakeResistance: 19.2,     // Minimum connectable braking resistance in [ohm]
   }
+
+
+  export const la500_data = [la500_4009, la500_4015, la500_4018, la500_4024, la500_4031, la500_4039, la500_4045]

@@ -1,8 +1,12 @@
 import { calculateResistors, getResistorGraphic } from "../sharedFiles/braking_resistor_calculations.js";
 import { checkBrakingTorque, findCDBR } from "./braking_transistor_calculations.js";
-import { ga700_data } from "./ga700_data.js";
 import { drive_OLCurves_higher_0_75_kW, drive_OLLinear_higher_0_75_kW, drive_OLCurves_smaller_0_75_kW, drive_OLLinear_smaller_0_75_kW } from "../sharedFiles/internal_braking_transistor_data.js";
 import { cdbr_data } from "../sharedFiles/cdbr_data.js";
+import { ga700_data } from "./ga700_data.js";
+import { ga500_data } from "./ga500_data.js";
+import { cr700_data } from "../CR700_calculator/cr700_data.js";
+import { la500_data } from "./la500_data.js";
+
 
 const calculateResistorButton = document.getElementById('calculateResistorButton');
 const dutyCycle = document.getElementById('dutyCycle');
@@ -10,6 +14,40 @@ const peakPower = document.getElementById('peakPower');
 const power = document.getElementById('power');
 const dutyCycleDuration = document.getElementById('dutyCycleDuration');
 const driveSelect = document.getElementById('driveSelect');
+
+//Populate "Select Drive Model"
+const radios = document.getElementsByName('driveSelectRadios');
+let selectedValue;
+for (const radio of radios) {
+  if (radio.checked) {
+    selectedValue = radio.value;
+    break;
+  }
+}
+
+var selectedDrive = ga700_data;
+if (selectedValue == "GA700") {
+  selectedDrive = ga700_data;
+}
+else if (selectedValue == "GA500") {
+  selectedDrive = ga500_data;
+}
+
+else if (selectedValue == "LA500") {
+  selectedDrive = la500_data;
+}
+
+else if (selectedValue == "CR700") {
+  selectedDrive = cr700_data;
+}
+const selectElement = document.getElementById('driveSelect');
+selectedDrive.forEach((drive, index) => {
+  const option = document.createElement('option');
+  option.text = drive.type;
+  option.value = drive;
+  selectElement.appendChild(option);
+});
+
 
 calculateResistorButton.addEventListener('click', function () {
   var form = document.getElementById('brakingDataInputForm');
@@ -21,7 +59,8 @@ calculateResistorButton.addEventListener('click', function () {
   }
 });
 
-//Tooltip
+
+//Tooltip and population of list
 document.addEventListener('DOMContentLoaded', function () {
   var tooltipTrigger = document.getElementById('tooltipLabel');
   var tooltip = new bootstrap.Tooltip(tooltipTrigger, {
@@ -36,6 +75,53 @@ document.addEventListener('DOMContentLoaded', function () {
     html: true,
     placement: 'top' // You can change the placement as needed
   });
+
+  var radioButtons = document.querySelectorAll('input[name="driveSelectRadios"]');
+  radioButtons.forEach(function (radio) {
+    radio.addEventListener('change', function () {
+      let selectedValue;
+      for (const radio of radios) {
+        if (radio.checked) {
+          selectedValue = radio.value;
+          break;
+        }
+      }
+
+
+      var selectedDrive = ga700_data;
+      if (selectedValue == "GA700") {
+        selectedDrive = ga700_data;
+      }
+      else if (selectedValue == "GA500") {
+        selectedDrive = ga500_data;
+      }
+
+      else if (selectedValue == "LA500") {
+        selectedDrive = la500_data;
+      }
+
+      else if (selectedValue == "CR700") {
+        selectedDrive = cr700_data;
+      }
+
+      const selectElement = document.getElementById('driveSelect');
+      // Get all child elements of the select element
+      const children = selectElement.children;
+      // Remove all child elements except the first one
+      while (selectElement.children.length > 1) {
+        selectElement.removeChild(selectElement.lastChild);
+      }
+
+      selectedDrive.forEach((drive, index) => {
+        const option = document.createElement('option');
+        option.text = drive.type;
+        option.value = drive;
+        selectElement.appendChild(option);
+      });
+    });
+  });
+
+
 });
 
 
@@ -329,15 +415,15 @@ function displayResistorTransistorSelection(resistorResults, transistorResults, 
       flexContainer.appendChild(transistorContainer);
     }
 
-// Details section
-var detailsContainer = document.createElement("div");
-detailsContainer.classList.add("collapse"); // Add the "well" class here
-detailsContainer.id = `details-${index}`;
+    // Details section
+    var detailsContainer = document.createElement("div");
+    detailsContainer.classList.add("collapse"); // Add the "well" class here
+    detailsContainer.id = `details-${index}`;
 
-// Create a wrapper div with margin inside detailsContainer
-var detailsContent = document.createElement("div");
-detailsContent.classList.add("mt-3");
-detailsContent.innerHTML = `
+    // Create a wrapper div with margin inside detailsContainer
+    var detailsContent = document.createElement("div");
+    detailsContent.classList.add("mt-3");
+    detailsContent.innerHTML = `
   <div style="display: flex; justify-content: left; margin: 0; padding: 0;">
     <div style="margin-right: 20px; padding: 0;">
       <strong style="font-size: 1.1em">Option details:</strong><br>
@@ -354,31 +440,31 @@ detailsContent.innerHTML = `
   </div>
 `;
 
-detailsContainer.appendChild(detailsContent); // Append detailsContent (with margin) inside detailsContainer
+    detailsContainer.appendChild(detailsContent); // Append detailsContent (with margin) inside detailsContainer
 
-var detailButton = document.createElement("button");
-detailButton.classList.add("btn", "btn-yask-blue", "mt-3");
-detailButton.setAttribute("type", "button");
-detailButton.setAttribute("data-bs-toggle", "collapse");
-detailButton.setAttribute("data-bs-target", `#details-${index}`);
-detailButton.setAttribute("aria-expanded", "false");
-detailButton.setAttribute("aria-controls", `details-${index}`);
-detailButton.textContent = "Show details";
+    var detailButton = document.createElement("button");
+    detailButton.classList.add("btn", "btn-yask-blue", "mt-3");
+    detailButton.setAttribute("type", "button");
+    detailButton.setAttribute("data-bs-toggle", "collapse");
+    detailButton.setAttribute("data-bs-target", `#details-${index}`);
+    detailButton.setAttribute("aria-expanded", "false");
+    detailButton.setAttribute("aria-controls", `details-${index}`);
+    detailButton.textContent = "Show details";
 
-// Event listener for Bootstrap collapse events
-detailsContainer.addEventListener("show.bs.collapse", function () {
-  detailButton.textContent = "Show less";
-});
+    // Event listener for Bootstrap collapse events
+    detailsContainer.addEventListener("show.bs.collapse", function () {
+      detailButton.textContent = "Show less";
+    });
 
-detailsContainer.addEventListener("hide.bs.collapse", function () {
-  detailButton.textContent = "Show details";
-});
+    detailsContainer.addEventListener("hide.bs.collapse", function () {
+      detailButton.textContent = "Show details";
+    });
 
-cardBody.appendChild(detailButton);
-cardBody.appendChild(detailsContainer); // Append detailsContainer (with collapsible content) to cardBody
+    cardBody.appendChild(detailButton);
+    cardBody.appendChild(detailsContainer); // Append detailsContainer (with collapsible content) to cardBody
 
-card.appendChild(cardBody);
-outputDiv.appendChild(card);
+    card.appendChild(cardBody);
+    outputDiv.appendChild(card);
 
   });
 }
