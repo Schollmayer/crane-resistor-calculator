@@ -915,7 +915,7 @@ const RH_4800W022 = {
 }
 
 const RH_4800W022_10 = {
-  type: "RRH-4800W022-10",
+  type: "RH-4800W022-10",
   resistance: 22,
   tolerance: 0.1,
   contPower: 1.400,
@@ -930,7 +930,7 @@ const RH_4800W022_10 = {
 }
 
 const RH_4800W022_10_UL_T = {
-  type: "RRH-4800W022-10-UL-T",
+  type: "RH-4800W022-10-UL-T",
   resistance: 22,
   tolerance: 0.1,
   contPower: 1.000,

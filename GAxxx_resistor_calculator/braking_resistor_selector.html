@@ -21,7 +21,9 @@
             <a class="navbar-brand" href="#">
                 <img src="../sharedFiles/graphics/logo_blue.png" alt="Yaskawa logo" style="height: 40px;">
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -57,8 +59,29 @@
             <p class="yask-dark-gray">
                 The calculator displays the most cost effective selection first.
             </p>
-
             <form id="brakingDataInputForm">
+                <label for="dutyCycle" class="form-label yask-blue mt-2" >
+                    Select drive series:
+                </label>
+                <div class="radio-container mb-1">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="driveSelectRadios" id="driveSelectRadio1" value="GA700" checked>
+                        <label class="form-check-label" for="driveSelectRadio1">GA700</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="driveSelectRadios" id="driveSelectRadio2" value="CR700">
+                        <label class="form-check-label" for="driveSelectRadio2">CR700</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="driveSelectRadios" id="driveSelectRadio3" value="GA500">
+                        <label class="form-check-label" for="driveSelectRadio3">GA500</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="driveSelectRadios" id="driveSelectRadio4" value="LA500">
+                        <label class="form-check-label" for="driveSelectRadio4">LA500</label>
+                    </div>
+                </div>
+                
                 <div>
                     <label for="driveSelect" class="form-label yask-blue">
                         Select drive model:
@@ -68,33 +91,20 @@
                             Select drive model
                         </option>
                     </select>
-                    <script type="module">
-                        import {
-                            ga700_data
-                        }
-                            from "./ga700_data.js";
-                        const selectElement = document.getElementById('driveSelect');
-                        ga700_data.forEach((drive, index) => {
-                            const option = document.createElement('option');
-                            option.text = drive.type;
-                            option.value = drive;
-                            selectElement.appendChild(option);
-                        });
-                    </script>
                 </div>
                 <div class="form-group pt-3">
                     <label for="dutyCycle" class="form-label yask-blue" id="tooltipLabel">
                         Duty cycle [%]
                     </label>
                     <input type="number" class="form-control" id="dutyCycle" placeholder="Enter braking duty cycle in %"
-                        min="1" max="100" step = "any" required>
+                        min="1" max="100" step="any" required>
                 </div>
                 <div class="form-group">
                     <label for="dutyCycleDuration" class="form-label yask-blue" id="tooltipLabel2">
                         Duty cycle duration [s]
                     </label>
                     <input type="number" class="form-control" id="dutyCycleDuration"
-                        placeholder="Enter braking duty cycle duration in s" min="1" step = "any" required>
+                        placeholder="Enter braking duty cycle duration in s" min="1" step="any" required>
                 </div>
                 <div class="form-group">
                     <label for="peakPower" class="form-label yask-blue">

@@ -39,7 +39,7 @@
       "command": "select",
       "target": "id=driveSelect",
       "targets": [],
-      "value": "label=GA70C4031BBA"
+      "value": "label=GA70C4031"
     }, {
       "id": "62081451-63e8-4e3d-a13f-c4ef78d9134d",
       "comment": "",
@@ -155,7 +155,7 @@
       "command": "select",
       "target": "id=driveSelect",
       "targets": [],
-      "value": "label=GA70C4296BBA"
+      "value": "label=GA70C4296"
     }, {
       "id": "8169a316-23c6-4867-8fc7-da47f5d1bab3",
       "comment": "",
@@ -271,7 +271,7 @@
       "command": "select",
       "target": "id=driveSelect",
       "targets": [],
-      "value": "label=GA70C4208BBA"
+      "value": "label=GA70C4208"
     }, {
       "id": "d9eeb269-f7f0-4206-8c12-9616ac388d70",
       "comment": "",
@@ -413,7 +413,7 @@
       "command": "select",
       "target": "id=driveSelect",
       "targets": [],
-      "value": "label=GA70C4371BBA"
+      "value": "label=GA70C4371"
     }, {
       "id": "9c37400e-a6da-4146-ae90-5c31c45a8e59",
       "comment": "",
@@ -555,7 +555,7 @@
       "command": "select",
       "target": "id=driveSelect",
       "targets": [],
-      "value": "label=GA70C4675BBA"
+      "value": "label=GA70C4675"
     }, {
       "id": "2be308b7-d322-4d8e-83a1-83edcfc11b21",
       "comment": "",
@@ -697,7 +697,7 @@
       "command": "select",
       "target": "id=driveSelect",
       "targets": [],
-      "value": "label=GA70C4002BBA"
+      "value": "label=GA70C4002"
     }, {
       "id": "5083fa0f-602a-434f-82ac-32d7502db527",
       "comment": "",
