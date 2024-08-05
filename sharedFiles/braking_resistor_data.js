@@ -106,6 +106,7 @@ const RH_0100W830 = {
   ],
 }
 
+//Not in NonConfigurableProducts
 const RH_0200W045 = {
   type: "RH-0200W045",
   resistance: 45,
@@ -136,6 +137,7 @@ const RH_0200W045 = {
   ],
 }
 
+//Not in NonConfigurableProducts
 const RH_0200W045_UL_T = {
   type: "RH-0200W045_UL_T",
   resistance: 45,
@@ -317,6 +319,7 @@ const RH_0390W070 = {
     },
   ],
 }
+//Not in NonConfigurableProducts
 const RH_0400W024 = {
   type: "RH-0400W024",
   resistance: 24,
@@ -346,7 +349,7 @@ const RH_0400W024 = {
     },
   ],
 }
-
+//Not in NonConfigurableProducts
 const RH_0400W032 = {
   type: "RH-0400W032",
   resistance: 32,

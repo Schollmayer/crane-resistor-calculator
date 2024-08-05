@@ -47,6 +47,10 @@
                 Resistor picker
             </h2>
             <p class="yask-dark-gray">
+                The calculator displays the most cost effective selection first and accounts for the tolerance of the
+                resistors.
+            </p>
+            <p class="yask-dark-gray">
                 Please input values.
             </p>
             <form id="brakingDataInputForm">
@@ -54,35 +58,35 @@
                     <label class="form-label yask-blue" for="Rmin">
                         Rmin [Ω]:
                     </label>
-                    <input type="number" class="form-control" id="Rmin"
-                        placeholder="Enter Rmin in Ω" min="0.01" step = "any" required>
+                    <input type="number" class="form-control" id="Rmin" placeholder="Enter Rmin in Ω" min="0.01"
+                        step="any" required>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="Rmax">
                         Rmax [Ω]:
                     </label>
-                    <input type="number" class="form-control" id="Rmax" placeholder="Enter Rmax in Ω" step = "any" min="0.01"
-                        required>
+                    <input type="number" class="form-control" id="Rmax" placeholder="Enter Rmax in Ω" step="any"
+                        min="0.01" required>
                 </div>
                 <div class="form-group">
                     <label for="power" class="form-label yask-blue">
                         Power [kW]
                     </label>
-                    <input type="number" class="form-control" id="power" placeholder="Enter power in kW" step = "any" min="0.01"
-                        step="any" required>
+                    <input type="number" class="form-control" id="power" placeholder="Enter power in kW" step="any"
+                        min="0.01" step="any" required>
                 </div>
                 <div class="form-group pt-3">
                     <label for="dutyCycle" class="form-label yask-blue" id="tooltipLabel2">
                         Duty cycle [%]
                     </label>
-                    <input type="number" class="form-control" id="dutyCycle" placeholder="Enter duty cycle in %"
-                        min="1" max="100" step = "any" required>
+                    <input type="number" class="form-control" id="dutyCycle" placeholder="Enter duty cycle in %" min="1"
+                        max="100" step="any" required>
                 </div>
                 <div class="form-group">
                     <label for="dutyCycleDuration" class="form-label yask-blue" id="tooltipLabel">
                         Duty cycle duration [s]
                     </label>
-                    <input type="number" class="form-control" id="dutyCycleDuration" step = "any"
+                    <input type="number" class="form-control" id="dutyCycleDuration" step="any"
                         placeholder="Enter duty cycle duration in s" min="1" required>
                 </div>
             </form>

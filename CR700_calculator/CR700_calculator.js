@@ -240,8 +240,8 @@ detailsContent.innerHTML = `
     <div style="margin-right: 20px; padding: 0;"> 
       <strong style="font-size: 1.1em">Option details:</strong><br>
       <strong>Rtotal:</strong> ${obj.totalResistance.toFixed(2)} Ω<br>
-      <strong>Total Power:</strong> ${obj.totalPower.toFixed(2)} kW<br>
-      <strong>Total Quantity:</strong> ${obj.quantity}<br>
+      <strong>Total power:</strong> ${obj.totalPower.toFixed(2)} kW<br>
+      <strong>Total quantity:</strong> ${obj.quantity}<br>
     </div>
   </div>
 `;
