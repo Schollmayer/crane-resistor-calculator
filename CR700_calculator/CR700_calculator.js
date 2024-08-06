@@ -296,12 +296,12 @@ function calculateResult() {
 
   if (CR700selection) {
     if (useInternalbrakingTransistor) {
-      let resistorResults = calculateResistors(CR700selection.minBrakeResistance, hoist.maxBrakeResistance(), hoist.averageBrakePower(), hoist.dutyCycle, getdutyCyleTime(hoist.maxBrakePower()))
+      let resistorResults = calculateResistors(CR700selection.minBrakeResistance, hoist.maxBrakeResistance(), hoist.averageBrakePower(), hoist.dutyCycle, getdutyCyleTime(hoist.maxBrakeTime(), hoist.dutyCycle))
       displayResistorTransistorSelection(CR700selection, null, resistorResults, CR700selection.minBrakeResistance, hoist.maxBrakeResistance(), hoist.averageBrakePower(),hoist);
     }
 
     else {
-      let resistorResults = calculateResistors(hoist.selectedCDBR().cdbr.minResistance, hoist.maxBrakeResistance(), hoist.averageBrakePower(), hoist.dutyCycle, getdutyCyleTime(hoist.maxBrakePower()))
+      let resistorResults = calculateResistors(hoist.selectedCDBR().cdbr.minResistance, hoist.maxBrakeResistance(), hoist.averageBrakePower(), hoist.dutyCycle, getdutyCyleTime(hoist.maxBrakeTime(), hoist.dutyCycle))
       displayResistorTransistorSelection(CR700selection, hoist.selectedCDBR(), resistorResults, hoist.selectedCDBR().cdbr.minResistance, hoist.maxBrakeResistance(), hoist.averageBrakePower(),hoist);
     }
   }
