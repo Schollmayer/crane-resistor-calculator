@@ -55,7 +55,7 @@ export class HoistFrontend {
 // Functions
 
 // Function to select one or more CDBR braking units according to application requirements
-const findCDBR = (maxBrakeResistance, maxBrakeTime, brakeActivationV, dutyCycle) => {
+export const findCDBR = (maxBrakeResistance, maxBrakeTime, brakeActivationV, dutyCycle) => {
   let selectedCDBR;
   let selectedEDCurve;
   let maxBrakingCurrent;
@@ -139,7 +139,7 @@ const findCDBR = (maxBrakeResistance, maxBrakeTime, brakeActivationV, dutyCycle)
 
 
 // Function to select CR700 drive according to application motoring and braking requirements
-const findCR700 = (motorRatedCurrent, avBrakePower, maxBrakeResistance, maxBrakeTime, dutyCycle) => {
+export const findCR700 = (motorRatedCurrent, avBrakePower, maxBrakeResistance, maxBrakeTime, dutyCycle) => {
   let selectedCR700;
 
   // Initial CR700 selection according to motor rated current and mininmum connectable braking resistance (including 5% tolerance). Braking resistance considered only if CR700 has internal braking transistor
@@ -182,14 +182,14 @@ const findCR700 = (motorRatedCurrent, avBrakePower, maxBrakeResistance, maxBrake
 
 }
 
-function getTransistorCurves(outputPower) {
+export function getTransistorCurves(outputPower) {
   if (outputPower < 0.75) {
     return drive_OLCurves_smaller_0_75_kW;
   }
   else { return drive_OLCurves_higher_0_75_kW; }
 }
 
-function getTransistorLinearCurves(outputPower) {
+export function getTransistorLinearCurves(outputPower) {
   if (outputPower < 0.75) {
     return drive_OLLinear_smaller_0_75_kW;
   }
@@ -199,7 +199,7 @@ function getTransistorLinearCurves(outputPower) {
 }
 
 // Function to determine if the allowable braking torque at the ed/brakeTime operation point for the selected CR700 is higher than application requirements
-function checkBrakingTorque(ed, brakeTime, brakePower, cr700) {
+export function checkBrakingTorque(ed, brakeTime, brakePower, cr700) {
   let tbLineAbove;
 
   let brakingTorquePercent = Math.round((brakePower / cr700.hdPower) * 100);

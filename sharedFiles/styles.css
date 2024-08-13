@@ -73,6 +73,7 @@ h1 {
 
 
 
+
 /*Changes to be consistent with Yaskawa style.css*/
 /*.form-select {
   padding-top: 0.6rem;
@@ -159,4 +160,14 @@ h1 {
 
 .form-check-label{
   color: var(--yask-dark-gray) !important;
+}
+
+#loadInputsButton {
+background: var(--yask-light-gray) !important;
+border: var(--yask-light-gray) !important;
+}
+
+#resetInputsButton {
+  background: var(--yask-gray) !important;
+  border: var(--yask-gray) !important;
 }

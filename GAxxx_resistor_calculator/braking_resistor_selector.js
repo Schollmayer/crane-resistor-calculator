@@ -57,8 +57,97 @@ calculateResistorButton.addEventListener('click', function () {
   else {
     form.reportValidity(); // This will trigger the browser's built-in validation messages
   }
+  storeFormInput();
 });
 
+const loadInputsButton = document.getElementById('loadInputsButton');
+loadInputsButton.addEventListener('click', loadFormData);
+
+const resetInputsButton = document.getElementById('resetInputsButton');
+resetInputsButton.addEventListener('click', resetForm);
+
+//Functions to store last form input values
+function storeFormInput() {
+  // Get all inputs in the form
+  const form = document.getElementById('brakingDataInputForm');
+  const inputs = form.querySelectorAll('input');
+  const selects = form.querySelectorAll('select');
+
+  // Create an object to hold form data
+  const formData = {};
+
+  // Loop through inputs and store their values
+  inputs.forEach(input => {
+    if (input.type === 'radio' && input.checked) {
+      // Save the checked radio button
+      formData[input.name] = input.value;
+    } else if (input.type !== 'radio') {
+      formData[input.id] = input.value;
+    }
+  });
+
+  // Loop through selects and store their selected values
+  selects.forEach(select => {
+    formData[select.id] = select.value;
+  });
+
+  // Store form data as a JSON string in local storage
+  localStorage.setItem('brakingFormData', JSON.stringify(formData));
+}
+
+// Function to load form data from local storage
+// Function to load form data from local storage
+function loadFormData() {
+  // Retrieve the data from local storage
+  const formData = JSON.parse(localStorage.getItem('brakingFormData'));
+
+  // If formData is null, there is no saved data
+  if (!formData) {
+    alert('No saved data found!');
+    return;
+  }
+
+  // Get all inputs in the form
+  const form = document.getElementById('brakingDataInputForm');
+  const inputs = form.querySelectorAll('input');
+  const selects = form.querySelectorAll('select');
+
+  // Loop through inputs and set their values from local storage
+  inputs.forEach(input => {
+    if (input.type === 'radio') {
+      if (formData[input.name] === input.value) {
+        input.checked = true;
+      }
+    } else if (formData[input.id] !== undefined) {
+      input.value = formData[input.id];
+    }
+  });
+
+  // Loop through selects and set their selected values
+  selects.forEach(select => {
+    if (formData[select.id] !== undefined) {
+      select.value = formData[select.id];
+    }
+  });
+}
+// Function to reset all form inputs to empty strings and reset radio buttons
+function resetForm() {
+  const form = document.getElementById('brakingDataInputForm');
+  const inputs = form.querySelectorAll('input');
+  const selects = form.querySelectorAll('select');
+
+  inputs.forEach(input => {
+    if (input.type === 'radio') {
+      input.checked = input.defaultChecked;
+    } else {
+      input.value = '';
+    }
+  });
+
+  selects.forEach(select => {
+    select.selectedIndex = 0;
+  });
+}
 
 //Tooltip and population of list
 document.addEventListener('DOMContentLoaded', function () {

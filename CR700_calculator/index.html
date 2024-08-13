@@ -36,6 +36,10 @@
                             tool</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link yask-blue" href="../CR700_calculator_alternative/">Crane hoist selection
+                            tool 2</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link yask-blue" href="../Resistor_selector/index.html">Resistor picker
                             tool</a>
                     </li>
@@ -49,7 +53,7 @@
             <span class="yask-dark-gray body-font">
                 So far this calculator only works with the 400V-class drives and
                 motors.<br></span>
-            <p class="yask-dark-gray">This calculator assumes a CDBR voltage selection of 460V and accounts for the tolerance of the resistors.</p>
+            <p class="yask-dark-gray">This calculator assumes a CDBR voltage selection of 788V and accounts for the tolerance of the resistors.</p>
 
             <p class="yask-dark-gray">
                 Please input values.
@@ -89,7 +93,7 @@
                 </h3>
                 <div class="form-group mt-2">
                     <label class="form-label yask-blue" for="ed%Input" id="tooltipLabel">
-                        Regenerative percentage [%]:
+                        Regenerative percentage / Duty cycle [%]:
                     </label>
                     <input type="number" class="form-control" id="ed%Input"
                         placeholder="Enter regenerative percentage in %" min="10" max="50" step = "any" required>
@@ -111,6 +115,12 @@
             </form>
             <button type="button" class="btn btn-yask-blue mt-3" id="calculateButton">
                 Calculate
+            </button>
+            <button type="button" class="btn btn-yask-blue mt-3" id="loadInputsButton">
+                Load last inputs
+            </button>
+            <button type="button" class="btn btn-yask-blue mt-3" id="resetInputsButton">
+                Reset inputs
             </button>
             <div id="output" class="mt-3">
             </div>

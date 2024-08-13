@@ -12,7 +12,62 @@ calculateButton.addEventListener('click', function () {
   else {
     form.reportValidity(); // This will trigger the browser's built-in validation messages
   }
+  storeFormInput();
 });
+
+const loadInputsButton = document.getElementById('loadInputsButton');
+loadInputsButton.addEventListener('click', loadFormData);
+
+const resetInputsButton = document.getElementById('resetInputsButton');
+resetInputsButton.addEventListener('click', resetForm);
+
+//Functions to store last form input values
+function storeFormInput() {
+  // Get all inputs in the form
+  const form = document.getElementById('brakingDataInputForm');
+  const inputs = form.querySelectorAll('input');
+  // Create an object to hold form data
+  const formData = {};
+  // Loop through inputs and store their values
+  inputs.forEach(input => {
+    formData[input.id] = input.value;
+  });
+
+  // Store form data as a JSON string in local storage
+  localStorage.setItem('brakingFormData', JSON.stringify(formData));
+}
+
+// Function to load form data from local storage
+function loadFormData() {
+  // Retrieve the data from local storage
+  const formData = JSON.parse(localStorage.getItem('brakingFormData'));
+
+  // If formData is null, there is no saved data
+  if (!formData) {
+    alert('No saved data found!');
+    return;
+  }
+
+  // Get all inputs in the form
+  const form = document.getElementById('brakingDataInputForm');
+  const inputs = form.querySelectorAll('input');
+
+  // Loop through inputs and set their values from local storage
+  inputs.forEach(input => {
+    if (formData[input.id] !== undefined) {
+      input.value = formData[input.id];
+    }
+  });
+}
+// Function to reset all form inputs to empty strings
+function resetForm() {
+  const form = document.getElementById('brakingDataInputForm');
+  const inputs = form.querySelectorAll('input');
+
+  inputs.forEach(input => {
+    input.value = '';
+  });
+}
 
 //Tooltip
 document.addEventListener('DOMContentLoaded', function () {
