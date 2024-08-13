@@ -38,13 +38,13 @@ function storeFormInput() {
   });
 
   // Store form data as a JSON string in local storage
-  localStorage.setItem('brakingFormData', JSON.stringify(formData));
+  localStorage.setItem('InputFormDataResitorCalc', JSON.stringify(formData));
 }
 
 // Function to load form data from local storage
 function loadFormData() {
   // Retrieve the data from local storage
-  const formData = JSON.parse(localStorage.getItem('brakingFormData'));
+  const formData = JSON.parse(localStorage.getItem('InputFormDataResitorCalc'));
 
   // If formData is null, there is no saved data
   if (!formData) {
