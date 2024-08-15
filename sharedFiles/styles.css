@@ -170,12 +170,3 @@ h1 {
   color: var(--yask-dark-gray) !important;
 }
 
-#loadInputsButton {
-  background: var(--yask-light-gray) !important;
-  border: var(--yask-light-gray) !important;
-}
-
-#resetInputsButton {
-  background: var(--yask-gray) !important;
-  border: var(--yask-gray) !important;
-}
