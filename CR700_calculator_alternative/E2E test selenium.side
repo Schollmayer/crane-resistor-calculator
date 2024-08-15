@@ -1,0 +1,256 @@
+{
+  "id": "26861c86-43a8-4efb-9188-5d992a595748",
+  "version": "2.0",
+  "name": "E2E test selenium",
+  "url": "http://127.0.0.1:5500",
+  "tests": [{
+    "id": "4fca441d-9de7-4f9f-8f90-7442ad5e9321",
+    "name": "Document example",
+    "commands": [{
+      "id": "8836992e-e5c6-4fa2-aeb4-dae58fde3679",
+      "comment": "",
+      "command": "open",
+      "target": "/CR700_calculator_alternative/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6a23b2d2-f811-486e-be59-728095a44dc8",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1654x897",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3118bbbd-ce9c-4be4-8fb7-1862fb6cd5a4",
+      "comment": "",
+      "command": "click",
+      "target": "id=motorRatedCurrentInput",
+      "targets": [
+        ["id=motorRatedCurrentInput", "id"],
+        ["css=#motorRatedCurrentInput", "css:finder"],
+        ["xpath=//input[@id='motorRatedCurrentInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "000415b8-8372-4289-b9ef-2176f2d1c80d",
+      "comment": "",
+      "command": "type",
+      "target": "id=motorRatedCurrentInput",
+      "targets": [
+        ["id=motorRatedCurrentInput", "id"],
+        ["css=#motorRatedCurrentInput", "css:finder"],
+        ["xpath=//input[@id='motorRatedCurrentInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "45"
+    }, {
+      "id": "5927bf36-820c-454d-b0f8-154af5409954",
+      "comment": "",
+      "command": "type",
+      "target": "id=avMotorPowerInput",
+      "targets": [
+        ["id=avMotorPowerInput", "id"],
+        ["css=#avMotorPowerInput", "css:finder"],
+        ["xpath=//input[@id='avMotorPowerInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "25"
+    }, {
+      "id": "674c54f8-12bd-4d27-86f7-2c48f8386ecf",
+      "comment": "",
+      "command": "type",
+      "target": "id=avMotorSpeedInput",
+      "targets": [
+        ["id=avMotorSpeedInput", "id"],
+        ["css=#avMotorSpeedInput", "css:finder"],
+        ["xpath=//input[@id='avMotorSpeedInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "1420"
+    }, {
+      "id": "8ef25ab7-e882-49bd-bb8b-41a9cc165a61",
+      "comment": "",
+      "command": "type",
+      "target": "id=MotorInertiaInput",
+      "targets": [
+        ["id=MotorInertiaInput", "id"],
+        ["css=#MotorInertiaInput", "css:finder"],
+        ["xpath=//input[@id='MotorInertiaInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": "0.141"
+    }, {
+      "id": "f6620416-4b9f-432c-80ba-c442066caf94",
+      "comment": "",
+      "command": "click",
+      "target": "id=hoistHeigthInput",
+      "targets": [
+        ["id=hoistHeigthInput", "id"],
+        ["css=#hoistHeigthInput", "css:finder"],
+        ["xpath=//input[@id='hoistHeigthInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[6]/input", "xpath:idRelative"],
+        ["xpath=//div[6]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c5780346-e23d-4364-9b3b-4054ca8c2683",
+      "comment": "",
+      "command": "type",
+      "target": "id=hoistHeigthInput",
+      "targets": [
+        ["id=hoistHeigthInput", "id"],
+        ["css=#hoistHeigthInput", "css:finder"],
+        ["xpath=//input[@id='hoistHeigthInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[6]/input", "xpath:idRelative"],
+        ["xpath=//div[6]/input", "xpath:position"]
+      ],
+      "value": "17"
+    }, {
+      "id": "d7d2a9a7-a6a6-4f1b-b01c-2a96dbe6fa31",
+      "comment": "",
+      "command": "type",
+      "target": "id=hoistLinSpeedInput",
+      "targets": [
+        ["id=hoistLinSpeedInput", "id"],
+        ["css=#hoistLinSpeedInput", "css:finder"],
+        ["xpath=//input[@id='hoistLinSpeedInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[7]/input", "xpath:idRelative"],
+        ["xpath=//div[7]/input", "xpath:position"]
+      ],
+      "value": "1.76"
+    }, {
+      "id": "07cab531-4d60-4c60-b467-8dca49a6506a",
+      "comment": "",
+      "command": "type",
+      "target": "id=WorkingLoadInput",
+      "targets": [
+        ["id=WorkingLoadInput", "id"],
+        ["css=#WorkingLoadInput", "css:finder"],
+        ["xpath=//input[@id='WorkingLoadInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[8]/input", "xpath:idRelative"],
+        ["xpath=//div[8]/input", "xpath:position"]
+      ],
+      "value": "70"
+    }, {
+      "id": "d1c042ea-7ff4-42eb-b97b-4e2f79e10a64",
+      "comment": "",
+      "command": "type",
+      "target": "id=ChainWeightInput",
+      "targets": [
+        ["id=ChainWeightInput", "id"],
+        ["css=.form-group:nth-child(10) > #ChainWeightInput", "css:finder"],
+        ["xpath=//input[@id='ChainWeightInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[9]/input", "xpath:idRelative"],
+        ["xpath=//div[9]/input", "xpath:position"]
+      ],
+      "value": "1.5"
+    }, {
+      "id": "845e6c7a-91dd-4bbe-bb56-be827f3cfbb6",
+      "comment": "",
+      "command": "type",
+      "target": "css=.form-group:nth-child(11) > #ChainWeightInput",
+      "targets": [
+        ["css=.form-group:nth-child(11) > #ChainWeightInput", "css:finder"],
+        ["xpath=(//input[@id='ChainWeightInput'])[2]", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[10]/input", "xpath:idRelative"],
+        ["xpath=//div[10]/input", "xpath:position"]
+      ],
+      "value": "4"
+    }, {
+      "id": "67cb983a-5a95-4cee-ac53-404b69d5b003",
+      "comment": "",
+      "command": "type",
+      "target": "id=GearboxRatioInput",
+      "targets": [
+        ["id=GearboxRatioInput", "id"],
+        ["css=#GearboxRatioInput", "css:finder"],
+        ["xpath=//input[@id='GearboxRatioInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[11]/input", "xpath:idRelative"],
+        ["xpath=//div[11]/input", "xpath:position"]
+      ],
+      "value": "357"
+    }, {
+      "id": "b90c9076-9003-4bba-8814-602e5ddc05c6",
+      "comment": "",
+      "command": "click",
+      "target": "id=groveDiameterInput",
+      "targets": [
+        ["id=groveDiameterInput", "id"],
+        ["css=#groveDiameterInput", "css:finder"],
+        ["xpath=//input[@id='groveDiameterInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[14]/input", "xpath:idRelative"],
+        ["xpath=//div[14]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5ca783b3-4ec6-491a-81b0-9c608fef5f5c",
+      "comment": "",
+      "command": "type",
+      "target": "id=groveDiameterInput",
+      "targets": [
+        ["id=groveDiameterInput", "id"],
+        ["css=#groveDiameterInput", "css:finder"],
+        ["xpath=//input[@id='groveDiameterInput']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[14]/input", "xpath:idRelative"],
+        ["xpath=//div[14]/input", "xpath:position"]
+      ],
+      "value": "0.54"
+    }, {
+      "id": "b39f1bb4-128a-4d33-935e-ed5983959b4a",
+      "comment": "",
+      "command": "click",
+      "target": "id=ed%Input",
+      "targets": [
+        ["id=ed%Input", "id"],
+        ["css=#ed\\%Input", "css:finder"],
+        ["xpath=//input[@id='ed%Input']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[15]/input", "xpath:idRelative"],
+        ["xpath=//div[15]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b3a3d10b-0475-474a-87ea-29fc7e8e23ed",
+      "comment": "",
+      "command": "type",
+      "target": "id=ed%Input",
+      "targets": [
+        ["id=ed%Input", "id"],
+        ["css=#ed\\%Input", "css:finder"],
+        ["xpath=//input[@id='ed%Input']", "xpath:attributes"],
+        ["xpath=//form[@id='brakingDataInputForm']/div[15]/input", "xpath:idRelative"],
+        ["xpath=//div[15]/input", "xpath:position"]
+      ],
+      "value": "30"
+    }, {
+      "id": "8698fb36-fd99-4f0c-8e8e-5635db622e9d",
+      "comment": "",
+      "command": "click",
+      "target": "id=calculateButton",
+      "targets": [
+        ["id=calculateButton", "id"],
+        ["css=#calculateButton", "css:finder"],
+        ["xpath=//button[@id='calculateButton']", "xpath:attributes"],
+        ["xpath=//div[@id='mainDIV']/button", "xpath:idRelative"],
+        ["xpath=//div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Calculate')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "8d1c3fb9-22e3-4998-80f3-7327ef2e960e",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["4fca441d-9de7-4f9f-8f90-7442ad5e9321"]
+  }],
+  "urls": ["http://127.0.0.1:5500/"],
+  "plugins": []
+}

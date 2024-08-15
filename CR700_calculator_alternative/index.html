@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+
+³<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+        Crane hoist selection tool alternative approach
+    </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://yeu-frontend.yaskawa.eu/assets/css/plugins.css">
+    <link rel="stylesheet" href="https://yeu-frontend.yaskawa.eu/assets/css/style.css">
+    <link rel="stylesheet" href="https://yeu-frontend.yaskawa.eu/assets/css/yaskstyle.css">
+    <link rel="stylesheet" href="https://yeu-frontend.yaskawa.eu/assets/css/fonts.min.css">
+    <link rel="stylesheet" href="../sharedFiles/styles.css">
+
+<body>
+    <div class="container my-5 max-auto">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">
+                <img src="../sharedFiles/graphics/logo_blue.png" alt="Yaskawa logo" style="height: 40px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link yask-blue"
+                            href="../GAxxx_resistor_calculator/braking_resistor_selector.html">Braking resistor
+                            selector</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link yask-blue" href="../CR700_calculator/index.html">Crane hoist selection
+                            tool</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link yask-blue" href="../CR700_calculator_alternative/">Crane hoist selection
+                            tool 2</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link yask-blue" href="../Resistor_selector/index.html">Resistor picker
+                            tool</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="col-lg-6 px-0 mobilePadding" id="mainDIV">
+            <h2 class="yask-blue pt-4 pb-3 ">
+                Crane hoist selection tool alternative approach
+            </h2>
+            <span class="yask-dark-gray body-font">
+                So far this calculator only works with the 400V-class drives and
+                motors.<br></span>
+            <p class="yask-dark-gray">This calculator assumes a CDBR voltage selection of 788V and accounts for the tolerance of the resistors.</p>
+
+            <p class="yask-dark-gray">
+                Please input values.
+            </p>
+            <h3 class="yask-blue mb-1">Main hoist motor data</h3>
+            <form id="brakingDataInputForm">
+                <div class="form-group">
+                    <label class="form-label yask-blue" for="motorRatedCurrentInput">
+                        Motor rated current [A]:
+                    </label>
+                    <input type="number" class="form-control" id="motorRatedCurrentInput"
+                        placeholder="Enter motor rated current in A" min="1" max="605" step = "any" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label yask-blue" for="avMotorPowerInput">
+                        Motor power [kW]:
+                    </label>
+                    <input type="number" class="form-control" id="avMotorPowerInput"
+                        placeholder="Enter average motor power in kW" step = "any" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label yask-blue" for="avMotorSpeedInput">
+                        Motor speed [rpm]:
+                    </label>
+                    <input type="number" class="form-control" id="avMotorSpeedInput"
+                        placeholder="Enter motor speed in rpm" step = "any" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label yask-blue" for="MotorInertiaInput">
+                        Motor inertia [kgm&#178]:
+                    </label>
+                    <input type="number" class="form-control" id="MotorInertiaInput"
+                        placeholder="Enter motor inertia in kgm&#178" step = "any" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label yask-blue" for="motorEffInput">
+                        Motor efficiency [%]:
+                    </label>
+                    <input type="number" class="form-control" id="motorEffInput"
+                        placeholder="Enter pulley efficiency in %" min="70" max="100" step = "any" value = "92" required>
+                </div>
+                <h3 class="yask-blue mb-1 mt-3">
+                    Main hoist data
+                </h3>
+                <div class="form-group">
+                    <label class="form-label yask-blue" for="hoistHeigthInput">
+                        Hoist height [m]:
+                    </label>
+                    <input type="number" class="form-control" id="hoistHeigthInput"
+                        placeholder="Enter hoist height in m" min="1" max=200 step = "any" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label yask-blue" for="hoistLinSpeedInput">
+                        Hoist linear speed [m/min]:
+                    </label>
+                    <input type="number" class="form-control" id="hoistLinSpeedInput"
+                        placeholder="Enter hoist linear speed in m/min" min="1" max="50" step = "any" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label yask-blue" for="WorkingLoadInput">
+                        Save working load [t]:
+                    </label>
+                    <input type="number" class="form-control" id="WorkingLoadInput"
+                        placeholder="Enter save working load in t" step = "any" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label yask-blue" for="ChainWeightInput">
+                        Chain weight [t]:
+                    </label>
+                    <input type="number" class="form-control" id="ChainWeightInput"
+                        placeholder="Enter chain weight in t" step = "any" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label yask-blue" for="PulleyBlockRatioInput">
+                        Pulley block ratio [ratio:1]:
+                    </label>
+                    <input type="number" class="form-control" id="PulleyBlockRatioInput"
+                        placeholder="Enter pulley block ratio" step = "any" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label yask-blue" for="GearboxRatioInput">
+                        Gearbox ratio [ratio:1]:
+                    </label>
+                    <input type="number" class="form-control" id="GearboxRatioInput"
+                        placeholder="Enter gearbox ratio" step = "any" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label yask-blue" for="gearboxEffInput">
+                        Gearbox efficiency [%]:
+                    </label>
+                    <input type="number" class="form-control" id="gearboxEffInput"
+                        placeholder="Enter gearbox efficiency in %" min="70" max="100" step = "any" value = "80" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label yask-blue" for="pulleyEffInput">
+                        Pulley efficiency [%]:
+                    </label>
+                    <input type="number" class="form-control" id="pulleyEffInput"
+                        placeholder="Enter pulley efficiency in %" min="70" max="100" step = "any" value = "100" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label yask-blue" for="groveDiameterInput">
+                        Roope groove diameter [m]:
+                    </label>
+                    <input type="number" class="form-control" id="groveDiameterInput"
+                        placeholder="Roope groove diameter in m" step = "any" required>
+                </div>
+                <div class="form-group mt-2">
+                    <label class="form-label yask-blue" for="ed%Input" id="tooltipLabel">
+                        Regenerative percentage [%]:
+                    </label>
+                    <input type="number" class="form-control" id="ed%Input"
+                        placeholder="Enter regenerative percentage in %" min="10" max="50" step = "any" required>
+                </div>
+            </form>
+            <button type="button" class="btn btn-yask-blue mt-3" id="calculateButton">
+                Calculate
+            </button>
+            <button type="button" class="btn btn-yask-blue mt-3" id="loadInputsButton">
+                Load last inputs
+            </button>
+            <button type="button" class="btn btn-yask-blue mt-3" id="resetInputsButton">
+                Reset inputs
+            </button>
+            <div id="output" class="mt-3">
+            </div>
+        </div>
+    </div>
+    <script type="module" src="CR700_calculator.js">
+    </script>
+    <script type="text/javascript" src="https://yeu-frontend.yaskawa.eu/assets/js/core/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="https://yeu-frontend.yaskawa.eu/assets/js/core/popper.min.js"></script>
+    <script type="text/javascript" src="https://yeu-frontend.yaskawa.eu/assets/js/core/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://yeu-frontend.yaskawa.eu/assets/js/custom.js"></script>
+    <script type="text/javascript"
+    src="https://yeu-frontend.yaskawa.eu/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    
+   </body>
+
+</html>
