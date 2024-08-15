@@ -28,22 +28,27 @@ h1 {
 
 /* Custom styles for the tooltip */
 .tooltip-inner {
-  max-width: none; /* Allows the tooltip to be larger than the default max-width */
-  padding: 4; /* Removes default padding */
-  background-color: var(--yask-super-light-gray); 
+  max-width: none;
+  /* Allows the tooltip to be larger than the default max-width */
+  padding: 4;
+  /* Removes default padding */
+  background-color: var(--yask-super-light-gray);
   border: 2px solid var(--yask-blue);
   opacity: 1;
 }
+
 .tooltip.right .tooltip-arrow {
-  color: var(--yask-blue); 
-  border-bottom-color: var(--yask-blue)!important;
-  border-top-color: var(--yask-blue)!important;
-  border-right-color: var(--yask-blue)!important;
-  border-left-color: var(--yask-blue)!important;
+  color: var(--yask-blue);
+  border-bottom-color: var(--yask-blue) !important;
+  border-top-color: var(--yask-blue) !important;
+  border-right-color: var(--yask-blue) !important;
+  border-left-color: var(--yask-blue) !important;
 }
+
 .tooltip-inner img {
   display: block;
-  max-width: 100%; /* Ensures the image fits within the tooltip */
+  max-width: 100%;
+  /* Ensures the image fits within the tooltip */
 }
 
 .tooltip.show {
@@ -55,13 +60,15 @@ h1 {
 }
 
 .accordion-button:not(.collapsed) {
-  color: white; /* Text color */
-  background-color: var(--yask-blue); /* Background color */
+  color: white;
+  /* Text color */
+  background-color: var(--yask-blue);
+  /* Background color */
   box-shadow: none;
 }
 
 .accordion-button {
-  border-color:var(--yask-blue);
+  border-color: var(--yask-blue);
   border-width: "2 px";
 }
 
@@ -102,7 +109,7 @@ h1 {
 }
 
 .form-select option {
-  color: #636669; 
+  color: #636669;
 }
 
 .body-font {
@@ -111,15 +118,15 @@ h1 {
   margin-bottom: 1rem;
 }
 
-#driveSelect{
-  border:var(--bs-border-width) solid #ebedf2;
+#driveSelect {
+  border: var(--bs-border-width) solid #ebedf2;
   border-radius: var(--bs-border-radius);
   line-height: 1.5;
   color: var(--bs-body-color);
   border-width: 2px;
 }
 
-#mainDIV{
+#mainDIV {
   padding-left: 1rem !important;
   padding-right: 1rem !important;
 }
@@ -128,14 +135,15 @@ h1 {
   font-size: 1.25rem;
 }
 
-.navbar-toggler{
+.navbar-toggler {
   width: 4rem;
   height: 3rem;
   background-color: var(--yask-blue);
-  border:none;
+  border: none;
   margin-right: 1rem;
 }
-.navbar-toggle{
+
+.navbar-toggle {
   width: 100%;
   float: left;
   height: 2px;
@@ -148,23 +156,23 @@ h1 {
   margin-right: 0;
   padding-left: 0;
   padding-bottom: 0;
-  padding-top: 0; 
+  padding-top: 0;
 }
 
 @media (max-width: 576px) {
   .form-check-inline {
-      display: inline-block;
-      margin-right: 0;
+    display: inline-block;
+    margin-right: 0;
   }
 }
 
-.form-check-label{
+.form-check-label {
   color: var(--yask-dark-gray) !important;
 }
 
 #loadInputsButton {
-background: var(--yask-light-gray) !important;
-border: var(--yask-light-gray) !important;
+  background: var(--yask-light-gray) !important;
+  border: var(--yask-light-gray) !important;
 }
 
 #resetInputsButton {

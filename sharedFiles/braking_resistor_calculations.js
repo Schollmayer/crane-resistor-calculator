@@ -114,15 +114,16 @@ function findUniqueCombinations(items, maxItemCount) {
       uniqueCombinations.push(calculateResistorNetworkValues(resistorBlocks3, false));
     }
       */
-
-    const resistorBlocks4 = [];
+     //rn-S3P2 obsolete as S3P2 and P2S3 have the same resistance
+    
+    /* const resistorBlocks4 = [];
     if (resistorNetwork.quantity == 3 && resistorNetwork.resistorNetwork[0].inSeries == true) {
       resistorBlocks4.push(resistorNetwork.resistorNetwork[0]);
       resistorBlocks4.push(resistorNetwork.resistorNetwork[0]);
-      //rn-S3P2
       uniqueCombinations.push(calculateResistorNetworkValues(resistorBlocks4, false));
     }
 
+    */
   });
   return uniqueCombinations;
 }
@@ -210,29 +211,14 @@ export function getResistorGraphic(resistor) {
   }
   else if (resistor.resistorNetwork.length == 2) {
     if (resistor.quantity == 4) {
-      if (resistor.inSeries) {
-        return picturePath + "rn-P2S2.svg"
-      }
-      else {
-        return picturePath + "rn-S2P2.svg"
-      }
+        return [picturePath + "rn-P2S2.svg", picturePath + "rn-S2P2.svg"]
     }
     else if (resistor.quantity == 6) {
-      if (resistor.inSeries) {
-        return picturePath + "rn-P3S2.svg"
-      }
-      else {
-        return picturePath + "rn-S3P2.svg"
-      }
+        return [picturePath + "rn-P3S2.svg", picturePath + "rn-S2P3.svg" ]
     }
   }
   else if (resistor.resistorNetwork.length == 3) {
-    if (resistor.inSeries) {
-      return picturePath + "rn-P2S3.svg"
-    }
-    else {
-      return picturePath + "rn-S2P3.svg"
-    }
+      return [picturePath + "rn-P2S3.svg", picturePath + "rn-S3P2.svg"]
   }
   return null;
 }

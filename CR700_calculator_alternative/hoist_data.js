@@ -12,8 +12,10 @@ export class HoistAlternative {
 
         // Get hoist speed in meters per minute. Range [1 - 50] m/min
         this.v_hoist = parseFloat(document.getElementById("hoistLinSpeedInput").value);
-        // Motor speed in rpm
+        // Motor target speed in rpm
         this.n_motor = parseFloat(document.getElementById("avMotorSpeedInput").value);
+        // Motor target speed in rpm
+        this.n_motor_start = parseFloat(document.getElementById("motorStartSpeedInput").value);
         // Save working load in kg (mass) and convert to grams
         this.m_L = parseFloat(document.getElementById("WorkingLoadInput").value) * 1000;
         // Chain weight in kg (mass) and convert to grams
@@ -59,7 +61,7 @@ export class HoistAlternative {
 
         //Maximum breaking torque
         //TODO Check n2 and 0.5, there is no 0.5 present to get result from example
-        this.M_B_max = ((this.I_total * this.n_motor) / (60 / (2 * Math.PI) )) + this.M_load;
+        this.M_B_max = ((this.I_total * (this.n_motor - this.n_motor_start)) / (60 / (2 * Math.PI))) + this.M_load;
 
         //Maximum braking power
         this.P_B_max = ((this.M_B_max * this.n_motor) / (60 / (2 * Math.PI)));
@@ -68,7 +70,7 @@ export class HoistAlternative {
         this.P_El_max = (this.P_B_max - ((1 - this.η_motor) * this.P_m) - (((1 - this.η_gearbox) * (1 - this.η_pulley)) * this.P_B_max)) / 1000;
 
         //Maximum braking resistance
-        this.R_max = (this.brakeActivateVoltage ** 2) / (this.P_El_max *1000);
+        this.R_max = (this.brakeActivateVoltage ** 2) / (this.P_El_max * 1000);
 
         //Maximum brake time
         this.t_brake_max = Math.round((this.h_lift / this.v_hoist) * 60);
