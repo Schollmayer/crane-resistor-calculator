@@ -16,7 +16,62 @@ calculateButton.addEventListener('click', function () {
   else {
     form.reportValidity(); // This will trigger the browser's built-in validation messages
   }
+  storeFormInput();
 });
+
+const loadInputsButton = document.getElementById('loadInputsButton');
+loadInputsButton.addEventListener('click', loadFormData);
+
+const resetInputsButton = document.getElementById('resetInputsButton');
+resetInputsButton.addEventListener('click', resetForm);
+
+//Functions to store last form input values
+function storeFormInput() {
+  // Get all inputs in the form
+  const form = document.getElementById('brakingDataInputForm');
+  const inputs = form.querySelectorAll('input');
+  // Create an object to hold form data
+  const formData = {};
+  // Loop through inputs and store their values
+  inputs.forEach(input => {
+    formData[input.id] = input.value;
+  });
+
+  // Store form data as a JSON string in local storage
+  localStorage.setItem('InputFormDataResitorCalc', JSON.stringify(formData));
+}
+
+// Function to load form data from local storage
+function loadFormData() {
+  // Retrieve the data from local storage
+  const formData = JSON.parse(localStorage.getItem('InputFormDataResitorCalc'));
+
+  // If formData is null, there is no saved data
+  if (!formData) {
+    alert('No saved data found!');
+    return;
+  }
+
+  // Get all inputs in the form
+  const form = document.getElementById('brakingDataInputForm');
+  const inputs = form.querySelectorAll('input');
+
+  // Loop through inputs and set their values from local storage
+  inputs.forEach(input => {
+    if (formData[input.id] !== undefined) {
+      input.value = formData[input.id];
+    }
+  });
+}
+// Function to reset all form inputs to empty strings
+function resetForm() {
+  const form = document.getElementById('brakingDataInputForm');
+  const inputs = form.querySelectorAll('input');
+
+  inputs.forEach(input => {
+    input.value = '';
+  });
+}
 
 //Tooltip
 document.addEventListener('DOMContentLoaded', function () {
@@ -81,23 +136,71 @@ function displayResistorTransistorSelection(resistorResults, minR, maxR, power) 
     resistorContainer.appendChild(resistorDetail);
     flexContainer.appendChild(resistorContainer);
 
+
     let resistorImageFile = getResistorGraphic(obj);
-    // Add image next to the resistor details
+
+    // Add images next to the resistor details if resistorImageFile is valid
     if (resistorImageFile) {
       var resistorImageContainer = document.createElement("div");
       resistorImageContainer.style.marginTop = "10px"; // Adjust the space between text and image
+      resistorImageContainer.style.display = "flex"; // Display images in a row
+      resistorImageContainer.style.gap = "10px"; // Add space between the images
+      resistorImageContainer.style.flexWrap = "wrap"; // Wrap images on smaller screens
+      resistorImageContainer.style.alignItems = "center"; // Align items vertically if needed
+      resistorImageContainer.style.justifyContent = "flex-start"; // Align images to the left
 
-      var resistorImage = document.createElement("img");
-      resistorImage.src = resistorImageFile; // Replace with the actual image URL
-      resistorImage.alt = "Resistor network";
-      resistorImage.style.maxWidth = "100%"; // Set maximum width to ensure it fits within the container
-      resistorImage.style.height = "auto"; // Maintain aspect ratio
+      // Check if resistorImageFile is an array
+      if (Array.isArray(resistorImageFile)) {
+        // Loop through the array and create images for each element
+        resistorImageFile.forEach((imageSrc, index) => {
+          if (index < 2) { // Display up to two images
+            var resistorImage = document.createElement("img");
+            resistorImage.src = imageSrc;
+            resistorImage.alt = `Resistor network ${index + 1}`;
+            resistorImage.style.maxWidth = "100%"; // Ensure image fits within the container
+            resistorImage.style.height = "auto"; // Maintain aspect ratio
+            resistorImage.style.maxHeight = "200px"; // Limit the maximum height
+            resistorImage.style.objectFit = "contain"; // Ensure image fits within its container
+            resistorImage.style.margin = "0"; // Left-align the image
+            resistorImage.style.marginTop = "10px"; // Left-align the image
 
-      // Optionally, you can limit the maximum height of the image
-      resistorImage.style.maxHeight = "200px"; // Adjust the max height as per your design
+            // Add a class to the second image for special mobile styling
+            if (index === 1) {
+              resistorImage.classList.add("second-image");
+            }
 
-      resistorImageContainer.appendChild(resistorImage);
-      flexContainer.appendChild(resistorImageContainer);
+            resistorImageContainer.appendChild(resistorImage);
+
+            // Add the "or" text between the images
+            if (index === 0 && resistorImageFile.length > 1) {
+              var orText = document.createElement("span");
+              orText.textContent = "OR";
+              orText.style.margin = "0 10px"; // Add margin to space the "or" text from the images
+              orText.style.fontSize = "1.3em"; // Make the text bigger
+              orText.style.fontWeight = "bold"; // Make the text bold
+              orText.style.color = "var(--yask-blue)"; // Use the --yask-blue color
+
+              resistorImageContainer.appendChild(orText);
+            }
+          }
+        });
+      } else {
+        // If resistorImageFile is not an array, handle it as a single image
+        var resistorImage = document.createElement("img");
+        resistorImage.src = resistorImageFile;
+        resistorImage.alt = "Resistor network";
+        resistorImage.style.maxWidth = "100%"; // Ensure image fits within the container
+        resistorImage.style.height = "auto"; // Maintain aspect ratio
+        resistorImage.style.maxHeight = "200px"; // Limit the maximum height
+        resistorImage.style.objectFit = "contain"; // Ensure image fits within its container
+        resistorImage.style.margin = "0"; // Left-align the image
+        resistorImage.style.marginTop = "10px"; // Left-align the image
+
+        resistorImageContainer.appendChild(resistorImage);
+      }
+
+      // Append the container with images to the cardBody
+      cardBody.appendChild(resistorImageContainer);
     }
 
     // Details section
@@ -158,9 +261,9 @@ function calculateResult() {
   clearOutput()
   var resistorResults = calculateResistors(Number(Rmin.value), Number(Rmax.value), Number(power.value), Number(dutyCycle.value), Number(dutyCycleDuration.value));
   if (resistorResults) {
-    displayResistorTransistorSelection(resistorResults,Number( Rmin.value), Number(Rmax.value), Number(power.value))
+    displayResistorTransistorSelection(resistorResults, Number(Rmin.value), Number(Rmax.value), Number(power.value))
   }
-  else{
+  else {
     noResistorFound();
   }
 }

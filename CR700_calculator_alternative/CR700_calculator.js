@@ -1,5 +1,5 @@
 import { cdbr_data, ed_interpolate } from "../sharedFiles/cdbr_data.js";
-import { HoistFrontend } from "./hoist_data.js";
+import { HoistAlternative } from "./hoist_data.js";
 import { calculateResistors, getResistorGraphic } from "../sharedFiles/braking_resistor_calculations.js";
 
 //Button-EventListener
@@ -34,13 +34,13 @@ function storeFormInput() {
   });
 
   // Store form data as a JSON string in local storage
-  localStorage.setItem('InputFormDataCR700Calc', JSON.stringify(formData));
+  localStorage.setItem('InputFormDataCR700CalcAlt', JSON.stringify(formData));
 }
 
 // Function to load form data from local storage
 function loadFormData() {
   // Retrieve the data from local storage
-  const formData = JSON.parse(localStorage.getItem('InputFormDataCR700Calc'));
+  const formData = JSON.parse(localStorage.getItem('InputFormDataCR700CalcAlt'));
 
   // If formData is null, there is no saved data
   if (!formData) {
@@ -148,7 +148,7 @@ function displayResistorTransistorSelection(cr700Result, transistorResults, resi
     transistorFlexContainer.style.flexDirection = "column"; // Ensure column direction for line breaks
     transistorFlexContainer.innerHTML = `<strong>Type:</strong> ${transistorResults.cdbr.type} <br>
                                        <strong>Quantity:</strong> ${transistorResults.qtty}`;
-    if (transistorResults.qtty>1){
+    if (transistorResults.qtty > 1) {
       transistorFlexContainer.innerHTML += `<br><br><strong>Please select the displayed resistor values for each braking transistor. `
     }
     transistorCardBody.appendChild(transistorFlexContainer);
@@ -186,49 +186,49 @@ function displayResistorTransistorSelection(cr700Result, transistorResults, resi
 
   outputDiv.appendChild(cardGroup);
 
-//Display calculated application data in accordion
-var accordion = document.createElement("div");
-accordion.classList.add("accordion", "mb-3");
+  //Display calculated application data in accordion
+  var accordion = document.createElement("div");
+  accordion.classList.add("accordion", "mb-3");
 
-var accordionCard = document.createElement("div");
-accordionCard.classList.add("accordion-item");
+  var accordionCard = document.createElement("div");
+  accordionCard.classList.add("accordion-item");
 
-var accordionHeader = document.createElement("h3");
-accordionHeader.classList.add("accordion-header");
+  var accordionHeader = document.createElement("h3");
+  accordionHeader.classList.add("accordion-header");
 
-var headerButton = document.createElement("button");
-headerButton.classList.add("accordion-button", "collapsed");  // Start with collapsed
-headerButton.style.outline = "none";
-headerButton.setAttribute("type", "button");
-headerButton.setAttribute("data-bs-toggle", "collapse");
-headerButton.setAttribute("data-bs-target", "#resistorAccordion");
-headerButton.setAttribute("aria-expanded", "false");
-headerButton.setAttribute("aria-controls", "resistorAccordion");
+  var headerButton = document.createElement("button");
+  headerButton.classList.add("accordion-button", "collapsed");  // Start with collapsed
+  headerButton.style.outline = "none";
+  headerButton.setAttribute("type", "button");
+  headerButton.setAttribute("data-bs-toggle", "collapse");
+  headerButton.setAttribute("data-bs-target", "#resistorAccordion");
+  headerButton.setAttribute("aria-expanded", "false");
+  headerButton.setAttribute("aria-controls", "resistorAccordion");
 
-// Make the text bold and increase the font size
-headerButton.innerHTML = `<strong style="font-size: 1.1rem;">Calculated application values.</strong>`;
+  // Make the text bold and increase the font size
+  headerButton.innerHTML = `<strong style="font-size: 1.1rem;">Calculated application values.</strong>`;
 
-accordionHeader.appendChild(headerButton);
-accordionCard.appendChild(accordionHeader);
+  accordionHeader.appendChild(headerButton);
+  accordionCard.appendChild(accordionHeader);
 
-var accordionCollapse = document.createElement("div");
-accordionCollapse.classList.add("accordion-collapse", "collapse");  // Start with collapse
-accordionCollapse.id = "resistorAccordion";
+  var accordionCollapse = document.createElement("div");
+  accordionCollapse.classList.add("accordion-collapse", "collapse");  // Start with collapse
+  accordionCollapse.id = "resistorAccordion";
 
-var accordionBody = document.createElement("div");
-accordionBody.classList.add("accordion-body");
-accordionBody.innerHTML = `<strong>Average braking power:</strong> ${hoist.averageBrakePower().toFixed(2)} kW<br>
-<strong>Maximum braking power:</strong> ${hoist.maxBrakePower().toFixed(2)} kW<br>
-<strong>Maximum continuous braking time:</strong> ${hoist.maxBrakeTime().toFixed(2)} s`;
+  var accordionBody = document.createElement("div");
+  accordionBody.classList.add("accordion-body");
+  accordionBody.innerHTML = `<strong>Average braking power:</strong> ${hoist.P_El_avg.toFixed(2)} kW<br>
+<strong>Maximum braking power:</strong> ${hoist.P_El_max.toFixed(2)} kW<br>
+<strong>Maximum continuous braking time:</strong> ${hoist.t_brake_max.toFixed(2)} s`;
 
-accordionCollapse.appendChild(accordionBody);
-accordionCard.appendChild(accordionCollapse);
-accordion.appendChild(accordionCard);
+  accordionCollapse.appendChild(accordionBody);
+  accordionCard.appendChild(accordionCollapse);
+  accordion.appendChild(accordionCard);
 
-outputDiv.appendChild(accordion);
+  outputDiv.appendChild(accordion);
 
 
-//Display resistor network options
+  //Display resistor network options
   if (resistorResults) {
     resistorResults.forEach(function (obj, index) {
       var card = document.createElement("div");
@@ -328,15 +328,15 @@ outputDiv.appendChild(accordion);
         cardBody.appendChild(resistorImageContainer);
       }
 
-// Details section
-var detailsContainer = document.createElement("div");
-detailsContainer.classList.add("collapse"); // Add the "well" class here
-detailsContainer.id = `details-${index}`;
+      // Details section
+      var detailsContainer = document.createElement("div");
+      detailsContainer.classList.add("collapse"); // Add the "well" class here
+      detailsContainer.id = `details-${index}`;
 
-// Create a wrapper div with margin inside detailsContainer
-var detailsContent = document.createElement("div");
-detailsContent.classList.add("mt-3");
-detailsContent.innerHTML = `
+      // Create a wrapper div with margin inside detailsContainer
+      var detailsContent = document.createElement("div");
+      detailsContent.classList.add("mt-3");
+      detailsContent.innerHTML = `
   <div style="display: flex; justify-content: left; margin: 0; padding: 0;">
     <div style="margin-right: 20px; padding: 0;"> 
       <strong style="font-size: 1.1em">Option details:</strong><br>
@@ -347,31 +347,31 @@ detailsContent.innerHTML = `
   </div>
 `;
 
-detailsContainer.appendChild(detailsContent); // Append detailsContent (with margin) inside detailsContainer
+      detailsContainer.appendChild(detailsContent); // Append detailsContent (with margin) inside detailsContainer
 
-var detailButton = document.createElement("button");
-detailButton.classList.add("btn", "btn-yask-blue", "mt-3");
-detailButton.setAttribute("type", "button");
-detailButton.setAttribute("data-bs-toggle", "collapse");
-detailButton.setAttribute("data-bs-target", `#details-${index}`);
-detailButton.setAttribute("aria-expanded", "false");
-detailButton.setAttribute("aria-controls", `details-${index}`);
-detailButton.textContent = "Show details";
+      var detailButton = document.createElement("button");
+      detailButton.classList.add("btn", "btn-yask-blue", "mt-3");
+      detailButton.setAttribute("type", "button");
+      detailButton.setAttribute("data-bs-toggle", "collapse");
+      detailButton.setAttribute("data-bs-target", `#details-${index}`);
+      detailButton.setAttribute("aria-expanded", "false");
+      detailButton.setAttribute("aria-controls", `details-${index}`);
+      detailButton.textContent = "Show details";
 
-// Event listener for Bootstrap collapse events
-detailsContainer.addEventListener("show.bs.collapse", function () {
-  detailButton.textContent = "Show less";
-});
+      // Event listener for Bootstrap collapse events
+      detailsContainer.addEventListener("show.bs.collapse", function () {
+        detailButton.textContent = "Show less";
+      });
 
-detailsContainer.addEventListener("hide.bs.collapse", function () {
-  detailButton.textContent = "Show details";
-});
+      detailsContainer.addEventListener("hide.bs.collapse", function () {
+        detailButton.textContent = "Show details";
+      });
 
-cardBody.appendChild(detailButton);
-cardBody.appendChild(detailsContainer); // Append detailsContainer (with collapsible content) to cardBody
+      cardBody.appendChild(detailButton);
+      cardBody.appendChild(detailsContainer); // Append detailsContainer (with collapsible content) to cardBody
 
-card.appendChild(cardBody);
-outputDiv.appendChild(card);
+      card.appendChild(cardBody);
+      outputDiv.appendChild(card);
 
     });
   }
@@ -390,20 +390,20 @@ function getdutyCyleTime(maxBrakeTime, dutyCycle) {
 }
 
 function calculateResult() {
-  let hoist = new HoistFrontend("Hoist1");
+  let hoist = new HoistAlternative();
   let [CR700selection, useInternalbrakingTransistor] = hoist.selectedCR700();
   console.log(`Use Internal : ${useInternalbrakingTransistor}%`);
   console.log(`CR700 : ${CR700selection}%`);
 
   if (CR700selection) {
     if (useInternalbrakingTransistor) {
-      let resistorResults = calculateResistors(CR700selection.minBrakeResistance, hoist.maxBrakeResistance(), hoist.averageBrakePower(), hoist.dutyCycle, getdutyCyleTime(hoist.maxBrakeTime(), hoist.dutyCycle))
-      displayResistorTransistorSelection(CR700selection, null, resistorResults, CR700selection.minBrakeResistance, hoist.maxBrakeResistance(), hoist.averageBrakePower(),hoist);
+      let resistorResults = calculateResistors(CR700selection.minBrakeResistance, hoist.R_max, hoist.P_El_avg, hoist.η_dutyCycle, getdutyCyleTime(hoist.t_brake_max, hoist.η_dutyCycle))
+      displayResistorTransistorSelection(CR700selection, null, resistorResults, CR700selection.minBrakeResistance, hoist.R_max, hoist.P_El_avg, hoist);
     }
 
     else {
-      let resistorResults = calculateResistors(hoist.selectedCDBR().cdbr.minResistance, hoist.maxBrakeResistance(), hoist.averageBrakePower(), hoist.dutyCycle, getdutyCyleTime(hoist.maxBrakeTime(), hoist.dutyCycle))
-      displayResistorTransistorSelection(CR700selection, hoist.selectedCDBR(), resistorResults, hoist.selectedCDBR().cdbr.minResistance, hoist.maxBrakeResistance(), hoist.averageBrakePower(),hoist);
+      let resistorResults = calculateResistors(hoist.selectedCDBR().cdbr.minResistance, hoist.R_max, hoist.P_El_avg, hoist.η_dutyCycle, getdutyCyleTime(hoist.t_brake_max, hoist.η_dutyCycle))
+      displayResistorTransistorSelection(CR700selection, hoist.selectedCDBR(), resistorResults, hoist.selectedCDBR().cdbr.minResistance, hoist.R_max, hoist.P_El_avg, hoist);
     }
   }
   else {
@@ -412,7 +412,7 @@ function calculateResult() {
   }
 
 
-  /*avBrakingPowerOutput.value = hoist.averageBrakePower().toFixed(1)
+  /*avBrakingPowerOutput.value = hoist.P_El_avg.toFixed(1)
   maxBrakingPowerOutput.value = hoist.maxBrakePower().toFixed(1)
   maxContBreakTimeOutput.value = hoist.maxBrakeTime().toFixed(1)
   maxBrakingResOutput.value = CDBRselection.maxResistance.toFixed(2)

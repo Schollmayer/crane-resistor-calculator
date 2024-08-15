@@ -1,6 +1,6 @@
 // Imports
 import { cdbr_data, ed_interpolate } from "../sharedFiles/cdbr_data.js";
-import { cr700_data} from "./cr700_data.js";
+import { cr700_data } from "./cr700_data.js";
 import { drive_OLCurves_higher_0_75_kW, drive_OLLinear_higher_0_75_kW, drive_OLCurves_smaller_0_75_kW, drive_OLLinear_smaller_0_75_kW } from "../sharedFiles/internal_braking_transistor_data.js";
 import { pointBelowLine } from "./helpers.js";
 
@@ -55,7 +55,7 @@ export class HoistFrontend {
 // Functions
 
 // Function to select one or more CDBR braking units according to application requirements
-const findCDBR = (maxBrakeResistance, maxBrakeTime, brakeActivationV, dutyCycle) => {
+export const findCDBR = (maxBrakeResistance, maxBrakeTime, brakeActivationV, dutyCycle) => {
   let selectedCDBR;
   let selectedEDCurve;
   let maxBrakingCurrent;
@@ -139,7 +139,7 @@ const findCDBR = (maxBrakeResistance, maxBrakeTime, brakeActivationV, dutyCycle)
 
 
 // Function to select CR700 drive according to application motoring and braking requirements
-const findCR700 = (motorRatedCurrent, avBrakePower, maxBrakeResistance, maxBrakeTime, dutyCycle) => {
+export const findCR700 = (motorRatedCurrent, avBrakePower, maxBrakeResistance, maxBrakeTime, dutyCycle) => {
   let selectedCR700;
 
   // Initial CR700 selection according to motor rated current and mininmum connectable braking resistance (including 5% tolerance). Braking resistance considered only if CR700 has internal braking transistor
@@ -159,7 +159,7 @@ const findCR700 = (motorRatedCurrent, avBrakePower, maxBrakeResistance, maxBrake
     if (typeof (selectedCR700) === 'undefined') {
       console.log(`\nNo CR700 drive found that fits application requirements`);
     }
-    return [selectedCR700,false];
+    return [selectedCR700, false];
   }
   //console.log(`\nInitial selection is ${selectedCR700.type}`);
 
@@ -182,14 +182,14 @@ const findCR700 = (motorRatedCurrent, avBrakePower, maxBrakeResistance, maxBrake
 
 }
 
-function getTransistorCurves(outputPower) {
+export function getTransistorCurves(outputPower) {
   if (outputPower < 0.75) {
     return drive_OLCurves_smaller_0_75_kW;
   }
   else { return drive_OLCurves_higher_0_75_kW; }
 }
 
-function getTransistorLinearCurves(outputPower) {
+export function getTransistorLinearCurves(outputPower) {
   if (outputPower < 0.75) {
     return drive_OLLinear_smaller_0_75_kW;
   }
@@ -199,7 +199,7 @@ function getTransistorLinearCurves(outputPower) {
 }
 
 // Function to determine if the allowable braking torque at the ed/brakeTime operation point for the selected CR700 is higher than application requirements
-function checkBrakingTorque(ed, brakeTime, brakePower, cr700) {
+export function checkBrakingTorque(ed, brakeTime, brakePower, cr700) {
   let tbLineAbove;
 
   let brakingTorquePercent = Math.round((brakePower / cr700.hdPower) * 100);
@@ -207,26 +207,29 @@ function checkBrakingTorque(ed, brakeTime, brakePower, cr700) {
 
   // Continue verification only if the braking torque at the operation point 
   // is less than the braking torque of the lowest overload curve (Tb[%] <= 155% in case of CR700)
-  if (brakingTorquePercent <= getTransistorCurves(cr700.outputPower)[0].brakingTorque) {
+  if (brakingTorquePercent <= getTransistorCurves(cr700.hdPower)[0].brakingTorque) {
 
     // If the braking torque at the operation point is less than the braking 
     // torque of the highest overload curve, selection is OK (Tb [%] < 70% in case of CR700)
-    if (brakingTorquePercent < getTransistorCurves(cr700.outputPower)[getTransistorCurves(cr700.outputPower).length - 1].brakingTorque) {
-      console.log(`Allowable braking torque at operation point: >${getTransistorCurves(cr700.outputPower)[getTransistorCurves(cr700.outputPower).length - 1].brakingTorque}%`);
+    if (brakingTorquePercent < getTransistorCurves(cr700.hdPower)[getTransistorCurves(cr700.hdPower).length - 1].brakingTorque) {
+      console.log(`Allowable braking torque at operation point: >${getTransistorCurves(cr700.hdPower)[getTransistorCurves(cr700.hdPower).length - 1].brakingTorque}%`);
       console.log(`Selection OK`);
       return true;
     }
 
-    tbLineAbove = getTransistorLinearCurves(cr700.outputPower).find(line => {
+    tbLineAbove = getTransistorLinearCurves(cr700.hdPower).find(line => {
       //console.log(`Line to be tested: tb_${line.brakingTorque}P`);
       let lineFound = false;
       lineFound = pointBelowLine(brakeTime, ed, line.slope, line.yCrossing);
       //console.log(`Line found: ${lineFound}`);
       return lineFound;
     });
-    console.log(`Allowable Braking Torque: ${tbLineAbove.brakingTorque}%`);
-    //return tbLineAbove.brakingTorque;
-    if (brakingTorquePercent < tbLineAbove.brakingTorque) return true;
+    if (tbLineAbove) {
+      console.log(`Allowable Braking Torque: ${tbLineAbove.brakingTorque}%`);
+      //return tbLineAbove.brakingTorque;
+      if (brakingTorquePercent < tbLineAbove.brakingTorque) return true;
+      else return false;
+    }
     else return false;
   }
   else return false;
