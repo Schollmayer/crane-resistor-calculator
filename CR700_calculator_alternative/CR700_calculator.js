@@ -402,8 +402,12 @@ function calculateResult() {
     }
 
     else {
-      let resistorResults = calculateResistors(hoist.selectedCDBR().cdbr.minResistance, hoist.R_max, hoist.P_El_avg, hoist.η_dutyCycle, getdutyCyleTime(hoist.t_brake_max, hoist.η_dutyCycle))
-      displayResistorTransistorSelection(CR700selection, hoist.selectedCDBR(), resistorResults, hoist.selectedCDBR().cdbr.minResistance, hoist.R_max, hoist.P_El_avg, hoist);
+      let Rmax = hoist.maxBrakeResistance();
+      if (hoist.selectedCDBR().qtty > 1){
+        Rmax = Rmax * hoist.selectedCDBR().qtty;
+      }
+      let resistorResults = calculateResistors(hoist.selectedCDBR().cdbr.minResistance, Rmax, hoist.P_El_avg, hoist.η_dutyCycle, getdutyCyleTime(hoist.t_brake_max, hoist.η_dutyCycle))
+      displayResistorTransistorSelection(CR700selection, hoist.selectedCDBR(), resistorResults, hoist.selectedCDBR().cdbr.minResistance, Rmax, hoist.P_El_avg, hoist);
     }
   }
   else {
