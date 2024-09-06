@@ -77,6 +77,18 @@ document.addEventListener('DOMContentLoaded', function () {
     html: true,
     placement: 'top' // You can change the placement as needed
   });
+  var tooltipTriggerSpeed = document.getElementById('tooltipLabelSpeed');
+  var tooltipSpeed = new bootstrap.Tooltip(tooltipTriggerSpeed, {
+    title: "<img src='../sharedFiles/graphics/rn-speed.svg' alt='Speed explanation' />",
+    html: true,
+    placement: 'top' // You can change the placement as needed
+  });
+  var tooltipTriggerSpeed2 = document.getElementById('tooltipLabelSpeed2');
+  var tooltipSpeed2 = new bootstrap.Tooltip(tooltipTriggerSpeed2, {
+    title: "<img src='../sharedFiles/graphics/rn-speed.svg' alt='Speed explanation' />",
+    html: true,
+    placement: 'top' // You can change the placement as needed
+  });
 });
 
 function noCR700found() {
