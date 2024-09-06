@@ -1,5 +1,10 @@
 <!doctype html>
-<html lang="en">
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var userLang = navigator.language || navigator.userLanguage;
+        document.documentElement.setAttribute("lang", userLang);
+    });
+</script>
 
 <head>
     <meta charset="utf-8">
@@ -64,42 +69,42 @@
                     <label class="form-label yask-blue" for="motorRatedCurrentInput">
                         Motor rated current [A]:
                     </label>
-                    <input type="number" class="form-control" id="motorRatedCurrentInput"
+                    <input type="number" inputmode="decimal" class="form-control" id="motorRatedCurrentInput"
                         placeholder="Enter motor rated current in A" min="1" max="605" step = "any" required>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="avMotorPowerInput">
                         Motor power [kW]:
                     </label>
-                    <input type="number" class="form-control" id="avMotorPowerInput"
+                    <input type="number" inputmode="decimal" class="form-control" id="avMotorPowerInput"
                         placeholder="Enter average motor power in kW" step = "any" required>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="motorStartSpeedInput">
                         Start speed [rpm]:
                     </label>
-                    <input type="number" class="form-control" id="motorStartSpeedInput"
+                    <input type="number" inputmode="decimal" class="form-control" id="motorStartSpeedInput"
                         placeholder="Enter start speed in rpm" step = "any" required>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="avMotorSpeedInput">
                         Motor speed / target speed [rpm]:
                     </label>
-                    <input type="number" class="form-control" id="avMotorSpeedInput"
+                    <input type="number" inputmode="decimal" class="form-control" id="avMotorSpeedInput"
                         placeholder="Enter motor speed / target speed  in rpm" step = "any" required>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="MotorInertiaInput">
                         Motor inertia [kgm&#178]:
                     </label>
-                    <input type="number" class="form-control" id="MotorInertiaInput"
+                    <input type="number" inputmode="decimal" class="form-control" id="MotorInertiaInput"
                         placeholder="Enter motor inertia in kgm&#178" step = "any" required>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="motorEffInput">
                         Motor efficiency [%]:
                     </label>
-                    <input type="number" class="form-control" id="motorEffInput"
+                    <input type="number" inputmode="decimal" class="form-control" id="motorEffInput"
                         placeholder="Enter pulley efficiency in %" min="70" max="100" step = "any" value = "92" required>
                 </div>
                 <h3 class="yask-blue mb-1 mt-3">
@@ -109,70 +114,70 @@
                     <label class="form-label yask-blue" for="hoistHeigthInput">
                         Hoist height [m]:
                     </label>
-                    <input type="number" class="form-control" id="hoistHeigthInput"
+                    <input type="number" inputmode="decimal" class="form-control" id="hoistHeigthInput"
                         placeholder="Enter hoist height in m" min="1" max=200 step = "any" required>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="hoistLinSpeedInput">
                         Hoist linear speed [m/min]:
                     </label>
-                    <input type="number" class="form-control" id="hoistLinSpeedInput"
+                    <input type="number" inputmode="decimal" class="form-control" id="hoistLinSpeedInput"
                         placeholder="Enter hoist linear speed in m/min" min="1" max="50" step = "any" required>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="WorkingLoadInput">
                         Save working load [t]:
                     </label>
-                    <input type="number" class="form-control" id="WorkingLoadInput"
+                    <input type="number" inputmode="decimal" class="form-control" id="WorkingLoadInput"
                         placeholder="Enter save working load in t" step = "any" required>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="ChainWeightInput">
                         Chain weight [t]:
                     </label>
-                    <input type="number" class="form-control" id="ChainWeightInput"
+                    <input type="number" inputmode="decimal" class="form-control" id="ChainWeightInput"
                         placeholder="Enter chain weight in t" step = "any" required>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="PulleyBlockRatioInput">
                         Pulley block ratio [ratio:1]:
                     </label>
-                    <input type="number" class="form-control" id="PulleyBlockRatioInput"
+                    <input type="number" inputmode="decimal" class="form-control" id="PulleyBlockRatioInput"
                         placeholder="Enter pulley block ratio" step = "any" required>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="GearboxRatioInput">
                         Gearbox ratio [ratio:1]:
                     </label>
-                    <input type="number" class="form-control" id="GearboxRatioInput"
+                    <input type="number" inputmode="decimal" class="form-control" id="GearboxRatioInput"
                         placeholder="Enter gearbox ratio" step = "any" required>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="gearboxEffInput">
                         Gearbox efficiency [%]:
                     </label>
-                    <input type="number" class="form-control" id="gearboxEffInput"
+                    <input type="number" inputmode="decimal" class="form-control" id="gearboxEffInput"
                         placeholder="Enter gearbox efficiency in %" min="70" max="100" step = "any" value = "80" required>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="pulleyEffInput">
                         Pulley efficiency [%]:
                     </label>
-                    <input type="number" class="form-control" id="pulleyEffInput"
+                    <input type="number" inputmode="decimal" class="form-control" id="pulleyEffInput"
                         placeholder="Enter pulley efficiency in %" min="70" max="100" step = "any" value = "100" required>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="groveDiameterInput">
                         Roope groove diameter [m]:
                     </label>
-                    <input type="number" class="form-control" id="groveDiameterInput"
+                    <input type="number" inputmode="decimal" class="form-control" id="groveDiameterInput"
                         placeholder="Roope groove diameter in m" step = "any" required>
                 </div>
                 <div class="form-group mt-2">
                     <label class="form-label yask-blue" for="ed%Input" id="tooltipLabel">
                         Regenerative percentage [%]:
                     </label>
-                    <input type="number" class="form-control" id="ed%Input"
+                    <input type="number" inputmode="decimal" class="form-control" id="ed%Input"
                         placeholder="Enter regenerative percentage in %" min="10" max="50" step = "any" required>
                 </div>
             </form>

@@ -1,5 +1,10 @@
 <!doctype html>
-<html lang="en">
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var userLang = navigator.language || navigator.userLanguage;
+        document.documentElement.setAttribute("lang", userLang);
+    });
+</script>
 
 <head>
     <meta charset="utf-8">
@@ -96,28 +101,28 @@
                     <label for="dutyCycle" class="form-label yask-blue" id="tooltipLabel">
                         Duty cycle [%]
                     </label>
-                    <input type="number" class="form-control" id="dutyCycle" placeholder="Enter braking duty cycle in %"
+                    <input type="number" inputmode="decimal" inputmode="decimal" inputmode="decimal" class="form-control" id="dutyCycle" placeholder="Enter braking duty cycle in %"
                         min="1" max="100" step="any" required>
                 </div>
                 <div class="form-group">
                     <label for="dutyCycleDuration" class="form-label yask-blue" id="tooltipLabel2">
                         Duty cycle duration [s]
                     </label>
-                    <input type="number" class="form-control" id="dutyCycleDuration"
+                    <input type="number" inputmode="decimal" inputmode="decimal" inputmode="decimal" class="form-control" id="dutyCycleDuration"
                         placeholder="Enter braking duty cycle duration in s" min="1" step="any" required>
                 </div>
                 <div class="form-group">
                     <label for="peakPower" class="form-label yask-blue">
                         Peak braking power [kW]
                     </label>
-                    <input type="number" class="form-control" id="peakPower"
+                    <input type="number" inputmode="decimal" inputmode="decimal" inputmode="decimal" class="form-control" id="peakPower"
                         placeholder="Enter peak braking power in kW" min="0.01" step="any" required>
                 </div>
                 <div class="form-group">
                     <label for="power" class="form-label yask-blue">
                         Braking power [kW]
                     </label>
-                    <input type="number" class="form-control" id="power" placeholder="Enter braking power in kW"
+                    <input type="number" inputmode="decimal" inputmode="decimal" inputmode="decimal" class="form-control" id="power" placeholder="Enter braking power in kW"
                         min="0.01" step="any" required>
                 </div>
             </form>
