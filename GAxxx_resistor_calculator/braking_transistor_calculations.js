@@ -5,7 +5,6 @@ export function checkBrakingTorque(ed, brakeTime, brakePower, driveObject, drive
     let tbLineAbove;
   
     let brakingTorquePercent = Math.round((brakePower / driveObject.hdPower) * 100);
-    console.log(`\nRequired braking torque: ${brakingTorquePercent}% of drive rating`);
   
     // Continue verification only if the braking torque at the operation point 
     // is less than the braking torque of the lowest overload curve (Tb[%] <= 155% in case of CR700)
@@ -14,8 +13,6 @@ export function checkBrakingTorque(ed, brakeTime, brakePower, driveObject, drive
       // If the braking torque at the operation point is less than the braking 
       // torque of the highest overload curve, selection is OK (Tb [%] < 70% in case of CR700)
       if (brakingTorquePercent < driveCurves[driveCurves.length - 1].brakingTorque) {
-        console.log(`Allowable braking torque at operation point: >${driveCurves[driveCurves.length - 1].brakingTorque}%`);
-        console.log(`Selection OK`);
         return true;
       }
   
@@ -26,7 +23,6 @@ export function checkBrakingTorque(ed, brakeTime, brakePower, driveObject, drive
         //console.log(`Line found: ${lineFound}`);
         return lineFound;
       });
-      console.log(`Allowable Braking Torque: ${tbLineAbove.brakingTorque}%`);
       //return tbLineAbove.brakingTorque;
       if (brakingTorquePercent < tbLineAbove.brakingTorque) return true;
       else return false;
@@ -71,12 +67,10 @@ export function findCDBR  (cdbr_data, maxBrakeResistance, maxBrakeTime, brakeAct
 
     // Preliminary CDBR selection too small
     if (!selectionCompleted) {
-      console.log(`\nPreliminary selection too small, calculating alternative`);
       // Check if a larger CDBR is available
       if (cdbr_data.some(cdbr => cdbr.minResistance < selectedCDBR.minResistance)) {
         selectedCDBR = cdbr_data.find(cdbr => cdbr.minResistance < selectedCDBR.minResistance);
         selectedEDCurve = selectedCDBR.overloadCurves.find(curve => dutyCycle <= curve.dutyCycle);
-        console.log(`\nAlternative Selection: ${selectedCDBR.type} \n\tMin Connectable Resistance = ${selectedCDBR.minResistance}`);
         maxBrakingCurrent = brakeActivationV / selectedCDBR.minResistance;
         minBrakingCurrent = brakeActivationV / maxBrakeResistance;
         Ix = ed_interpolate(selectedEDCurve, maxBrakeTime);
@@ -86,7 +80,6 @@ export function findCDBR  (cdbr_data, maxBrakeResistance, maxBrakeTime, brakeAct
           // Ensure resistance still possible if 10% tolerance is considered
           if ((maxBrakeResistance - selectedCDBR.minResistance) > maxBrakeResistance * 0.1) {
             selectionCompleted = true;
-            console.log(`\nCDBR found on second attempt.`);
             return {
               cdbr: selectedCDBR,
               qtty: 1,
@@ -95,7 +88,6 @@ export function findCDBR  (cdbr_data, maxBrakeResistance, maxBrakeTime, brakeAct
           }
         }
       }
-      else console.log(`\nNo alternative found, multiple CDBR units required\n`);
     }
   }
 
@@ -108,7 +100,6 @@ export function findCDBR  (cdbr_data, maxBrakeResistance, maxBrakeTime, brakeAct
     let cdbrQuantity = Math.ceil(resistance / maxBrakeResistance);
     maxBrakeResistance = cdbrQuantity * maxBrakeResistance;
     selectionCompleted = true;
-    console.log(`\nMultiple CDBRs selected.`);
     return {
       cdbr: selectedCDBR,
       qtty: cdbrQuantity,

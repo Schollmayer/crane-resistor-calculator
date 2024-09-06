@@ -392,8 +392,6 @@ function getdutyCyleTime(maxBrakeTime, dutyCycle) {
 function calculateResult() {
   let hoist = new HoistFrontend("Hoist1");
   let [CR700selection, useInternalbrakingTransistor] = hoist.selectedCR700();
-  console.log(`Use Internal : ${useInternalbrakingTransistor}%`);
-  console.log(`CR700 : ${CR700selection}%`);
 
   if (CR700selection) {
     if (useInternalbrakingTransistor) {
