@@ -402,7 +402,7 @@ function calculateResult() {
     }
 
     else {
-      let Rmax = hoist.maxBrakeResistance();
+      let Rmax = hoist.R_max;
       if (hoist.selectedCDBR().qtty > 1){
         Rmax = Rmax * hoist.selectedCDBR().qtty;
       }
