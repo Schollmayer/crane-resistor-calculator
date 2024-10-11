@@ -313,31 +313,35 @@ function performAndDisplayCalculations(minR, maxR, power, dutyCycle, dutyCycleDu
         var selectedCDBR = findCDBR(cdbr_data, maxR, getMaxBreakTime(dutyCycle, dutyCycleDuration), getSelectedDrive(selectedDrive).brakeActivationVoltage, dutyCycle)
         if (selectedCDBR) {
           let Rmax = maxR;
+          let AvgPower = power;
           if (selectedCDBR.qtty > 1){
             Rmax = Rmax * selectedCDBR.qtty;
+            AvgPower = AvgPower / selectedCDBR.qtty;
           }
           outputSameDriveWithBrakingTransistor();
-          var resistorResults = calculateResistors(selectedCDBR.cdbr.minResistance, Rmax, power, dutyCycle, dutyCycleDuration);
+          var resistorResults = calculateResistors(selectedCDBR.cdbr.minResistance, Rmax, AvgPower, dutyCycle, dutyCycleDuration);
           if (resistorResults) {
-            displayResistorTransistorSelection(resistorResults, selectedCDBR, selectedCDBR.cdbr.minResistance, Rmax, power);
+            displayResistorTransistorSelection(resistorResults, selectedCDBR, selectedCDBR.cdbr.minResistance, Rmax, AvgPower);
           }
           else {
             var biggerCDBR = getBiggerCDBR(selectedCDBR, cdbr_data);
             if (biggerCDBR) {
               let Rmax = maxR;
-              if (biggerCDBR.qtty > 1){
-                Rmax = Rmax * biggerCDBR.qtty;
+              let AvgPower = power;
+              if (selectedCDBR.qtty > 1){
+                Rmax = Rmax * selectedCDBR.qtty;
+                AvgPower = AvgPower / selectedCDBR.qtty;
               }
-              resistorResults = calculateResistors(biggerCDBR.cdbr.minResistance, Rmax, power, dutyCycle, dutyCycleDuration);
+              resistorResults = calculateResistors(biggerCDBR.cdbr.minResistance, Rmax, AvgPower, dutyCycle, dutyCycleDuration);
               if (resistorResults) {
-                displayResistorTransistorSelection(resistorResults, biggerCDBR, biggerCDBR.cdbr.minResistance, Rmax, power);
+                displayResistorTransistorSelection(resistorResults, biggerCDBR, biggerCDBR.cdbr.minResistance, Rmax, AvgPower);
               }
               else {
-                displayNoResistorFoundError(selectedCDBR.cdbr.minResistance, Rmax, power, selectedCDBR);
+                displayNoResistorFoundError(selectedCDBR.cdbr.minResistance, Rmax, AvgPower, selectedCDBR);
               }
             }
             else {
-              displayNoResistorFoundError(selectedCDBR.cdbr.minResistance, Rmax, power, selectedCDBR);
+              displayNoResistorFoundError(selectedCDBR.cdbr.minResistance, Rmax, AvgPower, selectedCDBR);
             }
           }
         }
@@ -351,27 +355,29 @@ function performAndDisplayCalculations(minR, maxR, power, dutyCycle, dutyCycleDu
     var selectedCDBR = findCDBR(cdbr_data, maxR, getMaxBreakTime(dutyCycle, dutyCycleDuration), getSelectedDrive(selectedDrive).brakeActivationVoltage, dutyCycle)
     if (selectedCDBR) {
       let Rmax = maxR;
+      let AvgPower = power;
       if (selectedCDBR.qtty > 1){
         Rmax = Rmax * selectedCDBR.qtty;
+        AvgPower = AvgPower / selectedCDBR.qtty;
       }
       outputExternalBrakingTransistor()
-      var resistorResults = calculateResistors(selectedCDBR.cdbr.minResistance, Rmax, power, dutyCycle, dutyCycleDuration);
+      var resistorResults = calculateResistors(selectedCDBR.cdbr.minResistance, Rmax, AvgPower, dutyCycle, dutyCycleDuration);
       if (resistorResults) {
-        displayResistorTransistorSelection(resistorResults, selectedCDBR, selectedCDBR.cdbr.minResistance, Rmax, power);
+        displayResistorTransistorSelection(resistorResults, selectedCDBR, selectedCDBR.cdbr.minResistance, Rmax, AvgPower);
       }
       else {
         var biggerCDBR = getBiggerCDBR(selectedCDBR, cdbr_data);
         if (biggerCDBR) {
-          resistorResults = calculateResistors(biggerCDBR.cdbr.minResistance, Rmax, power, dutyCycle, dutyCycleDuration);
+          resistorResults = calculateResistors(biggerCDBR.cdbr.minResistance, Rmax, AvgPower, dutyCycle, dutyCycleDuration);
           if (resistorResults) {
-            displayResistorTransistorSelection(resistorResults, biggerCDBR, biggerCDBR.cdbr.minResistance, Rmax, power);
+            displayResistorTransistorSelection(resistorResults, biggerCDBR, biggerCDBR.cdbr.minResistance, Rmax, AvgPower);
           }
           else {
-            displayNoResistorFoundError(selectedCDBR.cdbr.minResistance, Rmax, power, selectedCDBR);
+            displayNoResistorFoundError(selectedCDBR.cdbr.minResistance, Rmax, AvgPower, selectedCDBR);
           }
         }
         else {
-          displayNoResistorFoundError(selectedCDBR.cdbr.minResistance, Rmax, power, selectedCDBR);
+          displayNoResistorFoundError(selectedCDBR.cdbr.minResistance, Rmax, AvgPower, selectedCDBR);
         }
       }
     }

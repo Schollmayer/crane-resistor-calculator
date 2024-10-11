@@ -412,12 +412,14 @@ function calculateResult() {
     }
 
     else {
-      let Rmax = hoist.R_max;
+      let Rmax = hoist.maxBrakeResistance();
+      let Pavg = hoist.P_El_avg;
       if (hoist.selectedCDBR().qtty > 1){
         Rmax = Rmax * hoist.selectedCDBR().qtty;
+        Pavg = Pavg / hoist.selectedCDBR().qtty;
       }
-      let resistorResults = calculateResistors(hoist.selectedCDBR().cdbr.minResistance, Rmax, hoist.P_El_avg, hoist.η_dutyCycle, getdutyCyleTime(hoist.t_brake_max, hoist.η_dutyCycle))
-      displayResistorTransistorSelection(CR700selection, hoist.selectedCDBR(), resistorResults, hoist.selectedCDBR().cdbr.minResistance, Rmax, hoist.P_El_avg, hoist);
+      let resistorResults = calculateResistors(hoist.selectedCDBR().cdbr.minResistance, Rmax,Pavg , hoist.η_dutyCycle, getdutyCyleTime(hoist.t_brake_max, hoist.η_dutyCycle))
+      displayResistorTransistorSelection(CR700selection, hoist.selectedCDBR(), resistorResults, hoist.selectedCDBR().cdbr.minResistance, Rmax, Pavg, hoist);
     }
   }
   else {
