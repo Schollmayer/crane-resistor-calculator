@@ -61,10 +61,10 @@ export class HoistAlternative {
 
         //Maximum breaking torque
         //TODO Check n2 and 0.5, there is no 0.5 present to get result from example
-        this.M_B_max = ((this.I_total * (this.n_motor - this.n_motor_start)) / (60 / (2 * Math.PI))) + this.M_load;
+        this.M_B_max = ((this.I_total * (this.n_motor_start - this.n_motor)) / (60 / (2 * Math.PI))) + this.M_load;
 
         //Maximum braking power
-        this.P_B_max = ((this.M_B_max * this.n_motor) / (60 / (2 * Math.PI)));
+        this.P_B_max = ((this.M_B_max * (this.n_motor_start - this.n_motor)) / (60 / (2 * Math.PI)));
 
         //Maximum electrical braking power in kW
         this.P_El_max = (this.P_B_max - ((1 - this.η_motor) * this.P_m) - (((1 - this.η_gearbox) * (1 - this.η_pulley)) * this.P_B_max)) / 1000;
@@ -76,7 +76,7 @@ export class HoistAlternative {
         this.t_brake_max = Math.round((this.h_lift / this.v_hoist) * 60);
 
         //Power while lowering
-        this.P_low = (this.M_load * this.n_motor) / (60 / (2 * Math.PI));
+        this.P_low = (this.M_load * (this.n_motor_start - this.n_motor)) / (60 / (2 * Math.PI));
 
         //Power while lowering - losses can be used as average electrical braking power in kW
         this.P_El_avg = (this.P_low - ((1 - this.η_motor) * this.P_m) - ((1 - this.η_gearbox) * this.P_low) - ((1 - this.η_pulley) * this.P_low)) / 1000;
