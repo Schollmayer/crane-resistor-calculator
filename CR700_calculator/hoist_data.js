@@ -39,7 +39,7 @@ export class HoistFrontend {
     return this.averageBrakePower() * 2;
   }
   maxBrakeTime() {
-    return Math.round((this.hoistHeight / this.hoistSpeed) * 60);
+    return ((this.hoistHeight / this.hoistSpeed) * 60);
   }
   maxBrakeResistance() {
     return (this.brakeActivateVoltage ** 2) / (this.maxBrakePower() * 1000);

@@ -73,7 +73,7 @@ export class HoistAlternative {
         this.R_max = (this.brakeActivateVoltage ** 2) / (this.P_El_max * 1000);
 
         //Maximum brake time
-        this.t_brake_max = Math.round((this.h_lift / this.v_hoist) * 60);
+        this.t_brake_max = ((this.h_lift / this.v_hoist) * 60);
 
         //Power while lowering
         this.P_low = (this.M_load * (this.n_motor_start - this.n_motor)) / (60 / (2 * Math.PI));
