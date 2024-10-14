@@ -248,7 +248,8 @@ function displayResistorTransistorSelection(cr700Result, transistorResults, resi
   accordionBody.classList.add("accordion-body");
   accordionBody.innerHTML = `<strong>Average braking power:</strong> ${hoist.P_El_avg.toFixed(2)} kW<br>
 <strong>Maximum braking power:</strong> ${hoist.P_El_max.toFixed(2)} kW<br>
-<strong>Maximum continuous braking time:</strong> ${hoist.t_brake_max.toFixed(2)} s`;
+<strong>Maximum continuous braking time:</strong> ${hoist.t_brake_max.toFixed(2)} s<br>
+<strong>Duty cycle time:</strong> ${hoist.t_duty_cycle.toFixed(2)} s`;
 
   accordionCollapse.appendChild(accordionBody);
   accordionCard.appendChild(accordionCollapse);
@@ -424,7 +425,7 @@ function calculateResult() {
 
   if (CR700selection) {
     if (useInternalbrakingTransistor) {
-      let resistorResults = calculateResistors(CR700selection.minBrakeResistance, hoist.R_max, hoist.P_El_avg, hoist.η_dutyCycle, getdutyCyleTime(hoist.t_brake_max, hoist.η_dutyCycle))
+      let resistorResults = calculateResistors(CR700selection.minBrakeResistance, hoist.R_max, hoist.P_El_avg, hoist.dutyCycle, getdutyCyleTime(hoist.t_brake_max, hoist.dutyCycle))
       displayResistorTransistorSelection(CR700selection, null, resistorResults, CR700selection.minBrakeResistance, hoist.R_max, hoist.P_El_avg, hoist);
     }
 
@@ -435,7 +436,7 @@ function calculateResult() {
         Rmax = Rmax * hoist.selectedCDBR().qtty;
         Pavg = Pavg / hoist.selectedCDBR().qtty;
       }
-      let resistorResults = calculateResistors(hoist.selectedCDBR().cdbr.minResistance, Rmax,Pavg , hoist.η_dutyCycle, getdutyCyleTime(hoist.t_brake_max, hoist.η_dutyCycle))
+      let resistorResults = calculateResistors(hoist.selectedCDBR().cdbr.minResistance, Rmax,Pavg , hoist.dutyCycle, getdutyCyleTime(hoist.t_brake_max, hoist.dutyCycle))
       displayResistorTransistorSelection(CR700selection, hoist.selectedCDBR(), resistorResults, hoist.selectedCDBR().cdbr.minResistance, Rmax, Pavg, hoist);
     }
   }

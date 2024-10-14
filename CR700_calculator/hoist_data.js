@@ -41,6 +41,10 @@ export class HoistFrontend {
   maxBrakeTime() {
     return ((this.hoistHeight / this.hoistSpeed) * 60);
   }
+
+  dutyCycleTime() {
+    return this.maxBrakeTime() / (this.dutyCycle/100)
+  }
   maxBrakeResistance() {
     return (this.brakeActivateVoltage ** 2) / (this.maxBrakePower() * 1000);
   }

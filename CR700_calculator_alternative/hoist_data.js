@@ -46,8 +46,8 @@ export class HoistAlternative {
         this.η_gearbox = parseFloat(document.getElementById("gearboxEffInput").value) / 100;
         // Get pulley efficiency in percent. Range [70-100] %
         this.η_pulley = parseFloat(document.getElementById("pulleyEffInput").value) / 100;
-        // Duty cycle efficiency (assuming it's already in the correct format)
-        this.η_dutyCycle = parseFloat(document.getElementById("ed%Input").value);
+        // Braking duty cycle percentage (assuming it's already in the correct format)
+        this.dutyCycle = parseFloat(document.getElementById("ed%Input").value);
 
 
 
@@ -75,6 +75,9 @@ export class HoistAlternative {
         //Maximum brake time
         this.t_brake_max = ((this.h_lift / this.v_hoist) * 60);
 
+        //Duty cycle time
+        this.t_duty_cycle = this.t_brake_max / (this.dutyCycle / 100) 
+
         //Power while lowering
         this.P_low = (this.M_load * (this.n_motor_start - this.n_motor)) / (60 / (2 * Math.PI));
 
@@ -83,9 +86,9 @@ export class HoistAlternative {
     }
 
     selectedCDBR() {
-        return findCDBR(this.R_max, this.t_brake_max, this.brakeActivateVoltage, this.η_dutyCycle);
+        return findCDBR(this.R_max, this.t_brake_max, this.brakeActivateVoltage, this.dutyCycle);
     }
     selectedCR700() {
-        return findCR700(this.I_motor, this.P_El_avg, this.R_max, this.t_brake_max, this.η_dutyCycle);
+        return findCR700(this.I_motor, this.P_El_avg, this.R_max, this.t_brake_max, this.dutyCycle);
     }
 }

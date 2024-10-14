@@ -9,7 +9,7 @@ calculateButton.addEventListener('click', function () {
   // Clear previous calculation results
   var outputDiv = document.getElementById("output");
   outputDiv.innerHTML = "";
-  
+
   if (form.checkValidity()) {
     calculateResult();
   }
@@ -223,7 +223,8 @@ var accordionBody = document.createElement("div");
 accordionBody.classList.add("accordion-body");
 accordionBody.innerHTML = `<strong>Average braking power:</strong> ${hoist.averageBrakePower().toFixed(2)} kW<br>
 <strong>Maximum braking power:</strong> ${hoist.maxBrakePower().toFixed(2)} kW<br>
-<strong>Maximum continuous braking time:</strong> ${hoist.maxBrakeTime().toFixed(2)} s`;
+<strong>Maximum continuous braking time:</strong> ${hoist.maxBrakeTime().toFixed(2)} s<br>
+<strong>Duty cycle time:</strong> ${hoist.dutyCycleTime().toFixed(2)} s`;
 
 accordionCollapse.appendChild(accordionBody);
 accordionCard.appendChild(accordionCollapse);
