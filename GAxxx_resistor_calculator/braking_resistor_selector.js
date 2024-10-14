@@ -51,6 +51,10 @@ selectedDrive.forEach((drive, index) => {
 
 calculateResistorButton.addEventListener('click', function () {
   var form = document.getElementById('brakingDataInputForm');
+  // Clear previous calculation results
+  var outputDiv = document.getElementById("output");
+  outputDiv.innerHTML = "";
+  
   if (form.checkValidity()) {
     calculate();
   }

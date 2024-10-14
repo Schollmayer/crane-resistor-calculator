@@ -10,6 +10,10 @@ const dutyCycle = document.getElementById('dutyCycle');
 const calculateButton = document.getElementById('calculateButton');
 calculateButton.addEventListener('click', function () {
   var form = document.getElementById('brakingDataInputForm');
+  // Clear previous calculation results
+  var outputDiv = document.getElementById("output");
+  outputDiv.innerHTML = "";
+  
   if (form.checkValidity()) {
     calculateResult();
   }
