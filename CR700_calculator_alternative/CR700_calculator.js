@@ -2,21 +2,34 @@ import { cdbr_data, ed_interpolate } from "../sharedFiles/cdbr_data.js";
 import { HoistAlternative } from "./hoist_data.js";
 import { calculateResistors, getResistorGraphic } from "../sharedFiles/braking_resistor_calculations.js";
 
-//Button-EventListener
+// Button-EventListener
 const calculateButton = document.getElementById('calculateButton');
 calculateButton.addEventListener('click', function () {
-  var form = document.getElementById('brakingDataInputForm');
-  // Clear previous calculation results
-  var outputDiv = document.getElementById("output");
-  outputDiv.innerHTML = "";
-  
-  if (form.checkValidity()) {
-    calculateResult();
-  }
-  else {
-    form.reportValidity(); // This will trigger the browser's built-in validation messages
-  }
-  storeFormInput();
+    const startSpeedInput = document.getElementById('motorStartSpeedInput');
+    const targetSpeedInput = document.getElementById('avMotorSpeedInput');
+
+    const startSpeed = parseFloat(startSpeedInput.value);
+    const targetSpeed = parseFloat(targetSpeedInput.value);
+
+    // Reset custom validity messages
+    startSpeedInput.setCustomValidity('');
+    targetSpeedInput.setCustomValidity('');
+
+    // Speed validation check
+    if (targetSpeed > startSpeed) {
+        targetSpeedInput.setCustomValidity('Target speed cannot be higher than start speed!');
+        targetSpeedInput.reportValidity();  // This will trigger the built-in validation error
+        return; // Exit the function to prevent further action
+    }
+
+    var form = document.getElementById('brakingDataInputForm');
+    if (form.checkValidity()) {
+        calculateResult(); // Call your calculation function
+    } else {
+        form.reportValidity(); // Trigger browser's built-in validation
+    }
+
+    storeFormInput(); // Store the form inputs
 });
 
 const loadInputsButton = document.getElementById('loadInputsButton');
