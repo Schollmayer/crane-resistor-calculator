@@ -5,29 +5,33 @@ import { calculateResistors, getResistorGraphic } from "../sharedFiles/braking_r
 // Button-EventListener
 const calculateButton = document.getElementById('calculateButton');
 calculateButton.addEventListener('click', function () {
-    const startSpeedInput = document.getElementById('motorStartSpeedInput');
-    const targetSpeedInput = document.getElementById('avMotorSpeedInput');
+  // Clear previous calculation results
+  var outputDiv = document.getElementById("output");
+  outputDiv.innerHTML = "";
 
-    const startSpeed = parseFloat(startSpeedInput.value);
-    const targetSpeed = parseFloat(targetSpeedInput.value);
+  const startSpeedInput = document.getElementById('motorStartSpeedInput');
+  const targetSpeedInput = document.getElementById('avMotorSpeedInput');
 
-    // Reset custom validity messages
-    startSpeedInput.setCustomValidity('');
-    targetSpeedInput.setCustomValidity('');
+  const startSpeed = parseFloat(startSpeedInput.value);
+  const targetSpeed = parseFloat(targetSpeedInput.value);
 
-    // Speed validation check
-    if (targetSpeed > startSpeed) {
-        targetSpeedInput.setCustomValidity('Target speed cannot be higher than start speed!');
-        targetSpeedInput.reportValidity();  // This will trigger the built-in validation error
-        return; // Exit the function to prevent further action
-    }
+  // Reset custom validity messages
+  startSpeedInput.setCustomValidity('');
+  targetSpeedInput.setCustomValidity('');
 
-    var form = document.getElementById('brakingDataInputForm');
-    if (form.checkValidity()) {
-        calculateResult(); // Call your calculation function
-    } else {
-        form.reportValidity(); // Trigger browser's built-in validation
-    }
+  // Speed validation check
+  if (targetSpeed > startSpeed) {
+      targetSpeedInput.setCustomValidity('Target speed cannot be higher than start speed!');
+      targetSpeedInput.reportValidity();  // This will trigger the built-in validation error
+      return; // Exit the function to prevent further action
+  }
+
+  var form = document.getElementById('brakingDataInputForm');
+  if (form.checkValidity()) {
+      calculateResult(); // Call your calculation function
+  } else {
+      form.reportValidity(); // Trigger browser's built-in validation
+  }
 
     storeFormInput(); // Store the form inputs
 });
