@@ -1,65 +1,86 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <script data-require="snap.svg@0.3.0" data-semver="0.3.0" src="//cdn.jsdelivr.net/snap.svg/0.5.1/snap.svg-min.js"></script>
+<head>
+    <script data-require="snap.svg@0.3.0" data-semver="0.3.0"
+        src="//cdn.jsdelivr.net/snap.svg/0.5.1/snap.svg-min.js"></script>
     <link rel="stylesheet" href="style.css" />
-  </head>
+</head>
 
-  <body> 
+<body>
     <script>
 
-// Initialize Snap.svg
-var s = Snap(1000, 1000);
+        function createSchematic(numCDBRs) {
+            var s = Snap(1000, 1000);
 
-var rectWidth = 40;
-var rectHeight = 60;
-var cornerRounding = 6;
-var strokeWidth = 1;
-var zeroPointX = rectWidth * 2;
-var zeroPointyY = 1;
+            var rectWidth = 80;
+            var rectHeight = 120;
+            var cornerRounding = 8;
+            var strokeWidth = 2;
+            var zeroPointX = strokeWidth;
+            var zeroPointyY = strokeWidth;
 
-//Get middle of button of rect
-function mb (rect){ 
-var bbox = rect.getBBox()
- var coordinates = {
-  x: bbox.x + bbox.width / 2,
-  y: bbox.y + bbox.height,
- }
- return coordinates;
-}
+            // Get middle of bottom of rect
+            function mb(rect) {
+                var bbox = rect.getBBox();
+                var coordinates = {
+                    x: bbox.x + bbox.width / 2,
+                    y: bbox.y + bbox.height
+                };
+                return coordinates;
+            }
 
-//Get middle of top of rect
-function mt (rect){ 
-var bbox = rect.getBBox()
- var coordinates = {
-  x: bbox.x + bbox.width / 2,
-  y: bbox.y,
- }
- return coordinates;
-}
+            // Get middle of top of rect
+            function mt(rect) {
+                var bbox = rect.getBBox();
+                var coordinates = {
+                    x: bbox.x + bbox.width / 2,
+                    y: bbox.y
+                };
+                return coordinates;
+            }
 
-// Create the first rectangle
-var CR700 = s.rect(zeroPointX, zeroPointyY, rectWidth, rectHeight, cornerRounding, cornerRounding).attr({
-    fill: "transparent",
-    stroke: "#005BBB",
-    strokeWidth: strokeWidth
-});
+            // Create the first rectangle (CR700)
+            var CR700 = s.rect(zeroPointX + (rectWidth* (numCDBRs - 1)) , zeroPointyY, rectWidth, rectHeight, cornerRounding, cornerRounding).attr({
+                fill: "transparent",
+                stroke: "#005BBB",
+                strokeWidth: strokeWidth
+            });
 
-// Create the first rectangle
-var CDBR_1 = s.rect(zeroPointX, zeroPointyY + rectHeight * 2, rectWidth, rectHeight, cornerRounding, cornerRounding).attr({
-    fill: "transparent",
-    stroke: "#747678",
-    strokeWidth: strokeWidth
-});
-
-var line1 =  s.line(mb(CR700).x, mb(CR700).y, mt(CDBR_1).x, mt(CDBR_1).y).attr({
-    stroke: "black",
-    strokeWidth: 1
-});
+            // Function to create multiple CDBR rectangles
+            var spacing = rectWidth + rectWidth; // Adjust spacing as needed
+            var startX = zeroPointX - (spacing * (numCDBRs - 1)) / 2; // Center the CDBRs
 
 
-</script>
-  </body>
+
+            for (var i = 0; i < numCDBRs; i++) {
+                var x = startX + i * spacing;
+                var CDBR = s.rect(x, zeroPointyY + rectHeight * 2, rectWidth, rectHeight, cornerRounding, cornerRounding).attr({
+                    fill: "transparent",
+                    stroke: "#747678",
+                    strokeWidth: strokeWidth
+                });
+
+                // Draw right-angle line connecting CR700 to each CDBR
+                var cr700Bottom = mb(CR700);
+                var cdbrTop = mt(CDBR);
+                var midX = cr700Bottom.x;
+                var midY = cdbrTop.y - cdbrTop.y / 2;
+
+                s.path(`M${cr700Bottom.x},${cr700Bottom.y} H${midX} V${midY} H${cdbrTop.x}`).attr({
+                    stroke: "black",
+                    strokeWidth: 1,
+                    fill: "none"
+                });
+            }
+        }
+
+        // Example usage: create 5 CDBR rectangles
+        createSchematic(4);
+
+
+
+    </script>
+</body>
 
 </html>
