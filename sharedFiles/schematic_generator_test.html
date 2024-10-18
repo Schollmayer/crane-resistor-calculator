@@ -11,15 +11,17 @@
     <script>
 
         function createSchematic(numCDBRs) {
-            var s = Snap(1000, 1000);
-
+            
             var rectWidth = 80;
             var rectHeight = 120;
             var cornerRounding = 8;
             var strokeWidth = 2;
             var zeroPointX = strokeWidth + rectWidth / 2 ;
             var zeroPointyY = strokeWidth;
-
+            
+            
+            var s = Snap(rectWidth *  2 * (numCDBRs + 1), 1000);
+ 
             // Get middle of bottom of rect
             function mb(rect) {
                 var bbox = rect.getBBox();
@@ -51,8 +53,6 @@
             var spacing = rectWidth + rectWidth; // Adjust spacing as needed
             var startX = zeroPointX
 
-
-
             for (var i = 0; i < numCDBRs; i++) {
                 var x = startX + i * spacing;
                 var CDBR = s.rect(x, zeroPointyY + rectHeight * 2, rectWidth, rectHeight, cornerRounding, cornerRounding).attr({
@@ -76,7 +76,7 @@
         }
 
         // Example usage: create 5 CDBR rectangles
-        createSchematic(3);
+        createSchematic(4);
 
 
 
