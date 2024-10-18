@@ -40,6 +40,26 @@ function createSchematic(numCDBRs) {
         return coordinates;
     }
 
+        // Get middle of top of rect
+        function ml(rect) {
+        var bbox = rect.getBBox();
+        var coordinates = {
+            x: bbox.x,
+            y: bbox.y + bbox.height /2,
+        };
+        return coordinates;
+    }
+
+        // Get middle of top of rect
+        function mr(rect) {
+        var bbox = rect.getBBox();
+        var coordinates = {
+            x: bbox.x + bbox.width,
+            y: bbox.y + bbox.height /2,
+        };
+        return coordinates;
+    }
+
     // Create the first rectangle (CR700)
     var CR700 = s.rect(zeroPointX + (rectWidth * (numCDBRs - 1)), zeroPointyY, rectWidth, rectHeight, cornerRounding, cornerRounding).attr({
         fill: "transparent",
@@ -73,11 +93,23 @@ function createSchematic(numCDBRs) {
             fill: "none"
         });
 
+        // Create a rectangle centered under each CDBR
+        var smallRectWidth = rectWidth / 1.6;
+        var smallRectHeight = rectHeight / 4;
+        var smallRectX = x + (rectWidth - smallRectWidth) / 2;
+        var smallRectY = zeroPointyY + rectHeight * 3  + rectHeight / 3;
+
+        s.rect(smallRectX, smallRectY, smallRectWidth, smallRectHeight).attr({
+            fill: "transparent",
+            stroke: "#616365",
+            strokeWidth: strokeWidth
+        });
     }
 }
 
 // Example usage: create 4 CDBR rectangles
-createSchematic(5);
+createSchematic(3);
+
 
 
 
