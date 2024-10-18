@@ -10,7 +10,7 @@
 <body>
     <script>
 
-function createSchematic(numCDBRs) {
+function createSchematic(numCDBRs, CR700_Name) {
     var rectWidth = 80;
     var rectHeight = 120;
     var cornerRounding = 8;
@@ -40,22 +40,22 @@ function createSchematic(numCDBRs) {
         return coordinates;
     }
 
-        // Get middle of the left side of rect
-        function ml(rect) {
+    // Get middle of the left side of rect
+    function ml(rect) {
         var bbox = rect.getBBox();
         var coordinates = {
             x: bbox.x,
-            y: bbox.y + bbox.height /2,
+            y: bbox.y + bbox.height / 2,
         };
         return coordinates;
     }
 
-        // Get middle of the right side of rect
-        function mr(rect) {
+    // Get middle of the right side of rect
+    function mr(rect) {
         var bbox = rect.getBBox();
         var coordinates = {
             x: bbox.x + bbox.width,
-            y: bbox.y + bbox.height /2,
+            y: bbox.y + bbox.height / 2,
         };
         return coordinates;
     }
@@ -65,6 +65,23 @@ function createSchematic(numCDBRs) {
         fill: "transparent",
         stroke: "#005BBB",
         strokeWidth: strokeWidth
+    });
+
+    // Add text inside CR700 with line break
+    var textX = zeroPointX + (rectWidth * (numCDBRs - 1)) + rectWidth / 2;
+    var textY = zeroPointyY + rectHeight / 2;
+    var lines = CR700_Name.split(/(CR70)/).filter(Boolean);
+    s.text(textX, textY - 10, lines[0] + "-").attr({
+        'text-anchor': 'middle',
+        'dominant-baseline': 'middle',
+        'font-size': 14,
+        'fill': '#005BBB'
+    });
+    s.text(textX, textY + 10, lines[1]).attr({
+        'text-anchor': 'middle',
+        'dominant-baseline': 'middle',
+        'font-size': 14,
+        'fill': '#005BBB'
     });
 
     // Function to create multiple CDBR rectangles
@@ -97,30 +114,28 @@ function createSchematic(numCDBRs) {
         var smallRectWidth = rectWidth / 1.6;
         var smallRectHeight = rectHeight / 4;
         var smallRectX = x + (rectWidth - smallRectWidth) / 2;
-        var smallRectY = zeroPointyY + rectHeight * 3  + rectHeight / 3;
+        var smallRectY = zeroPointyY + rectHeight * 3 + rectHeight / 3;
 
-        resistor = s.rect(smallRectX, smallRectY, smallRectWidth, smallRectHeight).attr({
+        var resistor = s.rect(smallRectX, smallRectY, smallRectWidth, smallRectHeight).attr({
             fill: "transparent",
             stroke: "#616365",
             strokeWidth: strokeWidth
         });
 
-
         // Add lines to connect resistor
+        var startB1LineX = mb(CDBR).x - rectWidth * (1 / 6);
+        var startB1LineY = mb(CDBR).y;
 
-        startB1LineX = mb(CDBR).x - rectWidth * (1/6);
-        startB1LineY = mb(CDBR).y;
-
-        s.path(`M${startB1LineX},${startB1LineY} v${((mt(resistor).y) - mb(CDBR).y)/2} h${-rectWidth/2} V${ml(resistor).y} H${ml(resistor).x}` ).attr({
+        s.path(`M${startB1LineX},${startB1LineY} v${((mt(resistor).y) - mb(CDBR).y) / 2} h${-rectWidth / 2} V${ml(resistor).y} H${ml(resistor).x}`).attr({
             stroke: "black",
             strokeWidth: 1,
             fill: "none"
         });
 
-        startB2LineX = mb(CDBR).x + rectWidth * (1/6);
-        startB2LineY = mb(CDBR).y;
+        var startB2LineX = mb(CDBR).x + rectWidth * (1 / 6);
+        var startB2LineY = mb(CDBR).y;
 
-        s.path(`M${startB2LineX},${startB2LineY} v${((mt(resistor).y) - mb(CDBR).y)/2} h${rectWidth/2} V${ml(resistor).y} H${ml(resistor).x + smallRectWidth}` ).attr({
+        s.path(`M${startB2LineX},${startB2LineY} v${((mt(resistor).y) - mb(CDBR).y) / 2} h${rectWidth / 2} V${ml(resistor).y} H${ml(resistor).x + smallRectWidth}`).attr({
             stroke: "black",
             strokeWidth: 1,
             fill: "none"
@@ -128,8 +143,9 @@ function createSchematic(numCDBRs) {
     }
 }
 
-// Example usage: create 4 CDBR rectangles
-createSchematic(3);
+// Example usage: create 4 CDBR rectangles with text "CDBR-4045D"
+createSchematic(4, "CR70C4304");
+
 
 
 
