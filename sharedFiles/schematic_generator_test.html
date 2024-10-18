@@ -10,73 +10,75 @@
 <body>
     <script>
 
-        function createSchematic(numCDBRs) {
-            
-            var rectWidth = 80;
-            var rectHeight = 120;
-            var cornerRounding = 8;
-            var strokeWidth = 2;
-            var zeroPointX = strokeWidth + rectWidth / 2 ;
-            var zeroPointyY = strokeWidth;
-            
-            
-            var s = Snap(rectWidth *  2 * (numCDBRs + 1), 1000);
- 
-            // Get middle of bottom of rect
-            function mb(rect) {
-                var bbox = rect.getBBox();
-                var coordinates = {
-                    x: bbox.x + bbox.width / 2,
-                    y: bbox.y + bbox.height
-                };
-                return coordinates;
-            }
+function createSchematic(numCDBRs) {
+    var rectWidth = 80;
+    var rectHeight = 120;
+    var cornerRounding = 8;
+    var strokeWidth = 2;
+    var zeroPointX = strokeWidth + rectWidth / 2;
+    var zeroPointyY = strokeWidth;
 
-            // Get middle of top of rect
-            function mt(rect) {
-                var bbox = rect.getBBox();
-                var coordinates = {
-                    x: bbox.x + bbox.width / 2,
-                    y: bbox.y
-                };
-                return coordinates;
-            }
+    var s = Snap(rectWidth * 2 * (numCDBRs + 1), 1000);
 
-            // Create the first rectangle (CR700)
-            var CR700 = s.rect(zeroPointX + (rectWidth* (numCDBRs - 1)) , zeroPointyY, rectWidth, rectHeight, cornerRounding, cornerRounding).attr({
-                fill: "transparent",
-                stroke: "#005BBB",
-                strokeWidth: strokeWidth
-            });
+    // Get middle of bottom of rect
+    function mb(rect) {
+        var bbox = rect.getBBox();
+        var coordinates = {
+            x: bbox.x + bbox.width / 2,
+            y: bbox.y + bbox.height
+        };
+        return coordinates;
+    }
 
-            // Function to create multiple CDBR rectangles
-            var spacing = rectWidth + rectWidth; // Adjust spacing as needed
-            var startX = zeroPointX
+    // Get middle of top of rect
+    function mt(rect) {
+        var bbox = rect.getBBox();
+        var coordinates = {
+            x: bbox.x + bbox.width / 2,
+            y: bbox.y
+        };
+        return coordinates;
+    }
 
-            for (var i = 0; i < numCDBRs; i++) {
-                var x = startX + i * spacing;
-                var CDBR = s.rect(x, zeroPointyY + rectHeight * 2, rectWidth, rectHeight, cornerRounding, cornerRounding).attr({
-                    fill: "transparent",
-                    stroke: "#747678",
-                    strokeWidth: strokeWidth
-                });
+    // Create the first rectangle (CR700)
+    var CR700 = s.rect(zeroPointX + (rectWidth * (numCDBRs - 1)), zeroPointyY, rectWidth, rectHeight, cornerRounding, cornerRounding).attr({
+        fill: "transparent",
+        stroke: "#005BBB",
+        strokeWidth: strokeWidth
+    });
 
-                // Draw right-angle line connecting CR700 to each CDBR
-                var cr700Bottom = mb(CR700);
-                var cdbrTop = mt(CDBR);
-                var midX = cr700Bottom.x;
-                var midY = cdbrTop.y - cdbrTop.y / 2;
+    // Function to create multiple CDBR rectangles
+    var spacing = rectWidth + rectWidth; // Adjust spacing as needed
+    var startX = zeroPointX;
 
-                s.path(`M${cr700Bottom.x},${cr700Bottom.y} H${midX} V${midY} H${cdbrTop.x}`).attr({
-                    stroke: "black",
-                    strokeWidth: 1,
-                    fill: "none"
-                });
-            }
-        }
+    for (var i = 0; i < numCDBRs; i++) {
+        var x = startX + i * spacing;
+        var CDBR = s.rect(x, zeroPointyY + rectHeight * 2, rectWidth, rectHeight, cornerRounding, cornerRounding).attr({
+            fill: "transparent",
+            stroke: "#747678",
+            strokeWidth: strokeWidth
+        });
 
-        // Example usage: create 5 CDBR rectangles
-        createSchematic(4);
+        // Draw right-angle line connecting CR700 to each CDBR
+        var cr700Bottom = mb(CR700);
+        var cdbrTop = mt(CDBR);
+
+        // Calculate the midpoints for the bend
+        var midX = cr700Bottom.x;
+        var midY = (cr700Bottom.y + cdbrTop.y) / 2;
+
+        s.path(`M${cr700Bottom.x},${cr700Bottom.y} V${midY} H${cdbrTop.x} V${cdbrTop.y}`).attr({
+            stroke: "black",
+            strokeWidth: 1,
+            fill: "none"
+        });
+
+    }
+}
+
+// Example usage: create 4 CDBR rectangles
+createSchematic(5);
+
 
 
 
