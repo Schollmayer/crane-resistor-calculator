@@ -17,7 +17,7 @@
             var rectHeight = 120;
             var cornerRounding = 8;
             var strokeWidth = 2;
-            var zeroPointX = strokeWidth;
+            var zeroPointX = strokeWidth + rectWidth / 2 ;
             var zeroPointyY = strokeWidth;
 
             // Get middle of bottom of rect
@@ -49,7 +49,7 @@
 
             // Function to create multiple CDBR rectangles
             var spacing = rectWidth + rectWidth; // Adjust spacing as needed
-            var startX = zeroPointX - (spacing * (numCDBRs - 1)) / 2; // Center the CDBRs
+            var startX = zeroPointX
 
 
 
@@ -76,7 +76,7 @@
         }
 
         // Example usage: create 5 CDBR rectangles
-        createSchematic(4);
+        createSchematic(3);
 
 
 
