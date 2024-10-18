@@ -40,7 +40,7 @@ function createSchematic(numCDBRs) {
         return coordinates;
     }
 
-        // Get middle of top of rect
+        // Get middle of the left side of rect
         function ml(rect) {
         var bbox = rect.getBBox();
         var coordinates = {
@@ -50,7 +50,7 @@ function createSchematic(numCDBRs) {
         return coordinates;
     }
 
-        // Get middle of top of rect
+        // Get middle of the right side of rect
         function mr(rect) {
         var bbox = rect.getBBox();
         var coordinates = {
@@ -93,16 +93,37 @@ function createSchematic(numCDBRs) {
             fill: "none"
         });
 
-        // Create a rectangle centered under each CDBR
+        // Create a resistor centered under each CDBR
         var smallRectWidth = rectWidth / 1.6;
         var smallRectHeight = rectHeight / 4;
         var smallRectX = x + (rectWidth - smallRectWidth) / 2;
         var smallRectY = zeroPointyY + rectHeight * 3  + rectHeight / 3;
 
-        s.rect(smallRectX, smallRectY, smallRectWidth, smallRectHeight).attr({
+        resistor = s.rect(smallRectX, smallRectY, smallRectWidth, smallRectHeight).attr({
             fill: "transparent",
             stroke: "#616365",
             strokeWidth: strokeWidth
+        });
+
+
+        // Add lines to connect resistor
+
+        startB1LineX = mb(CDBR).x - rectWidth * (1/6);
+        startB1LineY = mb(CDBR).y;
+
+        s.path(`M${startB1LineX},${startB1LineY} v${((mt(resistor).y) - mb(CDBR).y)/2} h${-rectWidth/2} V${ml(resistor).y} H${ml(resistor).x}` ).attr({
+            stroke: "black",
+            strokeWidth: 1,
+            fill: "none"
+        });
+
+        startB2LineX = mb(CDBR).x + rectWidth * (1/6);
+        startB2LineY = mb(CDBR).y;
+
+        s.path(`M${startB2LineX},${startB2LineY} v${((mt(resistor).y) - mb(CDBR).y)/2} h${rectWidth/2} V${ml(resistor).y} H${ml(resistor).x + smallRectWidth}` ).attr({
+            stroke: "black",
+            strokeWidth: 1,
+            fill: "none"
         });
     }
 }
