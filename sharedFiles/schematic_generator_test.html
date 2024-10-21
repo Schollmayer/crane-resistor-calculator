@@ -9,7 +9,6 @@
 
 <body>
     <script>
-
         function createSchematic(numCDBRs, CR700_name, CDBR_name, Rmin, Rmax, RPower) {
             var rectWidth = 80;
             var rectHeight = 120;
@@ -18,7 +17,7 @@
             var zeroPointX = strokeWidth + rectWidth / 2;
             var zeroPointyY = strokeWidth;
 
-            var s = Snap(rectWidth * 2 * (numCDBRs + 1), 1000);
+            var s = Snap(rectWidth * 2 * (numCDBRs + 1), rectHeight * 4.2);
 
             // Get middle of bottom of rect
             function mb(rect) {
@@ -75,13 +74,17 @@
                 'text-anchor': 'middle',
                 'dominant-baseline': 'middle',
                 'font-size': 14,
-                'fill': '#005BBB'
+                'fill': '#005BBB',
+                'font-family': 'Roboto, Arial, sans-serif',
+                'fontWeight': 'bold'
             });
             s.text(textX, textY + 10, lines[1]).attr({
                 'text-anchor': 'middle',
                 'dominant-baseline': 'middle',
                 'font-size': 14,
-                'fill': '#005BBB'
+                'fill': '#005BBB',
+                'font-family': 'Roboto, Arial, sans-serif',
+                'fontWeight': 'bold'
             });
 
             // Function to create multiple CDBR rectangles
@@ -104,13 +107,18 @@
                     'text-anchor': 'middle',
                     'dominant-baseline': 'middle',
                     'font-size': 14,
-                    'fill': '#747678'
+                    'fill': '#747678',
+                    'font-family': 'Roboto, Arial, sans-serif',
+                    'fontWeight': 'bold'
+
                 });
                 s.text(cdbrTextX, cdbrTextY, lines[1]).attr({
                     'text-anchor': 'middle',
                     'dominant-baseline': 'middle',
                     'font-size': 14,
-                    'fill': '#747678'
+                    'fill': '#747678',
+                    'font-family': 'Roboto, Arial, sans-serif',
+                    'fontWeight': 'bold'
                 });
 
                 var masterSlaveText = "(Master)";
@@ -121,7 +129,8 @@
                     'text-anchor': 'middle',
                     'dominant-baseline': 'middle',
                     'font-size': 14,
-                    'fill': '#747678'
+                    'fill': '#747678',
+                    'font-family': 'Roboto, Arial, sans-serif',
                 });
 
                 // Draw right-angle line connecting CR700 to each CDBR
@@ -168,45 +177,60 @@
                     strokeWidth: 1,
                     fill: "none"
                 });
-                
+
                 //Add B1, B2 text
 
-                s.text(startB1LineX, startB1LineY -7, "B1").attr({
-                        'text-anchor': 'middle',
-                        'dominant-baseline': 'middle',
-                        'font-size': 12,
-                        'fill': '#616365'
-                    });
-                
-                s.text(startB2LineX, startB2LineY -7, "B2").attr({
-                        'text-anchor': 'middle',
-                        'dominant-baseline': 'middle',
-                        'font-size': 12,
-                        'fill': '#616365'
-                    });
+                s.text(startB1LineX, startB1LineY - 7, "B1").attr({
+                    'text-anchor': 'middle',
+                    'dominant-baseline': 'middle',
+                    'font-size': 12,
+                    'fill': '#616365',
+                    'font-family': 'Roboto, Arial, sans-serif',
+                    'fontWeight': 'bold'
+                });
+
+                s.text(startB2LineX, startB2LineY - 7, "B2").attr({
+                    'text-anchor': 'middle',
+                    'dominant-baseline': 'middle',
+                    'font-size': 12,
+                    'fill': '#616365',
+                    'font-family': 'Roboto, Arial, sans-serif',
+                    'fontWeight': 'bold'
+                });
 
 
                 // Add resistor information
 
-                var text = "Resistor network";
+                var text = "Resistor Network:";
+                
                 var resistorBottom = mb(resistor);
                 var textSpacing = 15;
-                for (var j = 1; j <= 4; j++) {
+
+                s.text(resistorBottom.x, resistorBottom.y  + textSpacing, text).attr({
+                    'text-anchor': 'middle',
+                    'dominant-baseline': 'middle',
+                    'font-size': 12,
+                    'fill': '#616365',
+                    'font-family': 'Roboto, Arial, sans-serif',
+                    'fontWeight' : 'bold'
+                });
+                for (var j = 2; j <= 4; j++) {
                     if (j == 2) {
-                        text = "Rmin: " + Rmin +"Ω";
+                        text = "Rmin: " + Rmin + " Ω";
                     }
-                    else if (j==3){
-                        text = "Rmax: " + Rmax+ "Ω";
+                    else if (j == 3) {
+                        text = "Rmax: " + Rmax + " Ω";
                     }
 
-                    else if (j ==4){
-                        text = "Power: " + RPower +"kW" ;
+                    else if (j == 4) {
+                        text = "Power: " + RPower + " kW";
                     }
                     s.text(resistorBottom.x, resistorBottom.y + j * textSpacing, text).attr({
                         'text-anchor': 'middle',
                         'dominant-baseline': 'middle',
                         'font-size': 12,
-                        'fill': '#616365'
+                        'fill': '#616365',
+                        'font-family': 'Roboto, Arial, sans-serif'
                     });
                 }
             }
