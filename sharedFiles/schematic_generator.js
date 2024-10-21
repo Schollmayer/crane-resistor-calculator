@@ -4,7 +4,7 @@
  */
 
 
-export function createSchematic(numCDBRs, CR700_name, CDBR_name, Rmin, Rmax, RPower) {
+function createSchematic(numCDBRs, CR700_name, CDBR_name, Rmin, Rmax, RPower) {
     var rectWidth = 80;
     var rectHeight = 120;
     var cornerRounding = 8;
@@ -54,43 +54,45 @@ export function createSchematic(numCDBRs, CR700_name, CDBR_name, Rmin, Rmax, RPo
         return coordinates;
     }
 
-    // Create the first rectangle (CR700)
-    var CR700 = s.rect(zeroPointX + (rectWidth * (numCDBRs - 1)), zeroPointyY, rectWidth, rectHeight, cornerRounding, cornerRounding).attr({
-        fill: "transparent",
-        stroke: "#005BBB",
-        strokeWidth: strokeWidth
-    });
-
-    // Add text inside CR700 with line break
-    var textX = zeroPointX + (rectWidth * (numCDBRs - 1)) + rectWidth / 2;
-    var textY = zeroPointyY + rectHeight / 2;
-    var lines = CR700_name.split(/(CR70)/).filter(Boolean);;
-    s.text(textX, textY - 10, lines[0] + "-").attr({
-        'text-anchor': 'middle',
-        'dominant-baseline': 'middle',
-        'font-size': 14,
-        'fill': '#005BBB',
-        'font-family': 'Roboto, Arial, sans-serif',
-        'fontWeight': 'bold'
-    });
-    s.text(textX, textY + 10, lines[1]).attr({
-        'text-anchor': 'middle',
-        'dominant-baseline': 'middle',
-        'font-size': 14,
-        'fill': '#005BBB',
-        'font-family': 'Roboto, Arial, sans-serif',
-        'fontWeight': 'bold'
-    });
-
-
     if (numCDBRs > 0) {
+
+
+        // Create the first rectangle (CR700)
+        var CR700 = s.rect(zeroPointX + (rectWidth * (numCDBRs - 1)), zeroPointyY, rectWidth, rectHeight, cornerRounding, cornerRounding).attr({
+            fill: "transparent",
+            stroke: "#005BBB",
+            strokeWidth: strokeWidth
+        });
+
+        // Add text inside CR700 with line break
+        var textX = zeroPointX + (rectWidth * (numCDBRs - 1)) + rectWidth / 2;
+        var textY = zeroPointyY + rectHeight / 2;
+        var lines = CR700_name.split(/(CR70)/).filter(Boolean);;
+        s.text(textX, textY - 10, lines[0] + "-").attr({
+            'text-anchor': 'middle',
+            'dominant-baseline': 'middle',
+            'font-size': 14,
+            'fill': '#005BBB',
+            'font-family': 'Roboto, Arial, sans-serif',
+            'fontWeight': 'bold'
+        });
+        s.text(textX, textY + 10, lines[1]).attr({
+            'text-anchor': 'middle',
+            'dominant-baseline': 'middle',
+            'font-size': 14,
+            'fill': '#005BBB',
+            'font-family': 'Roboto, Arial, sans-serif',
+            'fontWeight': 'bold'
+        });
+
         // Function to create multiple CDBR rectangles
         var spacing = rectWidth + rectWidth; // Adjust spacing as needed
         var startX = zeroPointX;
+        var spacingY = zeroPointyY + rectHeight * 1.5
 
         for (var i = 0; i < numCDBRs; i++) {
             var x = startX + i * spacing;
-            var CDBR = s.rect(x, zeroPointyY + rectHeight * 2, rectWidth, rectHeight, cornerRounding, cornerRounding).attr({
+            var CDBR = s.rect(x, spacingY, rectWidth, rectHeight, cornerRounding, cornerRounding).attr({
                 fill: "transparent",
                 stroke: "#747678",
                 strokeWidth: strokeWidth
@@ -98,7 +100,7 @@ export function createSchematic(numCDBRs, CR700_name, CDBR_name, Rmin, Rmax, RPo
 
             // Add text inside CDBR with line break
             var cdbrTextX = x + rectWidth / 2;
-            var cdbrTextY = zeroPointyY + rectHeight * 2 + rectHeight / 2;
+            var cdbrTextY = spacingY + rectHeight / 2;
             var lines = CDBR_name.split("-").filter(Boolean);;
             s.text(cdbrTextX, cdbrTextY - 20, lines[0] + "-").attr({
                 'text-anchor': 'middle',
@@ -148,8 +150,7 @@ export function createSchematic(numCDBRs, CR700_name, CDBR_name, Rmin, Rmax, RPo
             var smallRectWidth = rectWidth / 1.6;
             var smallRectHeight = rectHeight / 4;
             var smallRectX = x + (rectWidth - smallRectWidth) / 2;
-            var smallRectY = zeroPointyY + rectHeight * 3 + rectHeight / 3;
-
+            var smallRectY = mb(CDBR).y + (rectHeight / 3);
             var resistor = s.rect(smallRectX, smallRectY, smallRectWidth, smallRectHeight).attr({
                 fill: "transparent",
                 stroke: "#616365",
@@ -230,9 +231,127 @@ export function createSchematic(numCDBRs, CR700_name, CDBR_name, Rmin, Rmax, RPo
                     'font-family': 'Roboto, Arial, sans-serif'
                 });
             }
+
         }
+    }
+    else {
+        //Create graphic without CDBR
+        // Create the first rectangle (CR700)
+        var CR700 = s.rect(zeroPointX + rectWidth, zeroPointyY, rectWidth, rectHeight, cornerRounding, cornerRounding).attr({
+            fill: "transparent",
+            stroke: "#005BBB",
+            strokeWidth: strokeWidth
+        });
+
+        // Add text inside CR700 with line break
+        var textX = zeroPointX + rectWidth + rectWidth / 2;
+        var textY = zeroPointyY + rectHeight / 2;
+        var lines = CR700_name.split(/(CR70)/).filter(Boolean);;
+        s.text(textX, textY - 10, lines[0] + "-").attr({
+            'text-anchor': 'middle',
+            'dominant-baseline': 'middle',
+            'font-size': 14,
+            'fill': '#005BBB',
+            'font-family': 'Roboto, Arial, sans-serif',
+            'fontWeight': 'bold'
+        });
+        s.text(textX, textY + 10, lines[1]).attr({
+            'text-anchor': 'middle',
+            'dominant-baseline': 'middle',
+            'font-size': 14,
+            'fill': '#005BBB',
+            'font-family': 'Roboto, Arial, sans-serif',
+            'fontWeight': 'bold'
+        });
+
+        // Add lines to connect resistor
+        var startB1LineX = mb(CR700).x - rectWidth * (1 / 6);
+        var startB1LineY = mb(CR700).y;
+
+        // Create a resistor centered under each CDBR
+        var smallRectWidth = rectWidth / 1.6;
+        var smallRectHeight = rectHeight / 4;
+        var smallRectX = mb(CR700).x - smallRectWidth / 2;
+        var smallRectY = mb(CR700).y + rectHeight / 3;
+
+        var resistor = s.rect(smallRectX, smallRectY, smallRectWidth, smallRectHeight).attr({
+            fill: "transparent",
+            stroke: "#616365",
+            strokeWidth: strokeWidth
+        });
+
+        s.path(`M${startB1LineX},${startB1LineY} v${((mt(resistor).y) - mb(CR700).y) / 2} h${-rectWidth / 2} V${ml(resistor).y} H${ml(resistor).x}`).attr({
+            stroke: "black",
+            strokeWidth: 1,
+            fill: "none"
+        });
+
+        var startB2LineX = mb(CR700).x + rectWidth * (1 / 6);
+        var startB2LineY = mb(CR700).y;
+
+        s.path(`M${startB2LineX},${startB2LineY} v${((mt(resistor).y) - mb(CR700).y) / 2} h${rectWidth / 2} V${ml(resistor).y} H${ml(resistor).x + smallRectWidth}`).attr({
+            stroke: "black",
+            strokeWidth: 1,
+            fill: "none"
+        });
+
+        //Add B1, B2 text
+
+        s.text(startB1LineX, startB1LineY - 7, "B1").attr({
+            'text-anchor': 'middle',
+            'dominant-baseline': 'middle',
+            'font-size': 12,
+            'fill': '#616365',
+            'font-family': 'Roboto, Arial, sans-serif',
+            'fontWeight': 'bold'
+        });
+
+        s.text(startB2LineX, startB2LineY - 7, "B2").attr({
+            'text-anchor': 'middle',
+            'dominant-baseline': 'middle',
+            'font-size': 12,
+            'fill': '#616365',
+            'font-family': 'Roboto, Arial, sans-serif',
+            'fontWeight': 'bold'
+        });
+
+        // Add resistor information
+
+        var text = "Resistor Network:";
+
+        var resistorBottom = mb(resistor);
+        var textSpacing = 15;
+
+        s.text(resistorBottom.x, resistorBottom.y + textSpacing, text).attr({
+            'text-anchor': 'middle',
+            'dominant-baseline': 'middle',
+            'font-size': 12,
+            'fill': '#616365',
+            'font-family': 'Roboto, Arial, sans-serif',
+            'fontWeight': 'bold'
+        });
+        for (var j = 2; j <= 4; j++) {
+            if (j == 2) {
+                text = "Rmin: " + Rmin + " Ω";
+            }
+            else if (j == 3) {
+                text = "Rmax: " + Rmax + " Ω";
+            }
+
+            else if (j == 4) {
+                text = "Power: " + RPower + " kW";
+            }
+            s.text(resistorBottom.x, resistorBottom.y + j * textSpacing, text).attr({
+                'text-anchor': 'middle',
+                'dominant-baseline': 'middle',
+                'font-size': 12,
+                'fill': '#616365',
+                'font-family': 'Roboto, Arial, sans-serif'
+            });
+        }
+
     }
 }
 
 // Example usage: create 4 CDBR rectangles with text "CDBR-4045D"
-createSchematic(6, "CR70C4304", "CDBR-4045D", 20, 25, 100);
+createSchematic(3, "CR70C4304", "CDBR-4045D", 20, 25, 100);
