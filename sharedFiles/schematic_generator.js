@@ -3,8 +3,7 @@
  * You can find the full license text at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-
-function createSchematic(numCDBRs, CR700_name, CDBR_name, Rmin, Rmax, RPower) {
+export function createSchematic(numCDBRs, CR700_name, CDBR_name, Rmin, Rmax, RPower) {
     var rectWidth = 80;
     var rectHeight = 120;
     var cornerRounding = 8;
@@ -12,7 +11,9 @@ function createSchematic(numCDBRs, CR700_name, CDBR_name, Rmin, Rmax, RPower) {
     var zeroPointX = strokeWidth + rectWidth / 2;
     var zeroPointyY = strokeWidth;
 
-    var s = Snap("#svg-schematic");
+    //var svgContainer = document.getElementById("svg-schematic");
+    var s = Snap(1000, 1000);
+    //s.attr({ viewBox: "0 0 600 600" });
 
     // Get middle of bottom of rect
     function mb(rect) {
@@ -351,7 +352,23 @@ function createSchematic(numCDBRs, CR700_name, CDBR_name, Rmin, Rmax, RPower) {
         }
 
     }
+
+    // Calculate the bounding box of all elements
+    var bbox = s.getBBox();
+
+    // Adjust the size of the Snap.svg canvas
+    s.attr({
+        width: bbox.width + strokeWidth ,
+        height: bbox.height + strokeWidth ,
+        viewBox: `${bbox.x - strokeWidth} ${bbox.y -strokeWidth} ${bbox.width + strokeWidth *2} ${bbox.height + strokeWidth*2}`
+    });
+
+    // Once the drawing is done, convert SVG to Data URL
+    var svgString = new XMLSerializer().serializeToString(s.node);
+    //Remove drawing which snap.svg would put on the button of the page
+    s.node.remove();
+    return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svgString);
 }
 
 // Example usage: create 4 CDBR rectangles with text "CDBR-4045D"
-createSchematic(3, "CR70C4304", "CDBR-4045D", 20, 25, 100);
+//createSchematic(3, "CR70C4304", "CDBR-4045D", 20, 25, 100);
