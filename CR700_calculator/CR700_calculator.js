@@ -193,10 +193,11 @@ function displayResistorTransistorSelection(cr700Result, transistorResults, resi
 
 //Display calculated application data in accordion
 var accordion = document.createElement("div");
-accordion.classList.add("accordion", "mb-3", "shadow-sm");
+accordion.classList.add("accordion", "mb-3", "shadow");
 
 var accordionCard = document.createElement("div");
 accordionCard.classList.add("accordion-item");
+accordionCard.style.border = "0px"
 
 var accordionHeader = document.createElement("h3");
 accordionHeader.classList.add("accordion-header");
@@ -235,7 +236,7 @@ outputDiv.appendChild(accordion);
 
 //Add schematic picture
 var card = document.createElement("div");
-card.classList.add("card", "mb-3");
+card.classList.add("card", "mb-3", "mt-1");
 card.style.height = "auto"; // Setting explicit height
 card.style.width = "auto";   // Setting explicit width
 
