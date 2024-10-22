@@ -1,6 +1,7 @@
 import { cdbr_data, ed_interpolate } from "../sharedFiles/cdbr_data.js";
 import { HoistAlternative } from "./hoist_data.js";
 import { calculateResistors, getResistorGraphic } from "../sharedFiles/braking_resistor_calculations.js";
+import {createSchematic} from "../sharedFiles/schematic_generator.js";
 
 // Button-EventListener
 const calculateButton = document.getElementById('calculateButton');
@@ -261,7 +262,44 @@ function displayResistorTransistorSelection(cr700Result, transistorResults, resi
 
   outputDiv.appendChild(accordion);
 
+//Add schematic picture
+var card = document.createElement("div");
+card.classList.add("card", "mb-3", "mt-1");
+card.style.height = "auto"; // Setting explicit height
+card.style.width = "auto";   // Setting explicit width
 
+var cardBody = document.createElement("div");
+cardBody.classList.add("card-body");
+cardBody.setAttribute("height", "auto");
+cardBody.setAttribute("width", "auto");
+
+var cardTitle = document.createElement("div");
+cardTitle.classList.add("card-title");
+
+var titleElement = document.createElement("h5");
+titleElement.style.fontWeight = "bold";
+titleElement.textContent = "Schematic";
+cardTitle.appendChild(titleElement);
+
+// Create the SVG element
+var schematicURL;
+if (transistorResults) {
+  schematicURL = createSchematic(transistorResults.qtty, cr700Result.type, transistorResults.cdbr.type, minR.toFixed(2), maxR.toFixed(2), power.toFixed(2));
+} else {
+  schematicURL = createSchematic(0, cr700Result.type, null, minR.toFixed(2), maxR.toFixed(2), power.toFixed(2));
+}
+
+var schematicSVG = document.createElement("img");
+schematicSVG.src = schematicURL;
+schematicSVG.style.marginTop = "10px"; // Adjust the space between text and image
+schematicSVG.style.maxWidth = "100%"; // Ensure the image scales down
+schematicSVG.style.height = "auto"; // Maintain aspect ratio
+
+// Append everything
+cardBody.appendChild(cardTitle);
+cardBody.appendChild(schematicSVG);
+card.appendChild(cardBody);
+outputDiv.appendChild(card);
   //Display resistor network options
   if (resistorResults) {
     resistorResults.forEach(function (obj, index) {
@@ -434,7 +472,7 @@ function calculateResult() {
     }
 
     else {
-      let Rmax = hoist.maxBrakeResistance();
+      let Rmax = hoist.R_max;
       let Pavg = hoist.P_El_avg;
       if (hoist.selectedCDBR().qtty > 1){
         Rmax = Rmax * hoist.selectedCDBR().qtty;
