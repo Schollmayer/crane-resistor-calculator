@@ -1,6 +1,7 @@
 import { cdbr_data, ed_interpolate } from "../sharedFiles/cdbr_data.js";
 import { HoistFrontend } from "./hoist_data.js";
 import { calculateResistors, getResistorGraphic } from "../sharedFiles/braking_resistor_calculations.js";
+import {createSchematic} from "../sharedFiles/schematic_generator.js";
 
 //Button-EventListener
 const calculateButton = document.getElementById('calculateButton');
@@ -192,7 +193,7 @@ function displayResistorTransistorSelection(cr700Result, transistorResults, resi
 
 //Display calculated application data in accordion
 var accordion = document.createElement("div");
-accordion.classList.add("accordion", "mb-3");
+accordion.classList.add("accordion", "mb-3", "shadow-sm");
 
 var accordionCard = document.createElement("div");
 accordionCard.classList.add("accordion-item");
@@ -232,6 +233,45 @@ accordion.appendChild(accordionCard);
 
 outputDiv.appendChild(accordion);
 
+//Add schematic picture
+var card = document.createElement("div");
+card.classList.add("card", "mb-3");
+card.style.height = "auto"; // Setting explicit height
+card.style.width = "auto";   // Setting explicit width
+
+var cardBody = document.createElement("div");
+cardBody.classList.add("card-body");
+cardBody.setAttribute("height", "auto");
+cardBody.setAttribute("width", "auto");
+
+var cardTitle = document.createElement("div");
+cardTitle.classList.add("card-title");
+
+var titleElement = document.createElement("h5");
+titleElement.style.fontWeight = "bold";
+titleElement.textContent = "Schematic";
+cardTitle.appendChild(titleElement);
+
+// Create the SVG element
+var schematicURL;
+if (transistorResults) {
+  schematicURL = createSchematic(transistorResults.qtty, cr700Result.type, transistorResults.cdbr.type, minR.toFixed(2), maxR.toFixed(2), power.toFixed(2));
+} else {
+  schematicURL = createSchematic(0, cr700Result.type, null, minR.toFixed(2), maxR.toFixed(2), power.toFixed(2));
+}
+
+var schematicSVG = document.createElement("img");
+schematicSVG.src = schematicURL;
+schematicSVG.style.marginTop = "10px"; // Adjust the space between text and image
+schematicSVG.style.maxWidth = "100%"; // Ensure the image scales down
+schematicSVG.style.height = "auto"; // Maintain aspect ratio
+
+// Append everything
+cardBody.appendChild(cardTitle);
+cardBody.appendChild(schematicSVG);
+card.appendChild(cardBody);
+outputDiv.appendChild(card);
+
 
 //Display resistor network options
   if (resistorResults) {
@@ -256,7 +296,7 @@ outputDiv.appendChild(accordion);
       var resistorContainer = document.createElement("div");
       var resistorTitle = document.createElement("h6");
       resistorTitle.classList.add("card-subtitle", "mb-2", "text-muted");
-      resistorTitle.textContent = obj.qtty > 1 ? "Braking Resistors" : "Braking Resistor";
+      resistorTitle.textContent = obj.qtty > 1 ? "Braking Resistor Network" : "Braking Resistor Network";
       resistorContainer.appendChild(resistorTitle);
 
       // Format resistors output
