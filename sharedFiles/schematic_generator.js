@@ -68,7 +68,7 @@ export function createSchematic(numCDBRs, CR700_name, CDBR_name, Rmin, Rmax, RPo
         // Add text inside CR700 with line break
         var textX = zeroPointX + (rectWidth * (numCDBRs - 1)) + rectWidth / 2;
         var textY = zeroPointyY + rectHeight / 2;
-        var lines = CR700_name.split(/(CR70)/).filter(Boolean);;
+        var lines = CR700_name.split(/(CR70|GA70|LA50|GA50)/).filter(Boolean);;
         s.text(textX, textY - 10, lines[0] + "-").attr({
             'text-anchor': 'middle',
             'dominant-baseline': 'middle',
@@ -247,7 +247,7 @@ export function createSchematic(numCDBRs, CR700_name, CDBR_name, Rmin, Rmax, RPo
         // Add text inside CR700 with line break
         var textX = zeroPointX + rectWidth + rectWidth / 2;
         var textY = zeroPointyY + rectHeight / 2;
-        var lines = CR700_name.split(/(CR70)/).filter(Boolean);;
+        var lines = CR700_name.split(/(CR70|GA70|LA50|GA50)/).filter(Boolean);;
         s.text(textX, textY - 10, lines[0] + "-").attr({
             'text-anchor': 'middle',
             'dominant-baseline': 'middle',

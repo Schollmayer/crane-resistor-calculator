@@ -221,11 +221,13 @@ function displayResistorTransistorSelection(cr700Result, transistorResults, resi
   outputDiv.appendChild(cardGroup);
 
   //Display calculated application data in accordion
-  var accordion = document.createElement("div");
-  accordion.classList.add("accordion", "mb-3");
+//Display calculated application data in accordion
+var accordion = document.createElement("div");
+accordion.classList.add("accordion", "mb-3", "shadow");
 
-  var accordionCard = document.createElement("div");
-  accordionCard.classList.add("accordion-item");
+var accordionCard = document.createElement("div");
+accordionCard.classList.add("accordion-item");
+accordionCard.style.border = "0px"
 
   var accordionHeader = document.createElement("h3");
   accordionHeader.classList.add("accordion-header");

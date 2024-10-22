@@ -6,6 +6,7 @@ import { ga700_data } from "./ga700_data.js";
 import { ga500_data } from "./ga500_data.js";
 import { cr700_data } from "../CR700_calculator/cr700_data.js";
 import { la500_data } from "./la500_data.js";
+import { createSchematic } from "../sharedFiles/schematic_generator.js";
 
 
 const calculateResistorButton = document.getElementById('calculateResistorButton');
@@ -54,7 +55,7 @@ calculateResistorButton.addEventListener('click', function () {
   // Clear previous calculation results
   var outputDiv = document.getElementById("output");
   outputDiv.innerHTML = "";
-  
+
   if (form.checkValidity()) {
     calculate();
   }
@@ -128,11 +129,11 @@ function loadFormData() {
     }
   });
   // Now, set the selects after the options have been populated
-    if (formData[select.id] !== undefined) {
-      setTimeout(() => {
-        select.selectedIndex = formData[select.id];
-      }, 0); // Delay to ensure options are populated first
-    }
+  if (formData[select.id] !== undefined) {
+    setTimeout(() => {
+      select.selectedIndex = formData[select.id];
+    }, 0); // Delay to ensure options are populated first
+  }
 }
 
 
@@ -218,7 +219,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function calculate() {
-  performAndDisplayCalculations(getRmin(ga700_data), calculateRmax(ga700_data), power.value, dutyCycle.value, dutyCycleDuration.value);
+  performAndDisplayCalculations(getRmin(ga700_data), calculateRmax(ga700_data), parseFloat(power.value), parseFloat(dutyCycle.value), parseFloat(dutyCycleDuration.value));
 }
 
 function calculateRmax(driveData) {
@@ -303,10 +304,10 @@ function performAndDisplayCalculations(minR, maxR, power, dutyCycle, dutyCycleDu
     if (checkBrakingTorque(dutyCycle, getMaxBreakTime(dutyCycle, dutyCycleDuration), power, getSelectedDrive(selectedDrive), gaCurves, gaLinearCurves)) {
       var resistorResults = calculateResistors(minR, maxR, power, dutyCycle, dutyCycleDuration);
       if (resistorResults) {
-        displayResistorTransistorSelection(resistorResults, null, minR, maxR, power);
+        displayResistorTransistorSelection(resistorResults, null, minR, maxR, power, getSelectedDrive(selectedDrive).type);
       }
       else {
-        displayNoResistorFoundError(minR, maxR, power, null);
+        displayNoResistorFoundError(minR, maxR, power, null, getSelectedDrive(selectedDrive));
       }
     }
     else {
@@ -318,34 +319,34 @@ function performAndDisplayCalculations(minR, maxR, power, dutyCycle, dutyCycleDu
         if (selectedCDBR) {
           let Rmax = maxR;
           let AvgPower = power;
-          if (selectedCDBR.qtty > 1){
+          if (selectedCDBR.qtty > 1) {
             Rmax = Rmax * selectedCDBR.qtty;
             AvgPower = AvgPower / selectedCDBR.qtty;
           }
           outputSameDriveWithBrakingTransistor();
           var resistorResults = calculateResistors(selectedCDBR.cdbr.minResistance, Rmax, AvgPower, dutyCycle, dutyCycleDuration);
           if (resistorResults) {
-            displayResistorTransistorSelection(resistorResults, selectedCDBR, selectedCDBR.cdbr.minResistance, Rmax, AvgPower);
+            displayResistorTransistorSelection(resistorResults, selectedCDBR, selectedCDBR.cdbr.minResistance, Rmax, AvgPower, getSelectedDrive(selectedDrive).type);
           }
           else {
             var biggerCDBR = getBiggerCDBR(selectedCDBR, cdbr_data);
             if (biggerCDBR) {
               let Rmax = maxR;
               let AvgPower = power;
-              if (selectedCDBR.qtty > 1){
+              if (selectedCDBR.qtty > 1) {
                 Rmax = Rmax * selectedCDBR.qtty;
                 AvgPower = AvgPower / selectedCDBR.qtty;
               }
               resistorResults = calculateResistors(biggerCDBR.cdbr.minResistance, Rmax, AvgPower, dutyCycle, dutyCycleDuration);
               if (resistorResults) {
-                displayResistorTransistorSelection(resistorResults, biggerCDBR, biggerCDBR.cdbr.minResistance, Rmax, AvgPower);
+                displayResistorTransistorSelection(resistorResults, biggerCDBR, biggerCDBR.cdbr.minResistance, Rmax, AvgPower, getSelectedDrive(selectedDrive).type);
               }
               else {
-                displayNoResistorFoundError(selectedCDBR.cdbr.minResistance, Rmax, AvgPower, selectedCDBR);
+                displayNoResistorFoundError(selectedCDBR.cdbr.minResistance, Rmax, AvgPower, selectedCDBR, getSelectedDrive(selectedDrive).type);
               }
             }
             else {
-              displayNoResistorFoundError(selectedCDBR.cdbr.minResistance, Rmax, AvgPower, selectedCDBR);
+              displayNoResistorFoundError(selectedCDBR.cdbr.minResistance, Rmax, AvgPower, selectedCDBR, getSelectedDrive(selectedDrive).type);
             }
           }
         }
@@ -360,28 +361,28 @@ function performAndDisplayCalculations(minR, maxR, power, dutyCycle, dutyCycleDu
     if (selectedCDBR) {
       let Rmax = maxR;
       let AvgPower = power;
-      if (selectedCDBR.qtty > 1){
+      if (selectedCDBR.qtty > 1) {
         Rmax = Rmax * selectedCDBR.qtty;
         AvgPower = AvgPower / selectedCDBR.qtty;
       }
       outputExternalBrakingTransistor()
       var resistorResults = calculateResistors(selectedCDBR.cdbr.minResistance, Rmax, AvgPower, dutyCycle, dutyCycleDuration);
       if (resistorResults) {
-        displayResistorTransistorSelection(resistorResults, selectedCDBR, selectedCDBR.cdbr.minResistance, Rmax, AvgPower);
+        displayResistorTransistorSelection(resistorResults, selectedCDBR, selectedCDBR.cdbr.minResistance, Rmax, AvgPower, getSelectedDrive(selectedDrive).type);
       }
       else {
         var biggerCDBR = getBiggerCDBR(selectedCDBR, cdbr_data);
         if (biggerCDBR) {
           resistorResults = calculateResistors(biggerCDBR.cdbr.minResistance, Rmax, AvgPower, dutyCycle, dutyCycleDuration);
           if (resistorResults) {
-            displayResistorTransistorSelection(resistorResults, biggerCDBR, biggerCDBR.cdbr.minResistance, Rmax, AvgPower);
+            displayResistorTransistorSelection(resistorResults, biggerCDBR, biggerCDBR.cdbr.minResistance, Rmax, AvgPower, getSelectedDrive(selectedDrive).type);
           }
           else {
-            displayNoResistorFoundError(selectedCDBR.cdbr.minResistance, Rmax, AvgPower, selectedCDBR);
+            displayNoResistorFoundError(selectedCDBR.cdbr.minResistance, Rmax, AvgPower, selectedCDBR, getSelectedDrive(selectedDrive).type);
           }
         }
         else {
-          displayNoResistorFoundError(selectedCDBR.cdbr.minResistance, Rmax, AvgPower, selectedCDBR);
+          displayNoResistorFoundError(selectedCDBR.cdbr.minResistance, Rmax, AvgPower, selectedCDBR, getSelectedDrive(selectedDrive).type);
         }
       }
     }
@@ -426,7 +427,7 @@ function clearOutput() {
   outputDiv.innerHTML = "";
 }
 
-function displayNoResistorFoundError(minR, maxR, power, transistorResults) {
+function displayNoResistorFoundError(minR, maxR, power, transistorResults, drive) {
   var outputDiv = document.getElementById("output");
   var card = document.createElement("div");
   card.classList.add("card", "mb-3", "col-12");
@@ -470,11 +471,88 @@ function displayNoResistorFoundError(minR, maxR, power, transistorResults) {
 
   card.appendChild(cardBody);
   outputDiv.appendChild(card);
+
+  //Add schematic picture
+  var card = document.createElement("div");
+  card.classList.add("card", "mb-3", "mt-1");
+  card.style.height = "auto"; // Setting explicit height
+  card.style.width = "auto";   // Setting explicit width
+
+  var cardBody = document.createElement("div");
+  cardBody.classList.add("card-body");
+  cardBody.setAttribute("height", "auto");
+  cardBody.setAttribute("width", "auto");
+
+  var cardTitle = document.createElement("div");
+  cardTitle.classList.add("card-title");
+
+  var titleElement = document.createElement("h5");
+  titleElement.style.fontWeight = "bold";
+  titleElement.textContent = "Schematic";
+  cardTitle.appendChild(titleElement);
+
+  // Create the SVG element
+  var schematicURL;
+  if (transistorResults) {
+    schematicURL = createSchematic(transistorResults.qtty, drive, transistorResults.cdbr.type, minR.toFixed(2), maxR.toFixed(2), power.toFixed(2));
+  } else {
+    schematicURL = createSchematic(0, drive, null, minR.toFixed(2), maxR.toFixed(2), power.toFixed(2));
+  }
+
+  var schematicSVG = document.createElement("img");
+  schematicSVG.src = schematicURL;
+  schematicSVG.style.marginTop = "10px"; // Adjust the space between text and image
+  schematicSVG.style.maxWidth = "100%"; // Ensure the image scales down
+  schematicSVG.style.height = "auto"; // Maintain aspect ratio
+
+  // Append everything
+  cardBody.appendChild(cardTitle);
+  cardBody.appendChild(schematicSVG);
+  card.appendChild(cardBody);
+  outputDiv.appendChild(card);
 }
 
-function displayResistorTransistorSelection(resistorResults, transistorResults, minR, maxR, power) {
+function displayResistorTransistorSelection(resistorResults, transistorResults, minR, maxR, power, drive) {
   var outputDiv = document.getElementById("output");
 
+  //Add schematic picture
+  var card = document.createElement("div");
+  card.classList.add("card", "mb-3", "mt-1");
+  card.style.height = "auto"; // Setting explicit height
+  card.style.width = "auto";   // Setting explicit width
+
+  var cardBody = document.createElement("div");
+  cardBody.classList.add("card-body");
+  cardBody.setAttribute("height", "auto");
+  cardBody.setAttribute("width", "auto");
+
+  var cardTitle = document.createElement("div");
+  cardTitle.classList.add("card-title");
+
+  var titleElement = document.createElement("h5");
+  titleElement.style.fontWeight = "bold";
+  titleElement.textContent = "Schematic";
+  cardTitle.appendChild(titleElement);
+
+  // Create the SVG element
+  var schematicURL;
+  if (transistorResults) {
+    schematicURL = createSchematic(transistorResults.qtty, drive, transistorResults.cdbr.type, minR.toFixed(2), maxR.toFixed(2), power.toFixed(2));
+  } else {
+    schematicURL = createSchematic(0, drive, null, minR.toFixed(2), maxR.toFixed(2), power.toFixed(2));
+  }
+
+  var schematicSVG = document.createElement("img");
+  schematicSVG.src = schematicURL;
+  schematicSVG.style.marginTop = "10px"; // Adjust the space between text and image
+  schematicSVG.style.maxWidth = "100%"; // Ensure the image scales down
+  schematicSVG.style.height = "auto"; // Maintain aspect ratio
+
+  // Append everything
+  cardBody.appendChild(cardTitle);
+  cardBody.appendChild(schematicSVG);
+  card.appendChild(cardBody);
+  outputDiv.appendChild(card);
   resistorResults.forEach(function (obj, index) {
     var card = document.createElement("div");
     card.classList.add("card", "mb-3");
@@ -506,6 +584,8 @@ function displayResistorTransistorSelection(resistorResults, transistorResults, 
     flexContainer.appendChild(resistorContainer);
 
     let resistorImageFile = getResistorGraphic(obj);
+
+
 
     // Add images next to the resistor details if resistorImageFile is valid
     if (resistorImageFile) {
