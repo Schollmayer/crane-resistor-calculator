@@ -1,4 +1,5 @@
-import { calculateResistors, getResistorGraphic } from "../sharedFiles/braking_resistor_calculations.js";
+import { calculateResistors } from "../sharedFiles/braking_resistor_calculations.js";
+import {getResistorGraphic} from "../sharedFiles/calculation_output.js";
 
 const Rmin = document.getElementById('Rmin');
 const Rmax = document.getElementById('Rmax');

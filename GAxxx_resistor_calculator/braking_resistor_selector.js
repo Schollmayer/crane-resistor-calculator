@@ -1,4 +1,5 @@
-import { calculateResistors, getResistorGraphic } from "../sharedFiles/braking_resistor_calculations.js";
+import { calculateResistors} from "../sharedFiles/braking_resistor_calculations.js";
+import {getResistorGraphic} from "../sharedFiles/calculation_output.js";
 import { checkBrakingTorque, findCDBR } from "./braking_transistor_calculations.js";
 import { drive_OLCurves_higher_0_75_kW, drive_OLLinear_higher_0_75_kW, drive_OLCurves_smaller_0_75_kW, drive_OLLinear_smaller_0_75_kW } from "../sharedFiles/internal_braking_transistor_data.js";
 import { cdbr_data } from "../sharedFiles/cdbr_data.js";
