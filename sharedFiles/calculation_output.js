@@ -1,6 +1,7 @@
 import { createSchematic } from "./schematic_generator.js";
 
-export function displayResistorTransistorSelection(outputDIVName, cr700Result, transistorResults, resistorResults, minR, maxR, avgBrakePower, maxBrakePower, maxBrakeTime, dutyCycleTime) {
+export function displayResistorTransistorSelection(outputDIVName, cr700Result, transistorResults, resistorResults,
+    minR, maxR, avgBrakePower, maxBrakePower, maxBrakeTime, dutyCycleTime) {
     var outputDiv = document.getElementById(outputDIVName);
 
     // Clear previous content
@@ -23,7 +24,7 @@ export function displayResistorTransistorSelection(outputDIVName, cr700Result, t
     var driveCardTitle = document.createElement("h5");
     driveCardTitle.classList.add("card-title");
     driveCardTitle.style.fontWeight = "bold";
-    driveCardTitle.textContent = `Drive model:`;
+    driveCardTitle.textContent = `Drive Model:`;
     driveCardBody.appendChild(driveCardTitle);
 
     var driveFlexContainer = document.createElement("div");
@@ -50,7 +51,7 @@ export function displayResistorTransistorSelection(outputDIVName, cr700Result, t
         var transistorCardTitle = document.createElement("h5");
         transistorCardTitle.classList.add("card-title");
         transistorCardTitle.style.fontWeight = "bold";
-        transistorCardTitle.textContent = `Braking transistor:`;
+        transistorCardTitle.textContent = `Braking Transistor:`;
         transistorCardBody.appendChild(transistorCardTitle);
 
         var transistorFlexContainer = document.createElement("div");
@@ -78,7 +79,7 @@ export function displayResistorTransistorSelection(outputDIVName, cr700Result, t
     var resistorCardTitle = document.createElement("h5");
     resistorCardTitle.classList.add("card-title");
     resistorCardTitle.style.fontWeight = "bold";
-    resistorCardTitle.textContent = `Braking resistor:`;
+    resistorCardTitle.textContent = `Braking Resistor Network:`;
     resistorCardBody.appendChild(resistorCardTitle);
 
     var resistorFlexContainer = document.createElement("div");
@@ -102,7 +103,6 @@ export function displayResistorTransistorSelection(outputDIVName, cr700Result, t
 
     var accordionCard = document.createElement("div");
     accordionCard.classList.add("accordion-item");
-    accordionCard.style.border = "0px"
 
     var accordionHeader = document.createElement("h3");
     accordionHeader.classList.add("accordion-header");
@@ -117,7 +117,7 @@ export function displayResistorTransistorSelection(outputDIVName, cr700Result, t
     headerButton.setAttribute("aria-controls", "resistorAccordion");
 
     // Make the text bold and increase the font size
-    headerButton.innerHTML = `<strong style="font-size: 1.1rem;">Calculated application values.</strong>`;
+    headerButton.innerHTML = `<strong style="font-size: 1.1rem;">Calculated Application Values</strong>`;
 
     accordionHeader.appendChild(headerButton);
     accordionCard.appendChild(accordionHeader);
@@ -128,10 +128,10 @@ export function displayResistorTransistorSelection(outputDIVName, cr700Result, t
 
     var accordionBody = document.createElement("div");
     accordionBody.classList.add("accordion-body");
-    accordionBody.innerHTML = `<strong>Average braking power:</strong> ${avgBrakePower.toFixed(2)} kW<br>
-  <strong>Maximum braking power:</strong> ${maxBrakePower.toFixed(2)} kW<br>
-  <strong>Maximum continuous braking time:</strong> ${maxBrakeTime.toFixed(2)} s<br>
-  <strong>Duty cycle time:</strong> ${dutyCycleTime.toFixed(2)} s`;
+    accordionBody.innerHTML = `<strong>Average Braking Power:</strong> ${avgBrakePower.toFixed(2)} kW<br>
+  <strong>Maximum Braking Power:</strong> ${maxBrakePower.toFixed(2)} kW<br>
+  <strong>Maximum Continuous Braking Time:</strong> ${maxBrakeTime.toFixed(2)} s<br>
+  <strong>Duty Cycle Time:</strong> ${dutyCycleTime.toFixed(2)} s`;
 
     accordionCollapse.appendChild(accordionBody);
     accordionCard.appendChild(accordionCollapse);
@@ -202,7 +202,7 @@ export function displayResistorTransistorSelection(outputDIVName, cr700Result, t
             var resistorContainer = document.createElement("div");
             var resistorTitle = document.createElement("h6");
             resistorTitle.classList.add("card-subtitle", "mb-2", "text-muted");
-            resistorTitle.textContent = obj.qtty > 1 ? "Braking Resistor Network" : "Braking Resistor Network";
+            resistorTitle.textContent =  "Braking Resistor Network";
             resistorContainer.appendChild(resistorTitle);
 
             // Format resistors output

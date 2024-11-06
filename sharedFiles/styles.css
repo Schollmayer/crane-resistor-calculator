@@ -170,3 +170,39 @@ h1 {
   color: var(--yask-dark-gray) !important;
 }
 
+.card {
+  border-radius: 0.75rem;
+}
+
+.accordion {
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.accordion-item {
+  border: none !important;
+}
+
+.accordion-item:first-of-type {
+  border-top-left-radius: 0.75rem !important;
+  border-top-right-radius: 0.75rem !important;
+}
+
+.accordion-item:last-of-type {
+  border-bottom-left-radius: 0.75rem !important;
+  border-bottom-right-radius: 0.75rem !important;
+}
+
+.accordion-button {
+  border-radius: 0.75rem !important;
+  border: none !important;
+}
+
+.accordion-button.collapsed {
+  border-radius: 0.75rem !important;
+}
+
+.accordion-collapse {
+  border-bottom-left-radius: 0.75rem !important;
+  border-bottom-right-radius: 0.75rem !important;
+}
