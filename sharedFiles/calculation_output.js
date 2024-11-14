@@ -128,7 +128,11 @@ export function displayResistorTransistorSelection(outputDIVName, cr700Result, t
 
     var accordionBody = document.createElement("div");
     accordionBody.classList.add("accordion-body");
-    accordionBody.innerHTML = `<strong>Average Braking Power:</strong> ${avgBrakePower.toFixed(2)} kW<br>
+    var totalAvgBrakePower = avgBrakePower;
+    if (transistorResults){
+        totalAvgBrakePower = totalAvgBrakePower * transistorResults.qtty;
+    }
+    accordionBody.innerHTML = `<strong>Average Braking Power:</strong> ${totalAvgBrakePower.toFixed(2)} kW<br>
   <strong>Maximum Braking Power:</strong> ${maxBrakePower.toFixed(2)} kW<br>
   <strong>Maximum Continuous Braking Time:</strong> ${maxBrakeTime.toFixed(2)} s<br>
   <strong>Duty Cycle Time:</strong> ${dutyCycleTime.toFixed(2)} s`;
