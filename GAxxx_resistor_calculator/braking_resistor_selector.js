@@ -1,4 +1,6 @@
-import { calculateResistors, getResistorGraphic } from "../sharedFiles/braking_resistor_calculations.js";
+import { calculateResistors } from "../sharedFiles/braking_resistor_calculations.js";
+import { getResistorGraphic } from "../sharedFiles/calculation_output.js";
+import { displayResistorTransistorSelection } from "../sharedFiles/calculation_output.js";
 import { checkBrakingTorque, findCDBR } from "./braking_transistor_calculations.js";
 import { drive_OLCurves_higher_0_75_kW, drive_OLLinear_higher_0_75_kW, drive_OLCurves_smaller_0_75_kW, drive_OLLinear_smaller_0_75_kW } from "../sharedFiles/internal_braking_transistor_data.js";
 import { cdbr_data } from "../sharedFiles/cdbr_data.js";
@@ -49,20 +51,74 @@ selectedDrive.forEach((drive, index) => {
 });
 
 
-calculateResistorButton.addEventListener('click', function () {
-  var form = document.getElementById('brakingDataInputForm');
-  // Clear previous calculation results
-  var outputDiv = document.getElementById("output");
-  outputDiv.innerHTML = "";
+// Button Event Listener
+const calculateButton = document.getElementById('calculateResistorButton');
+calculateButton.addEventListener('click', function () {
+    // Clear previous calculation results
+    const outputDiv = document.getElementById("output");
+    outputDiv.innerHTML = "";
+
+    const Pb = document.getElementById('power');
+    const PBmax = document.getElementById('peakPower');
   
-  if (form.checkValidity()) {
-    calculate();
-  }
-  else {
-    form.reportValidity(); // This will trigger the browser's built-in validation messages
-  }
-  storeFormInput();
+    const PbValue = parseFloat(Pb.value);
+    const PBmaxValue = parseFloat(PBmax.value);
+  
+    // Reset custom validity messages
+    Pb.setCustomValidity('');
+    PBmax.setCustomValidity('');
+  
+    // Resistor validation check
+    if (PbValue > PBmaxValue) {
+      Pb.setCustomValidity('Rmax must be higher than Rmin!');
+      PBmax.setCustomValidity('Rmax must be higher than Rmin!');
+      PBmax.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    const form = document.getElementById('brakingDataInputForm');
+    if (validateForm(form)) {
+        calculate(); // Call your calculation function
+        calculateButton.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+        // Scroll to the first invalid input field
+        const firstInvalidInput = form.querySelector('input.is-invalid');
+        if (firstInvalidInput) {
+            firstInvalidInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
+    storeFormInput(); // Store the form inputs
 });
+
+// Custom form validation function
+function validateForm(form) {
+  // Select both inputs and selects within the form
+  const elements = form.querySelectorAll('input, select');
+  let isFormValid = true;
+
+  elements.forEach(element => {
+      // Check validity of each element
+      if (!element.checkValidity()) {
+          applyValidationClasses(element, false);
+          isFormValid = false;
+      } else {
+          applyValidationClasses(element, true);
+      }
+  });
+
+  // Return overall form validity status
+  return isFormValid;
+}
+
+// Helper function to apply Bootstrap validation classes
+function applyValidationClasses(input, isValid) {
+  if (isValid) {
+      input.classList.remove('is-invalid');
+  } else {
+      input.classList.remove('is-valid');
+      input.classList.add('is-invalid');
+  }
+}
+
 
 const loadInputsButton = document.getElementById('loadInputsButton');
 loadInputsButton.addEventListener('click', loadFormData);
@@ -128,11 +184,11 @@ function loadFormData() {
     }
   });
   // Now, set the selects after the options have been populated
-    if (formData[select.id] !== undefined) {
-      setTimeout(() => {
-        select.selectedIndex = formData[select.id];
-      }, 0); // Delay to ensure options are populated first
-    }
+  if (formData[select.id] !== undefined) {
+    setTimeout(() => {
+      select.selectedIndex = formData[select.id];
+    }, 0); // Delay to ensure options are populated first
+  }
 }
 
 
@@ -218,11 +274,11 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function calculate() {
-  performAndDisplayCalculations(getRmin(ga700_data), calculateRmax(ga700_data), power.value, dutyCycle.value, dutyCycleDuration.value);
+  performAndDisplayCalculations(getRmin(ga700_data), calculateRmax(ga700_data), parseFloat(power.value), parseFloat(dutyCycle.value), parseFloat(dutyCycleDuration.value));
 }
 
 function calculateRmax(driveData) {
-  const Rmax = (getSelectedDrive(driveData).brakeActivationVoltage * getSelectedDrive(driveData).brakeActivationVoltage) / (peakPower.value * 1000);
+  const Rmax = (getSelectedDrive(driveData).brakeActivationVoltage * getSelectedDrive(driveData).brakeActivationVoltage) / (parseFloat(peakPower.value) * 1000);
   return Rmax;
 }
 
@@ -303,10 +359,12 @@ function performAndDisplayCalculations(minR, maxR, power, dutyCycle, dutyCycleDu
     if (checkBrakingTorque(dutyCycle, getMaxBreakTime(dutyCycle, dutyCycleDuration), power, getSelectedDrive(selectedDrive), gaCurves, gaLinearCurves)) {
       var resistorResults = calculateResistors(minR, maxR, power, dutyCycle, dutyCycleDuration);
       if (resistorResults) {
-        displayResistorTransistorSelection(resistorResults, null, minR, maxR, power);
+        displayResistorTransistorSelection("output", getSelectedDrive(selectedDrive), null, resistorResults, minR, maxR, power, parseFloat(peakPower.value),
+          getMaxBreakTime(dutyCycle, dutyCycleDuration), dutyCycleDuration);
       }
       else {
-        displayNoResistorFoundError(minR, maxR, power, null);
+        displayResistorTransistorSelection("output", getSelectedDrive(selectedDrive), null, null, minR, maxR, power, parseFloat(peakPower.value),
+          getMaxBreakTime(dutyCycle, dutyCycleDuration), dutyCycleDuration);
       }
     }
     else {
@@ -318,88 +376,97 @@ function performAndDisplayCalculations(minR, maxR, power, dutyCycle, dutyCycleDu
         if (selectedCDBR) {
           let Rmax = maxR;
           let AvgPower = power;
-          if (selectedCDBR.qtty > 1){
+          if (selectedCDBR.qtty > 1) {
             Rmax = Rmax * selectedCDBR.qtty;
             AvgPower = AvgPower / selectedCDBR.qtty;
           }
           outputSameDriveWithBrakingTransistor();
           var resistorResults = calculateResistors(selectedCDBR.cdbr.minResistance, Rmax, AvgPower, dutyCycle, dutyCycleDuration);
           if (resistorResults) {
-            displayResistorTransistorSelection(resistorResults, selectedCDBR, selectedCDBR.cdbr.minResistance, Rmax, AvgPower);
+            displayResistorTransistorSelection("output", getSelectedDrive(selectedDrive), selectedCDBR, resistorResults, selectedCDBR.cdbr.minResistance, Rmax, AvgPower, parseFloat(peakPower.value),
+              getMaxBreakTime(dutyCycle, dutyCycleDuration), dutyCycleDuration);
           }
           else {
             var biggerCDBR = getBiggerCDBR(selectedCDBR, cdbr_data);
             if (biggerCDBR) {
               let Rmax = maxR;
               let AvgPower = power;
-              if (selectedCDBR.qtty > 1){
+              if (selectedCDBR.qtty > 1) {
                 Rmax = Rmax * selectedCDBR.qtty;
                 AvgPower = AvgPower / selectedCDBR.qtty;
               }
               resistorResults = calculateResistors(biggerCDBR.cdbr.minResistance, Rmax, AvgPower, dutyCycle, dutyCycleDuration);
               if (resistorResults) {
-                displayResistorTransistorSelection(resistorResults, biggerCDBR, biggerCDBR.cdbr.minResistance, Rmax, AvgPower);
+                displayResistorTransistorSelection("output", getSelectedDrive(selectedDrive), biggerCDBR, resistorResults, biggerCDBR.cdbr.minResistance, Rmax, AvgPower, parseFloat(peakPower.value),
+                  getMaxBreakTime(dutyCycle, dutyCycleDuration), dutyCycleDuration);
               }
               else {
-                displayNoResistorFoundError(selectedCDBR.cdbr.minResistance, Rmax, AvgPower, selectedCDBR);
+                displayResistorTransistorSelection("output", getSelectedDrive(selectedDrive), biggerCDBR, null, biggerCDBR.cdbr.minResistance, Rmax, AvgPower, parseFloat(peakPower.value),
+                  getMaxBreakTime(dutyCycle, dutyCycleDuration), dutyCycleDuration);
               }
             }
             else {
-              displayNoResistorFoundError(selectedCDBR.cdbr.minResistance, Rmax, AvgPower, selectedCDBR);
-            }
+              displayResistorTransistorSelection("output", getSelectedDrive(selectedDrive), selectedCDBR, resistorResults,selectedCDBR.cdbr.minResistance, Rmax, AvgPower, parseFloat(peakPower.value),
+                getMaxBreakTime(dutyCycle, dutyCycleDuration), dutyCycleDuration);
+            
           }
         }
+      }
         else {
-          noTransistorFound();
+        noTransistorFound();
+      }
+    }
+  }
+}
+  else {
+  var selectedCDBR = findCDBR(cdbr_data, maxR, getMaxBreakTime(dutyCycle, dutyCycleDuration), getSelectedDrive(selectedDrive).brakeActivationVoltage, dutyCycle)
+  if (selectedCDBR) {
+    let Rmax = maxR;
+    let AvgPower = power;
+    if (selectedCDBR.qtty > 1) {
+      Rmax = Rmax * selectedCDBR.qtty;
+      AvgPower = AvgPower / selectedCDBR.qtty;
+    }
+    outputExternalBrakingTransistor()
+    var resistorResults = calculateResistors(selectedCDBR.cdbr.minResistance, Rmax, AvgPower, dutyCycle, dutyCycleDuration);
+    if (resistorResults) {
+      displayResistorTransistorSelection("output", getSelectedDrive(selectedDrive), selectedCDBR, resistorResults, selectedCDBR.cdbr.minResistance, Rmax, AvgPower, parseFloat(peakPower.value),
+        getMaxBreakTime(dutyCycle, dutyCycleDuration), dutyCycleDuration);
+    }
+    else {
+      var biggerCDBR = getBiggerCDBR(selectedCDBR, cdbr_data);
+      if (biggerCDBR) {
+        resistorResults = calculateResistors(biggerCDBR.cdbr.minResistance, Rmax, AvgPower, dutyCycle, dutyCycleDuration);
+        if (resistorResults) {
+          displayResistorTransistorSelection("output", getSelectedDrive(selectedDrive), biggerCDBR, resistorResults, biggerCDBR.cdbr.minResistance, Rmax, AvgPower, parseFloat(peakPower.value),
+            getMaxBreakTime(dutyCycle, dutyCycleDuration), dutyCycleDuration);
         }
+        else {
+          displayResistorTransistorSelection("output", getSelectedDrive(selectedDrive), selectedCDBR, null, selectedCDBR.cdbr.minResistance, Rmax, AvgPower, parseFloat(peakPower.value),
+          getMaxBreakTime(dutyCycle, dutyCycleDuration), dutyCycleDuration);
+        }
+      }
+      else {
+        displayResistorTransistorSelection("output", getSelectedDrive(selectedDrive), selectedCDBR, null, selectedCDBR.cdbr.minResistance, Rmax, AvgPower, parseFloat(peakPower.value),
+        getMaxBreakTime(dutyCycle, dutyCycleDuration), dutyCycleDuration);
       }
     }
   }
   else {
-    var selectedCDBR = findCDBR(cdbr_data, maxR, getMaxBreakTime(dutyCycle, dutyCycleDuration), getSelectedDrive(selectedDrive).brakeActivationVoltage, dutyCycle)
-    if (selectedCDBR) {
-      let Rmax = maxR;
-      let AvgPower = power;
-      if (selectedCDBR.qtty > 1){
-        Rmax = Rmax * selectedCDBR.qtty;
-        AvgPower = AvgPower / selectedCDBR.qtty;
-      }
-      outputExternalBrakingTransistor()
-      var resistorResults = calculateResistors(selectedCDBR.cdbr.minResistance, Rmax, AvgPower, dutyCycle, dutyCycleDuration);
-      if (resistorResults) {
-        displayResistorTransistorSelection(resistorResults, selectedCDBR, selectedCDBR.cdbr.minResistance, Rmax, AvgPower);
-      }
-      else {
-        var biggerCDBR = getBiggerCDBR(selectedCDBR, cdbr_data);
-        if (biggerCDBR) {
-          resistorResults = calculateResistors(biggerCDBR.cdbr.minResistance, Rmax, AvgPower, dutyCycle, dutyCycleDuration);
-          if (resistorResults) {
-            displayResistorTransistorSelection(resistorResults, biggerCDBR, biggerCDBR.cdbr.minResistance, Rmax, AvgPower);
-          }
-          else {
-            displayNoResistorFoundError(selectedCDBR.cdbr.minResistance, Rmax, AvgPower, selectedCDBR);
-          }
-        }
-        else {
-          displayNoResistorFoundError(selectedCDBR.cdbr.minResistance, Rmax, AvgPower, selectedCDBR);
-        }
-      }
-    }
-    else {
-      noTransistorFound();
-    }
+    noTransistorFound();
   }
+}
 }
 
 function noTransistorFound() {
-  var outputDiv = document.getElementById("output");
+  var outputDiv = document.getElementById("outputMessage");
   outputDiv.innerHTML = `
   <h3>No product found which matches the desired specifications.</h3>
   <h4>Unfortunately there is no product in our catalog which matches the desired specifications.</h4>`
 }
 
 function outputSameDriveWithBrakingTransistor() {
-  var outputDiv = document.getElementById("output");
+  var outputDiv = document.getElementById("outputMessage");
   outputDiv.innerHTML = `
   <h3>The internal braking transistor is not sufficient for desired braking power.</h3>
   <h4>The next higher dimensioned drive does not have an internal braking transistor.
@@ -407,14 +474,14 @@ function outputSameDriveWithBrakingTransistor() {
 }
 
 function outputExternalBrakingTransistor() {
-  var outputDiv = document.getElementById("output");
+  var outputDiv = document.getElementById("outputMessage");
   outputDiv.innerHTML = `
   <h3>The selected drive does not have a integrated braking transistor.</h3>
   <h4>Please use an external braking transistor with the suggested resistor combination.</h4>`
 }
 
 function outputBrakingTransistorError() {
-  var outputDiv = document.getElementById("output");
+  var outputDiv = document.getElementById("outputMessage");
   outputDiv.innerHTML = `
   <h3>Internal braking transistor not sufficient for desired braking power.</h3>
   <h4>Please pick a higher dimensioned drive.</h4>`
@@ -424,225 +491,12 @@ function clearOutput() {
   var outputDiv = document.getElementById("output");
   // Clear previous output
   outputDiv.innerHTML = "";
+
+  var outputDiv = document.getElementById("outputMessage");
+  // Clear previous output
+  outputDiv.innerHTML = "";
 }
 
-function displayNoResistorFoundError(minR, maxR, power, transistorResults) {
-  var outputDiv = document.getElementById("output");
-  var card = document.createElement("div");
-  card.classList.add("card", "mb-3", "col-12");
-
-  var cardBody = document.createElement("div");
-  cardBody.classList.add("card-body");
-
-  var cardTitle = document.createElement("h5");
-  cardTitle.classList.add("card-title");
-  cardTitle.textContent = `Unfortunately there is no fitting resistor combination in our portfolio.`;
-  cardBody.appendChild(cardTitle);
-
-  var resistorContainer = document.createElement("div");
-  var resistorTitle = document.createElement("h6");
-  resistorTitle.classList.add("card-subtitle", "mb-2", "text-muted");
-  resistorTitle.textContent = "Please find a suitable resistor with the following specification from a supplier.";
-  resistorContainer.appendChild(resistorTitle);
-  var resistorDetail = document.createElement("div");
-  resistorDetail.innerHTML = `<b>Rmin:</b> ${minR.toFixed(2)}&#8486;<br><b>Rmax:</b> ${maxR.toFixed(2)}&#8486;<br><b>Power:</b> ${power}kW`;
-  resistorContainer.appendChild(resistorDetail);
-  cardBody.appendChild(resistorContainer);
-
-  // Transistor container
-  if (transistorResults) {
-    var transistorContainer = document.createElement("div");
-    transistorContainer.style.marginTop = "40px"; // Adding some space between resistor and transistor details
-    var transistorTitle = document.createElement("h6");
-    transistorTitle.classList.add("card-subtitle", "mb-2", "text-muted");
-    transistorTitle.textContent = "External braking transistor";
-    transistorContainer.appendChild(transistorTitle);
-
-    var transistorDetail = document.createElement("div");
-    transistorDetail.innerHTML = `${transistorResults.qtty}x ${transistorResults.cdbr.type}`;
-    if (transistorResults.qtty > 1) {
-      transistorDetail.innerHTML += '<br>Please use the displayed resistor values for each braking transistor.'
-    }
-    transistorContainer.appendChild(transistorDetail);
-
-    cardBody.appendChild(transistorContainer);
-  }
-
-  card.appendChild(cardBody);
-  outputDiv.appendChild(card);
-}
-
-function displayResistorTransistorSelection(resistorResults, transistorResults, minR, maxR, power) {
-  var outputDiv = document.getElementById("output");
-
-  resistorResults.forEach(function (obj, index) {
-    var card = document.createElement("div");
-    card.classList.add("card", "mb-3");
-
-    var cardBody = document.createElement("div");
-    cardBody.classList.add("card-body");
-
-    var cardTitle = document.createElement("h5");
-    cardTitle.classList.add("card-title");
-    cardTitle.style.fontWeight = "bold";
-    cardTitle.textContent = `Option ${index + 1}`;
-    cardBody.appendChild(cardTitle);
-
-    var flexContainer = document.createElement("div");
-    flexContainer.style.display = "flex";
-    flexContainer.style.flexDirection = "column"; // Display children in column
-    cardBody.appendChild(flexContainer);
-
-    var resistorContainer = document.createElement("div");
-    var resistorTitle = document.createElement("h6");
-    resistorTitle.classList.add("card-subtitle", "mb-2", "text-muted");
-    resistorTitle.textContent = obj.qtty > 1 ? "Braking Resistors" : "Braking Resistor";
-    resistorContainer.appendChild(resistorTitle);
-
-    // Format resistors output
-    var resistorDetail = document.createElement("div");
-    resistorDetail.innerHTML = `${obj.quantity}x ${obj.resistor.type}`;
-    resistorContainer.appendChild(resistorDetail);
-    flexContainer.appendChild(resistorContainer);
-
-    let resistorImageFile = getResistorGraphic(obj);
-
-    // Add images next to the resistor details if resistorImageFile is valid
-    if (resistorImageFile) {
-      var resistorImageContainer = document.createElement("div");
-      resistorImageContainer.style.marginTop = "10px"; // Adjust the space between text and image
-      resistorImageContainer.style.display = "flex"; // Display images in a row
-      resistorImageContainer.style.gap = "10px"; // Add space between the images
-      resistorImageContainer.style.flexWrap = "wrap"; // Wrap images on smaller screens
-      resistorImageContainer.style.alignItems = "center"; // Align items vertically if needed
-      resistorImageContainer.style.justifyContent = "flex-start"; // Align images to the left
-
-      // Check if resistorImageFile is an array
-      if (Array.isArray(resistorImageFile)) {
-        // Loop through the array and create images for each element
-        resistorImageFile.forEach((imageSrc, index) => {
-          if (index < 2) { // Display up to two images
-            var resistorImage = document.createElement("img");
-            resistorImage.src = imageSrc;
-            resistorImage.alt = `Resistor network ${index + 1}`;
-            resistorImage.style.maxWidth = "100%"; // Ensure image fits within the container
-            resistorImage.style.height = "auto"; // Maintain aspect ratio
-            resistorImage.style.maxHeight = "200px"; // Limit the maximum height
-            resistorImage.style.objectFit = "contain"; // Ensure image fits within its container
-            resistorImage.style.margin = "0"; // Left-align the image
-            resistorImage.style.marginTop = "10px"; // Left-align the image
-
-            // Add a class to the second image for special mobile styling
-            if (index === 1) {
-              resistorImage.classList.add("second-image");
-            }
-
-            resistorImageContainer.appendChild(resistorImage);
-
-            // Add the "or" text between the images
-            if (index === 0 && resistorImageFile.length > 1) {
-              var orText = document.createElement("span");
-              orText.textContent = "OR";
-              orText.style.margin = "0 10px"; // Add margin to space the "or" text from the images
-              orText.style.fontSize = "1.3em"; // Make the text bigger
-              orText.style.fontWeight = "bold"; // Make the text bold
-              orText.style.color = "var(--yask-blue)"; // Use the --yask-blue color
-
-              resistorImageContainer.appendChild(orText);
-            }
-          }
-        });
-      } else {
-        // If resistorImageFile is not an array, handle it as a single image
-        var resistorImage = document.createElement("img");
-        resistorImage.src = resistorImageFile;
-        resistorImage.alt = "Resistor network";
-        resistorImage.style.maxWidth = "100%"; // Ensure image fits within the container
-        resistorImage.style.height = "auto"; // Maintain aspect ratio
-        resistorImage.style.maxHeight = "200px"; // Limit the maximum height
-        resistorImage.style.objectFit = "contain"; // Ensure image fits within its container
-        resistorImage.style.margin = "0"; // Left-align the image
-        resistorImage.style.marginTop = "10px"; // Left-align the image
-
-        resistorImageContainer.appendChild(resistorImage);
-      }
-
-      // Append the container with images to the cardBody
-      cardBody.appendChild(resistorImageContainer);
-    }
-
-    // Transistor container
-    if (transistorResults) {
-      var transistorContainer = document.createElement("div");
-      transistorContainer.style.marginTop = "20px"; // Adding some space between resistor and transistor details
-      var transistorTitle = document.createElement("h6");
-      transistorTitle.classList.add("card-subtitle", "mb-2", "text-muted");
-      transistorTitle.textContent = "External braking transistor";
-      transistorContainer.appendChild(transistorTitle);
-
-      var transistorDetail = document.createElement("div");
-      transistorDetail.innerHTML = `${transistorResults.qtty}x ${transistorResults.cdbr.type}`;
-      transistorContainer.appendChild(transistorDetail);
-      if (transistorResults.qtty > 1) {
-        transistorDetail.innerHTML += '<br>Please use the displayed resistor network for each braking transistor.';
-      }
-
-      flexContainer.appendChild(transistorContainer);
-    }
-
-    // Details section
-    var detailsContainer = document.createElement("div");
-    detailsContainer.classList.add("collapse"); // Add the "well" class here
-    detailsContainer.id = `details-${index}`;
-
-    // Create a wrapper div with margin inside detailsContainer
-    var detailsContent = document.createElement("div");
-    detailsContent.classList.add("mt-3");
-    detailsContent.innerHTML = `
-  <div style="display: flex; justify-content: left; margin: 0; padding: 0;">
-    <div style="margin-right: 20px; padding: 0;">
-      <strong style="font-size: 1.1em">Option details:</strong><br>
-      <strong>Rtotal:</strong> ${obj.totalResistance.toFixed(2)} Ω<br>
-      <strong>Total power:</strong> ${obj.totalPower.toFixed(2)} kW<br>
-      <strong>Total quantity:</strong> ${obj.quantity}<br>
-    </div>
-    <div style="margin: 0; padding: 0;">
-      <strong style="font-size: 1.1em">Resistor requirements:</strong><br>
-      <strong>Rmin:</strong> ${minR.toFixed(2)} &#8486;<br>
-      <strong>Rmax:</strong> ${maxR.toFixed(2)} &#8486;<br>
-      <strong>Power:</strong> ${power} kW
-    </div>
-  </div>
-`;
-
-    detailsContainer.appendChild(detailsContent); // Append detailsContent (with margin) inside detailsContainer
-
-    var detailButton = document.createElement("button");
-    detailButton.classList.add("btn", "btn-yask-blue", "mt-3");
-    detailButton.setAttribute("type", "button");
-    detailButton.setAttribute("data-bs-toggle", "collapse");
-    detailButton.setAttribute("data-bs-target", `#details-${index}`);
-    detailButton.setAttribute("aria-expanded", "false");
-    detailButton.setAttribute("aria-controls", `details-${index}`);
-    detailButton.textContent = "Show details";
-
-    // Event listener for Bootstrap collapse events
-    detailsContainer.addEventListener("show.bs.collapse", function () {
-      detailButton.textContent = "Show less";
-    });
-
-    detailsContainer.addEventListener("hide.bs.collapse", function () {
-      detailButton.textContent = "Show details";
-    });
-
-    cardBody.appendChild(detailButton);
-    cardBody.appendChild(detailsContainer); // Append detailsContainer (with collapsible content) to cardBody
-
-    card.appendChild(cardBody);
-    outputDiv.appendChild(card);
-
-  });
-}
 
 
 

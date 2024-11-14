@@ -1,6 +1,11 @@
+<!--
+  This project includes Snap.svg, which is licensed under the Apache License 2.0.
+  You can find the full license at http://www.apache.org/licenses/LICENSE-2.0
+-->
+
 <!doctype html>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         var userLang = navigator.language || navigator.userLanguage;
         document.documentElement.setAttribute("lang", userLang);
     });
@@ -61,41 +66,56 @@
             <p class="yask-dark-gray">
                 Please input values.
             </p>
-            <form id="brakingDataInputForm">
+            <form id="brakingDataInputForm" novalidate>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="Rmin">
                         Rmin [Ω]:
                     </label>
-                    <input type="number" inputmode="decimal" class="form-control" id="Rmin" placeholder="Enter Rmin in Ω" min="0.01"
-                        step="any" required>
+                    <input type="number" inputmode="decimal" class="form-control" id="Rmin"
+                        placeholder="Enter Rmin in Ω" min="0.01" max="30000" step="any" required>
+                    <div class="invalid-feedback">
+                        The input value must be lower than Rmax and must be between 0.01 and 30000.
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="Rmax">
                         Rmax [Ω]:
                     </label>
-                    <input type="number" inputmode="decimal" class="form-control" id="Rmax" placeholder="Enter Rmax in Ω" step="any"
-                        min="0.01" required>
+                    <input type="number" inputmode="decimal" class="form-control" id="Rmax"
+                        placeholder="Enter Rmax in Ω" step="any" min="0.01" max="30000" required>
+                    <div class="invalid-feedback">
+                        The input value must be higher than Rmin and must be between 0.01 and 30000.
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="power" class="form-label yask-blue">
                         Power [kW]
                     </label>
-                    <input type="number" inputmode="decimal" class="form-control" id="power" placeholder="Enter power in kW" step="any"
-                        min="0.01" step="any" required>
+                    <input type="number" inputmode="decimal" class="form-control" id="power"
+                        placeholder="Enter power in kW" step="any" min="0.01" max="10000" step="any" required>
+                    <div class="invalid-feedback">
+                        The input value must be between 0.01 and 10000.
+                    </div>
                 </div>
                 <div class="form-group pt-3">
                     <label for="dutyCycle" class="form-label yask-blue" id="tooltipLabel2">
                         Duty Cycle [%]
                     </label>
-                    <input type="number" inputmode="decimal" class="form-control" id="dutyCycle" placeholder="Enter duty cycle in %" min="1"
-                        max="100" step="any" required>
+                    <input type="number" inputmode="decimal" class="form-control" id="dutyCycle"
+                        placeholder="Enter duty cycle in %" min="1" max="100" step="any" required>
+                    <div class="invalid-feedback">
+                        The input value must be between 1 and 100.
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="dutyCycleDuration" class="form-label yask-blue" id="tooltipLabel">
                         Duty Cycle Duration [s]
                     </label>
                     <input type="number" inputmode="decimal" class="form-control" id="dutyCycleDuration" step="any"
-                        placeholder="Enter duty cycle duration in s" min="1" required>
+                        placeholder="Enter duty cycle duration in s" min="1" max="10000" required>
+                    <div class="invalid-feedback">
+                        The input value must be between 1 and 10000.
+                    </div>
                 </div>
             </form>
             <button type="button" class="btn btn-yask-blue mt-3" id="calculateButton">

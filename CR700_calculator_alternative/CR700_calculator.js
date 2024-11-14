@@ -1,40 +1,75 @@
 import { cdbr_data, ed_interpolate } from "../sharedFiles/cdbr_data.js";
 import { HoistAlternative } from "./hoist_data.js";
-import { calculateResistors, getResistorGraphic } from "../sharedFiles/braking_resistor_calculations.js";
+import { calculateResistors} from "../sharedFiles/braking_resistor_calculations.js";
+import {createSchematic} from "../sharedFiles/schematic_generator.js";
+import {displayResistorTransistorSelection} from "../sharedFiles/calculation_output.js";
 
-// Button-EventListener
+// Button Event Listener
 const calculateButton = document.getElementById('calculateButton');
 calculateButton.addEventListener('click', function () {
-  // Clear previous calculation results
-  var outputDiv = document.getElementById("output");
-  outputDiv.innerHTML = "";
+    // Clear previous calculation results
+    const outputDiv = document.getElementById("output");
+    outputDiv.innerHTML = "";
 
-  const startSpeedInput = document.getElementById('motorStartSpeedInput');
-  const targetSpeedInput = document.getElementById('avMotorSpeedInput');
+    const startSpeedInput = document.getElementById('motorStartSpeedInput');
+    const targetSpeedInput = document.getElementById('avMotorSpeedInput');
 
-  const startSpeed = parseFloat(startSpeedInput.value);
-  const targetSpeed = parseFloat(targetSpeedInput.value);
+    const startSpeed = parseFloat(startSpeedInput.value);
+    const targetSpeed = parseFloat(targetSpeedInput.value);
 
-  // Reset custom validity messages
-  startSpeedInput.setCustomValidity('');
-  targetSpeedInput.setCustomValidity('');
+    // Reset custom validity messages
+    startSpeedInput.setCustomValidity('');
+    targetSpeedInput.setCustomValidity('');
 
-  // Speed validation check
-  if (targetSpeed > startSpeed) {
-      targetSpeedInput.setCustomValidity('Target speed cannot be higher than start speed!');
-      targetSpeedInput.reportValidity();  // This will trigger the built-in validation error
-      return; // Exit the function to prevent further action
-  }
+    // Speed validation check
+    if (targetSpeed > startSpeed) {
+        targetSpeedInput.setCustomValidity('Target speed cannot be higher than start speed!');
+        targetSpeedInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
 
-  var form = document.getElementById('brakingDataInputForm');
-  if (form.checkValidity()) {
-      calculateResult(); // Call your calculation function
-  } else {
-      form.reportValidity(); // Trigger browser's built-in validation
-  }
-
+    const form = document.getElementById('brakingDataInputForm');
+    if (validateForm(form)) {
+        calculateResult(); // Call your calculation function
+        calculateButton.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+        // Scroll to the first invalid input field
+        const firstInvalidInput = form.querySelector('input.is-invalid');
+        if (firstInvalidInput) {
+            firstInvalidInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
     storeFormInput(); // Store the form inputs
 });
+
+// Custom form validation function
+function validateForm(form) {
+  const inputs = form.querySelectorAll('input');
+  let isFormValid = true;
+
+  inputs.forEach(input => {
+      if (!input.checkValidity()) {
+          applyValidationClasses(input, false);
+          isFormValid = false;
+      } else {
+          applyValidationClasses(input, true);
+      }
+  });
+
+  //form.classList.add('was-validated');
+  return isFormValid;
+}
+
+// Helper function to apply Bootstrap validation classes
+function applyValidationClasses(input, isValid) {
+  if (isValid) {
+      input.classList.remove('is-invalid');
+      //input.classList.add('is-valid');
+  } else {
+      input.classList.remove('is-valid');
+      input.classList.add('is-invalid');
+  }
+}
+
 
 const loadInputsButton = document.getElementById('loadInputsButton');
 loadInputsButton.addEventListener('click', loadFormData);
@@ -123,301 +158,6 @@ function clearOutput() {
   // Clear previous output
   outputDiv.innerHTML = "";
 }
-function displayResistorTransistorSelection(cr700Result, transistorResults, resistorResults, minR, maxR, power, hoist) {
-  var outputDiv = document.getElementById("output");
-
-  // Clear previous content
-  outputDiv.innerHTML = "";
-
-  var borderThickness = "2px";
-  // Create a card group
-  var cardGroup = document.createElement("div");
-  cardGroup.classList.add("card-group");
-
-  // Create card for Drive model
-  var driveCard = document.createElement("div");
-  driveCard.classList.add("card", "mb-3");
-  driveCard.style.borderColor = "var(--yask-blue)";
-  driveCard.style.borderWidth = borderThickness;
-
-  var driveCardBody = document.createElement("div");
-  driveCardBody.classList.add("card-body");
-
-  var driveCardTitle = document.createElement("h5");
-  driveCardTitle.classList.add("card-title");
-  driveCardTitle.style.fontWeight = "bold";
-  driveCardTitle.textContent = `Drive model:`;
-  driveCardBody.appendChild(driveCardTitle);
-
-  var driveFlexContainer = document.createElement("div");
-  driveFlexContainer.style.display = "flex";
-  driveFlexContainer.style.flexDirection = "column"; // Ensure column direction for line breaks
-  driveFlexContainer.innerHTML = `<strong>Type:</strong> ${cr700Result.type}<br>
-                                       <strong>HD-current:</strong> ${cr700Result.hdCurrent} A<br>
-                                       <strong>HD-power:</strong> ${cr700Result.hdPower} kW`;
-  driveCardBody.appendChild(driveFlexContainer);
-
-  driveCard.appendChild(driveCardBody);
-  cardGroup.appendChild(driveCard);
-
-  if (transistorResults) {
-    // Create card for Braking transistor
-    var transistorCard = document.createElement("div");
-    transistorCard.classList.add("card", "mb-3");
-    transistorCard.style.borderColor = "var(--yask-blue)";
-    transistorCard.style.borderWidth = borderThickness;
-
-    var transistorCardBody = document.createElement("div");
-    transistorCardBody.classList.add("card-body");
-
-    var transistorCardTitle = document.createElement("h5");
-    transistorCardTitle.classList.add("card-title");
-    transistorCardTitle.style.fontWeight = "bold";
-    transistorCardTitle.textContent = `Braking transistor:`;
-    transistorCardBody.appendChild(transistorCardTitle);
-
-    var transistorFlexContainer = document.createElement("div");
-    transistorFlexContainer.style.display = "flex";
-    transistorFlexContainer.style.flexDirection = "column"; // Ensure column direction for line breaks
-    transistorFlexContainer.innerHTML = `<strong>Type:</strong> ${transistorResults.cdbr.type} <br>
-                                       <strong>Quantity:</strong> ${transistorResults.qtty}`;
-    if (transistorResults.qtty > 1) {
-      transistorFlexContainer.innerHTML += `<br><br><strong>Please select the displayed resistor values for each braking transistor. `
-    }
-    transistorCardBody.appendChild(transistorFlexContainer);
-
-    transistorCard.appendChild(transistorCardBody);
-    cardGroup.appendChild(transistorCard);
-  }
-  // Create card for Braking Resistor
-  var resistorCard = document.createElement("div");
-  resistorCard.classList.add("card", "mb-3");
-  resistorCard.style.borderColor = "var(--yask-blue)";
-  resistorCard.style.borderWidth = borderThickness;
-
-  var resistorCardBody = document.createElement("div");
-  resistorCardBody.classList.add("card-body");
-
-  var resistorCardTitle = document.createElement("h5");
-  resistorCardTitle.classList.add("card-title");
-  resistorCardTitle.style.fontWeight = "bold";
-  resistorCardTitle.textContent = `Braking resistor:`;
-  resistorCardBody.appendChild(resistorCardTitle);
-
-  var resistorFlexContainer = document.createElement("div");
-  resistorFlexContainer.style.display = "flex";
-  resistorFlexContainer.style.flexDirection = "column"; // Ensure column direction for line breaks
-
-  // Create the innerHTML with line breaks
-  resistorFlexContainer.innerHTML = `<strong>Rmin:</strong> ${minR.toFixed(2)} Ω<br>
-                                       <strong>Rmax:</strong> ${maxR.toFixed(2)} Ω<br>
-                                       <strong>Power:</strong> ${power.toFixed(2)} kW`;
-
-  resistorCardBody.appendChild(resistorFlexContainer);
-  resistorCard.appendChild(resistorCardBody);
-  cardGroup.appendChild(resistorCard);
-
-  outputDiv.appendChild(cardGroup);
-
-  //Display calculated application data in accordion
-  var accordion = document.createElement("div");
-  accordion.classList.add("accordion", "mb-3");
-
-  var accordionCard = document.createElement("div");
-  accordionCard.classList.add("accordion-item");
-
-  var accordionHeader = document.createElement("h3");
-  accordionHeader.classList.add("accordion-header");
-
-  var headerButton = document.createElement("button");
-  headerButton.classList.add("accordion-button", "collapsed");  // Start with collapsed
-  headerButton.style.outline = "none";
-  headerButton.setAttribute("type", "button");
-  headerButton.setAttribute("data-bs-toggle", "collapse");
-  headerButton.setAttribute("data-bs-target", "#resistorAccordion");
-  headerButton.setAttribute("aria-expanded", "false");
-  headerButton.setAttribute("aria-controls", "resistorAccordion");
-
-  // Make the text bold and increase the font size
-  headerButton.innerHTML = `<strong style="font-size: 1.1rem;">Calculated application values.</strong>`;
-
-  accordionHeader.appendChild(headerButton);
-  accordionCard.appendChild(accordionHeader);
-
-  var accordionCollapse = document.createElement("div");
-  accordionCollapse.classList.add("accordion-collapse", "collapse");  // Start with collapse
-  accordionCollapse.id = "resistorAccordion";
-
-  var accordionBody = document.createElement("div");
-  accordionBody.classList.add("accordion-body");
-  accordionBody.innerHTML = `<strong>Average braking power:</strong> ${hoist.P_El_avg.toFixed(2)} kW<br>
-<strong>Maximum braking power:</strong> ${hoist.P_El_max.toFixed(2)} kW<br>
-<strong>Maximum continuous braking time:</strong> ${hoist.t_brake_max.toFixed(2)} s<br>
-<strong>Duty cycle time:</strong> ${hoist.t_duty_cycle.toFixed(2)} s`;
-
-  accordionCollapse.appendChild(accordionBody);
-  accordionCard.appendChild(accordionCollapse);
-  accordion.appendChild(accordionCard);
-
-  outputDiv.appendChild(accordion);
-
-
-  //Display resistor network options
-  if (resistorResults) {
-    resistorResults.forEach(function (obj, index) {
-      var card = document.createElement("div");
-      card.classList.add("card", "mb-3");
-
-      var cardBody = document.createElement("div");
-      cardBody.classList.add("card-body");
-
-      var cardTitle = document.createElement("h5");
-      cardTitle.classList.add("card-title");
-      cardTitle.style.fontWeight = "bold";
-      cardTitle.textContent = `Option ${index + 1}`;
-      cardBody.appendChild(cardTitle);
-
-      var flexContainer = document.createElement("div");
-      flexContainer.style.display = "flex";
-      flexContainer.style.alignItems = "top";
-      cardBody.appendChild(flexContainer);
-
-      var resistorContainer = document.createElement("div");
-      var resistorTitle = document.createElement("h6");
-      resistorTitle.classList.add("card-subtitle", "mb-2", "text-muted");
-      resistorTitle.textContent = obj.qtty > 1 ? "Braking Resistors" : "Braking Resistor";
-      resistorContainer.appendChild(resistorTitle);
-
-      // Format resistors output
-      var resistorDetail = document.createElement("div");
-      resistorDetail.innerHTML = `${obj.quantity}x ${obj.resistor.type}`;
-      resistorContainer.appendChild(resistorDetail);
-
-      flexContainer.appendChild(resistorContainer);
-
-
-      let resistorImageFile = getResistorGraphic(obj);
-
-      // Add images next to the resistor details if resistorImageFile is valid
-      if (resistorImageFile) {
-        var resistorImageContainer = document.createElement("div");
-        resistorImageContainer.style.marginTop = "10px"; // Adjust the space between text and image
-        resistorImageContainer.style.display = "flex"; // Display images in a row
-        resistorImageContainer.style.gap = "10px"; // Add space between the images
-        resistorImageContainer.style.flexWrap = "wrap"; // Wrap images on smaller screens
-        resistorImageContainer.style.alignItems = "center"; // Align items vertically if needed
-        resistorImageContainer.style.justifyContent = "flex-start"; // Align images to the left
-  
-        // Check if resistorImageFile is an array
-        if (Array.isArray(resistorImageFile)) {
-          // Loop through the array and create images for each element
-          resistorImageFile.forEach((imageSrc, index) => {
-            if (index < 2) { // Display up to two images
-              var resistorImage = document.createElement("img");
-              resistorImage.src = imageSrc;
-              resistorImage.alt = `Resistor network ${index + 1}`;
-              resistorImage.style.maxWidth = "100%"; // Ensure image fits within the container
-              resistorImage.style.height = "auto"; // Maintain aspect ratio
-              resistorImage.style.maxHeight = "200px"; // Limit the maximum height
-              resistorImage.style.objectFit = "contain"; // Ensure image fits within its container
-              resistorImage.style.margin = "0"; // Left-align the image
-              resistorImage.style.marginTop = "10px"; // Left-align the image
-  
-              // Add a class to the second image for special mobile styling
-              if (index === 1) {
-                resistorImage.classList.add("second-image");
-              }
-  
-              resistorImageContainer.appendChild(resistorImage);
-  
-              // Add the "or" text between the images
-              if (index === 0 && resistorImageFile.length > 1) {
-                var orText = document.createElement("span");
-                orText.textContent = "OR";
-                orText.style.margin = "0 10px"; // Add margin to space the "or" text from the images
-                orText.style.fontSize = "1.3em"; // Make the text bigger
-                orText.style.fontWeight = "bold"; // Make the text bold
-                orText.style.color = "var(--yask-blue)"; // Use the --yask-blue color
-  
-                resistorImageContainer.appendChild(orText);
-              }
-            }
-          });
-        } else {
-          // If resistorImageFile is not an array, handle it as a single image
-          var resistorImage = document.createElement("img");
-          resistorImage.src = resistorImageFile;
-          resistorImage.alt = "Resistor network";
-          resistorImage.style.maxWidth = "100%"; // Ensure image fits within the container
-          resistorImage.style.height = "auto"; // Maintain aspect ratio
-          resistorImage.style.maxHeight = "200px"; // Limit the maximum height
-          resistorImage.style.objectFit = "contain"; // Ensure image fits within its container
-          resistorImage.style.margin = "0"; // Left-align the image
-          resistorImage.style.marginTop = "10px"; // Left-align the image
-  
-          resistorImageContainer.appendChild(resistorImage);
-        }
-  
-        // Append the container with images to the cardBody
-        cardBody.appendChild(resistorImageContainer);
-      }
-
-      // Details section
-      var detailsContainer = document.createElement("div");
-      detailsContainer.classList.add("collapse"); // Add the "well" class here
-      detailsContainer.id = `details-${index}`;
-
-      // Create a wrapper div with margin inside detailsContainer
-      var detailsContent = document.createElement("div");
-      detailsContent.classList.add("mt-3");
-      detailsContent.innerHTML = `
-  <div style="display: flex; justify-content: left; margin: 0; padding: 0;">
-    <div style="margin-right: 20px; padding: 0;"> 
-      <strong style="font-size: 1.1em">Option details:</strong><br>
-      <strong>Rtotal:</strong> ${obj.totalResistance.toFixed(2)} Ω<br>
-      <strong>Total power:</strong> ${obj.totalPower.toFixed(2)} kW<br>
-      <strong>Total quantity:</strong> ${obj.quantity}<br>
-    </div>
-  </div>
-`;
-
-      detailsContainer.appendChild(detailsContent); // Append detailsContent (with margin) inside detailsContainer
-
-      var detailButton = document.createElement("button");
-      detailButton.classList.add("btn", "btn-yask-blue", "mt-3");
-      detailButton.setAttribute("type", "button");
-      detailButton.setAttribute("data-bs-toggle", "collapse");
-      detailButton.setAttribute("data-bs-target", `#details-${index}`);
-      detailButton.setAttribute("aria-expanded", "false");
-      detailButton.setAttribute("aria-controls", `details-${index}`);
-      detailButton.textContent = "Show details";
-
-      // Event listener for Bootstrap collapse events
-      detailsContainer.addEventListener("show.bs.collapse", function () {
-        detailButton.textContent = "Show less";
-      });
-
-      detailsContainer.addEventListener("hide.bs.collapse", function () {
-        detailButton.textContent = "Show details";
-      });
-
-      cardBody.appendChild(detailButton);
-      cardBody.appendChild(detailsContainer); // Append detailsContainer (with collapsible content) to cardBody
-
-      card.appendChild(cardBody);
-      outputDiv.appendChild(card);
-
-    });
-  }
-
-  else {
-    var resistorError = document.createElement("div");
-    resistorError.innerHTML = `<h3>Unfortunately there is no resistor network in our portfolio which fits the selected application.</h3>
-    <br><h4>Please get a suitable resistor from a supplier.</h4>`
-
-    outputDiv.appendChild(resistorError);
-  }
-}
 
 function getdutyCyleTime(maxBrakeTime, dutyCycle) {
   return (maxBrakeTime / (dutyCycle / 100));
@@ -430,18 +170,18 @@ function calculateResult() {
   if (CR700selection) {
     if (useInternalbrakingTransistor) {
       let resistorResults = calculateResistors(CR700selection.minBrakeResistance, hoist.R_max, hoist.P_El_avg, hoist.dutyCycle, getdutyCyleTime(hoist.t_brake_max, hoist.dutyCycle))
-      displayResistorTransistorSelection(CR700selection, null, resistorResults, CR700selection.minBrakeResistance, hoist.R_max, hoist.P_El_avg, hoist);
+      displayResistorTransistorSelection("output",CR700selection, null, resistorResults, CR700selection.minBrakeResistance, hoist.R_max, hoist.P_El_avg, hoist.P_B_max, hoist.t_brake_max, hoist.t_duty_cycle);
     }
 
     else {
-      let Rmax = hoist.maxBrakeResistance();
+      let Rmax = hoist.R_max;
       let Pavg = hoist.P_El_avg;
       if (hoist.selectedCDBR().qtty > 1){
         Rmax = Rmax * hoist.selectedCDBR().qtty;
         Pavg = Pavg / hoist.selectedCDBR().qtty;
       }
       let resistorResults = calculateResistors(hoist.selectedCDBR().cdbr.minResistance, Rmax,Pavg , hoist.dutyCycle, getdutyCyleTime(hoist.t_brake_max, hoist.dutyCycle))
-      displayResistorTransistorSelection(CR700selection, hoist.selectedCDBR(), resistorResults, hoist.selectedCDBR().cdbr.minResistance, Rmax, Pavg, hoist);
+      displayResistorTransistorSelection("output",CR700selection, hoist.selectedCDBR(), resistorResults, hoist.selectedCDBR().cdbr.minResistance, Rmax, Pavg, hoist.P_B_max, hoist.t_brake_max, hoist.t_duty_cycle);
     }
   }
   else {

@@ -33,7 +33,7 @@ export class HoistAlternative {
 
         // Main hoist motor data
         // Motor power in kW
-        this.P_m = parseFloat(document.getElementById("avMotorPowerInput").value) * 1000;
+        this.P_m = parseFloat(document.getElementById("avMotorPowerInput").value);
         // Get motor rated current in Ampere. Range [1 - 2000] A
         this.I_motor = parseFloat(document.getElementById("motorRatedCurrentInput").value);
         // Motor speed
@@ -63,11 +63,11 @@ export class HoistAlternative {
         //TODO Check n2 and 0.5, there is no 0.5 present to get result from example
         this.M_B_max = ((this.I_total * (this.n_motor_start - this.n_motor)) / (60 / (2 * Math.PI))) + this.M_load;
 
-        //Maximum braking power
-        this.P_B_max = ((this.M_B_max * (this.n_motor_start - this.n_motor)) / (60 / (2 * Math.PI)));
+        //Maximum braking power in kW
+        this.P_B_max = ((this.M_B_max * (this.n_motor_start - this.n_motor)) / (60 / (2 * Math.PI)))/ 1000;
 
         //Maximum electrical braking power in kW
-        this.P_El_max = (this.P_B_max - ((1 - this.η_motor) * this.P_m) - (((1 - this.η_gearbox) * (1 - this.η_pulley)) * this.P_B_max)) / 1000;
+        this.P_El_max = (this.P_B_max - ((1 - this.η_motor) * this.P_m) - (((1 - this.η_gearbox) * (1 - this.η_pulley)) * this.P_B_max)) ;
 
         //Maximum braking resistance
         this.R_max = (this.brakeActivateVoltage ** 2) / (this.P_El_max * 1000);
@@ -78,11 +78,11 @@ export class HoistAlternative {
         //Duty cycle time
         this.t_duty_cycle = this.t_brake_max / (this.dutyCycle / 100) 
 
-        //Power while lowering
-        this.P_low = (this.M_load * (this.n_motor_start - this.n_motor)) / (60 / (2 * Math.PI));
+        //Power while lowering in kW
+        this.P_low = (this.M_load * (this.n_motor_start - this.n_motor)) / (60 / (2 * Math.PI)) / 1000;
 
         //Power while lowering - losses can be used as average electrical braking power in kW
-        this.P_El_avg = (this.P_low - ((1 - this.η_motor) * this.P_m) - ((1 - this.η_gearbox) * this.P_low) - ((1 - this.η_pulley) * this.P_low)) / 1000;
+        this.P_El_avg = (this.P_low - ((1 - this.η_motor) * this.P_m) - ((1 - this.η_gearbox) * this.P_low) - ((1 - this.η_pulley) * this.P_low));
     }
 
     selectedCDBR() {

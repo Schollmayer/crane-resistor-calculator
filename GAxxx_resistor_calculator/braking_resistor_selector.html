@@ -1,6 +1,11 @@
+<!--
+  This project includes Snap.svg, which is licensed under the Apache License 2.0.
+  You can find the full license at http://www.apache.org/licenses/LICENSE-2.0
+-->
+
 <!doctype html>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         var userLang = navigator.language || navigator.userLanguage;
         document.documentElement.setAttribute("lang", userLang);
     });
@@ -20,6 +25,8 @@
     <link rel="stylesheet" href="https://yeu-frontend.yaskawa.eu/assets/css/yaskstyle.css">
     <link rel="stylesheet" href="https://yeu-frontend.yaskawa.eu/assets/css/fonts.min.css">
     <link rel="stylesheet" href="../sharedFiles/styles.css">
+    <script data-require="snap.svg@0.5.1" data-semver="0.5.1"
+        src="//cdn.jsdelivr.net/snap.svg/0.5.1/snap.svg-min.js"></script>
 </head>
 
 <body>
@@ -62,71 +69,95 @@
                 If this is not accurate for your application, please do not use this tool.
             </p>
             <p class="yask-dark-gray">
-                The calculator displays the most cost effective selection first and accounts for the tolerance of the resistors..
+                The calculator displays the most cost effective selection first and accounts for the tolerance of the
+                resistors..
             </p>
             <p class="yask-dark-gray body-font">
                 Please input values.
             </p>
-            <form id="brakingDataInputForm">
-                <label for="dutyCycle" class="form-label yask-blue mt-2" >
+            <form id="brakingDataInputForm" novalidate>
+                <label for="dutyCycle" class="form-label yask-blue mt-2">
                     Select Drive Series:
                 </label>
                 <div class="radio-container mb-1">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="driveSelectRadios" id="driveSelectRadio1" value="GA700" checked>
+                        <input class="form-check-input" type="radio" name="driveSelectRadios" id="driveSelectRadio1"
+                            value="GA700" checked>
                         <label class="form-check-label" for="driveSelectRadio1">GA700</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="driveSelectRadios" id="driveSelectRadio2" value="CR700">
+                        <input class="form-check-input" type="radio" name="driveSelectRadios" id="driveSelectRadio2"
+                            value="CR700">
                         <label class="form-check-label" for="driveSelectRadio2">CR700</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="driveSelectRadios" id="driveSelectRadio3" value="GA500">
+                        <input class="form-check-input" type="radio" name="driveSelectRadios" id="driveSelectRadio3"
+                            value="GA500">
                         <label class="form-check-label" for="driveSelectRadio3">GA500</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="driveSelectRadios" id="driveSelectRadio4" value="LA500">
+                        <input class="form-check-input" type="radio" name="driveSelectRadios" id="driveSelectRadio4"
+                            value="LA500">
                         <label class="form-check-label" for="driveSelectRadio4">LA500</label>
                     </div>
                 </div>
-                
+
                 <div>
                     <label for="driveSelect" class="form-label yask-blue">
                         Select Drive Model:
                     </label>
                     <select class="form-select" id="driveSelect" required style="color: #636669">
                         <option value="" style="color: #636669" selected>
-                            Select Drive model
+                            Select Drive Model
                         </option>
                     </select>
+                    <div class="invalid-feedback">
+                        Please select a drive.
+                    </div>
                 </div>
                 <div class="form-group pt-3">
                     <label for="dutyCycle" class="form-label yask-blue" id="tooltipLabel">
                         Duty Cycle [%]
                     </label>
-                    <input type="number" inputmode="decimal" inputmode="decimal" inputmode="decimal" class="form-control" id="dutyCycle" placeholder="Enter braking duty cycle in %"
-                        min="1" max="100" step="any" required>
+                    <input type="number" inputmode="decimal" 
+                        class="form-control" id="dutyCycle" placeholder="Enter braking duty cycle in %" min="1"
+                        max="100" step="any" required>
+                        <div class="invalid-feedback">
+                            The input value must be between 1 and 100.
+                        </div>
                 </div>
                 <div class="form-group">
                     <label for="dutyCycleDuration" class="form-label yask-blue" id="tooltipLabel2">
                         Duty Cycle Duration [s]
                     </label>
-                    <input type="number" inputmode="decimal" inputmode="decimal" inputmode="decimal" class="form-control" id="dutyCycleDuration"
-                        placeholder="Enter braking duty cycle duration in s" min="1" step="any" required>
+                    <input type="number" inputmode="decimal"
+                        class="form-control" id="dutyCycleDuration" placeholder="Enter braking duty cycle duration in s"
+                        min="1" max ="10000" step="any" required>
+                        <div class="invalid-feedback">
+                            The input value must be between 1 and 10000.
+                        </div>
                 </div>
                 <div class="form-group">
                     <label for="peakPower" class="form-label yask-blue">
                         Peak Braking Power [kW]
                     </label>
-                    <input type="number" inputmode="decimal" inputmode="decimal" inputmode="decimal" class="form-control" id="peakPower"
-                        placeholder="Enter peak braking power in kW" min="0.01" step="any" required>
+                    <input type="number" inputmode="decimal" 
+                        class="form-control" id="peakPower" placeholder="Enter peak braking power in kW" min="0.01" max= "20000"
+                        step="any" required>
+                        <div class="invalid-feedback">
+                            The input value must be higher than the "Braking Power" value and must between 0.01 and 20000.
+                        </div>
                 </div>
                 <div class="form-group">
                     <label for="power" class="form-label yask-blue">
                         Braking Power [kW]
                     </label>
-                    <input type="number" inputmode="decimal" inputmode="decimal" inputmode="decimal" class="form-control" id="power" placeholder="Enter braking power in kW"
-                        min="0.01" step="any" required>
+                    <input type="number" inputmode="decimal" 
+                        class="form-control" id="power" placeholder="Enter braking power in kW" min="0.01" step="any" max= "10000"
+                        required>
+                        <div class="invalid-feedback">
+                            The input value must be lower than the "Peak Braking Power" value and must between 0.01 and 10000.
+                        </div>
                 </div>
             </form>
             <button type="button" class="btn btn-yask-blue mt-3" id="calculateResistorButton">
@@ -138,6 +169,8 @@
             <button type="button" class="btn btn-yask-gray mt-3" id="resetInputsButton">
                 Reset Inputs
             </button>
+            <div id="outputMessage" class="mt-4">
+            </div>
             <div id="output" class="mt-4">
             </div>
         </div>
