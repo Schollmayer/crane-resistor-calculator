@@ -1,5 +1,5 @@
 import { calculateResistors } from "../sharedFiles/braking_resistor_calculations.js";
-import {getResistorGraphic} from "../sharedFiles/calculation_output.js";
+import { getResistorGraphic } from "../sharedFiles/calculation_output.js";
 
 const Rmin = document.getElementById('Rmin');
 const Rmax = document.getElementById('Rmax');
@@ -7,22 +7,56 @@ const power = document.getElementById('power');
 const dutyCycleDuration = document.getElementById('dutyCycleDuration');
 const dutyCycle = document.getElementById('dutyCycle');
 
-//Button-EventListener
+// Button Event Listener
 const calculateButton = document.getElementById('calculateButton');
 calculateButton.addEventListener('click', function () {
-  var form = document.getElementById('brakingDataInputForm');
   // Clear previous calculation results
-  var outputDiv = document.getElementById("output");
+  const outputDiv = document.getElementById("output");
   outputDiv.innerHTML = "";
-  
-  if (form.checkValidity()) {
-    calculateResult();
+
+  const form = document.getElementById('brakingDataInputForm');
+  if (validateForm(form)) {
+    calculateResult(); // Call your calculation function
+    calculateButton.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    // Scroll to the first invalid input field
+    const firstInvalidInput = form.querySelector('input.is-invalid');
+    if (firstInvalidInput) {
+      firstInvalidInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
   }
-  else {
-    form.reportValidity(); // This will trigger the browser's built-in validation messages
-  }
-  storeFormInput();
+  storeFormInput(); // Store the form inputs
 });
+
+// Custom form validation function
+function validateForm(form) {
+  // Select both inputs and selects within the form
+  const elements = form.querySelectorAll('input, select');
+  let isFormValid = true;
+
+  elements.forEach(element => {
+    // Check validity of each element
+    if (!element.checkValidity()) {
+      applyValidationClasses(element, false);
+      isFormValid = false;
+    } else {
+      applyValidationClasses(element, true);
+    }
+  });
+
+  // Return overall form validity status
+  return isFormValid;
+}
+
+// Helper function to apply Bootstrap validation classes
+function applyValidationClasses(input, isValid) {
+  if (isValid) {
+    input.classList.remove('is-invalid');
+  } else {
+    input.classList.remove('is-valid');
+    input.classList.add('is-invalid');
+  }
+}
 
 const loadInputsButton = document.getElementById('loadInputsButton');
 loadInputsButton.addEventListener('click', loadFormData);

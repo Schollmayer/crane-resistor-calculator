@@ -24,10 +24,7 @@ calculateButton.addEventListener('click', function () {
     // Speed validation check
     if (targetSpeed > startSpeed) {
         targetSpeedInput.setCustomValidity('Target speed cannot be higher than start speed!');
-        targetSpeedInput.reportValidity();  // This will trigger the built-in validation error
-        applyValidationClasses(targetSpeedInput, false);
         targetSpeedInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        return; // Exit the function to prevent further action
     }
 
     const form = document.getElementById('brakingDataInputForm');
@@ -41,7 +38,6 @@ calculateButton.addEventListener('click', function () {
             firstInvalidInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     }
-
     storeFormInput(); // Store the form inputs
 });
 
