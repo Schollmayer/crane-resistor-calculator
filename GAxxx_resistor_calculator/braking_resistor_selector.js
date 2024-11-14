@@ -52,19 +52,59 @@ selectedDrive.forEach((drive, index) => {
 });
 
 
-calculateResistorButton.addEventListener('click', function () {
-  var form = document.getElementById('brakingDataInputForm');
-  // Clear previous calculation results
-  clearOutput();
+// Button Event Listener
+const calculateButton = document.getElementById('calculateResistorButton');
+calculateButton.addEventListener('click', function () {
+    // Clear previous calculation results
+    const outputDiv = document.getElementById("output");
+    outputDiv.innerHTML = "";
 
-  if (form.checkValidity()) {
-    calculate();
-  }
-  else {
-    form.reportValidity(); // This will trigger the browser's built-in validation messages
-  }
-  storeFormInput();
+    const form = document.getElementById('brakingDataInputForm');
+    if (validateForm(form)) {
+        calculate(); // Call your calculation function
+        calculateButton.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+        // Scroll to the first invalid input field
+        const firstInvalidInput = form.querySelector('input.is-invalid');
+        if (firstInvalidInput) {
+            firstInvalidInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
+
+    storeFormInput(); // Store the form inputs
 });
+
+// Custom form validation function
+function validateForm(form) {
+  // Select both inputs and selects within the form
+  const elements = form.querySelectorAll('input, select');
+  let isFormValid = true;
+
+  elements.forEach(element => {
+      // Check validity of each element
+      if (!element.checkValidity()) {
+          applyValidationClasses(element, false);
+          isFormValid = false;
+      } else {
+          applyValidationClasses(element, true);
+      }
+  });
+
+  // Return overall form validity status
+  return isFormValid;
+}
+
+// Helper function to apply Bootstrap validation classes
+function applyValidationClasses(input, isValid) {
+  if (isValid) {
+      input.classList.remove('is-invalid');
+      //input.classList.add('is-valid');
+  } else {
+      input.classList.remove('is-valid');
+      input.classList.add('is-invalid');
+  }
+}
+
 
 const loadInputsButton = document.getElementById('loadInputsButton');
 loadInputsButton.addEventListener('click', loadFormData);

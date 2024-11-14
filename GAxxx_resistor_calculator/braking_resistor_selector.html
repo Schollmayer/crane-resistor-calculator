@@ -72,7 +72,7 @@
             <p class="yask-dark-gray body-font">
                 Please input values.
             </p>
-            <form id="brakingDataInputForm">
+            <form id="brakingDataInputForm" novalidate>
                 <label for="dutyCycle" class="form-label yask-blue mt-2">
                     Select Drive Series:
                 </label>
@@ -105,9 +105,12 @@
                     </label>
                     <select class="form-select" id="driveSelect" required style="color: #636669">
                         <option value="" style="color: #636669" selected>
-                            Select Drive model
+                            Select Drive Model
                         </option>
                     </select>
+                    <div class="invalid-feedback">
+                        Please select a drive.
+                    </div>
                 </div>
                 <div class="form-group pt-3">
                     <label for="dutyCycle" class="form-label yask-blue" id="tooltipLabel">
@@ -116,6 +119,9 @@
                     <input type="number" inputmode="decimal" 
                         class="form-control" id="dutyCycle" placeholder="Enter braking duty cycle in %" min="1"
                         max="100" step="any" required>
+                        <div class="invalid-feedback">
+                            The input value must be between 1 and 100.
+                        </div>
                 </div>
                 <div class="form-group">
                     <label for="dutyCycleDuration" class="form-label yask-blue" id="tooltipLabel2">
@@ -123,23 +129,32 @@
                     </label>
                     <input type="number" inputmode="decimal"
                         class="form-control" id="dutyCycleDuration" placeholder="Enter braking duty cycle duration in s"
-                        min="1" step="any" required>
+                        min="1" max ="10000" step="any" required>
+                        <div class="invalid-feedback">
+                            The input value must be between 1 and 10000.
+                        </div>
                 </div>
                 <div class="form-group">
                     <label for="peakPower" class="form-label yask-blue">
                         Peak Braking Power [kW]
                     </label>
                     <input type="number" inputmode="decimal" 
-                        class="form-control" id="peakPower" placeholder="Enter peak braking power in kW" min="0.01"
+                        class="form-control" id="peakPower" placeholder="Enter peak braking power in kW" min="0.01" max= "20000"
                         step="any" required>
+                        <div class="invalid-feedback">
+                            The input value must be between 0.01 and 20000.
+                        </div>
                 </div>
                 <div class="form-group">
                     <label for="power" class="form-label yask-blue">
                         Braking Power [kW]
                     </label>
                     <input type="number" inputmode="decimal" 
-                        class="form-control" id="power" placeholder="Enter braking power in kW" min="0.01" step="any"
+                        class="form-control" id="power" placeholder="Enter braking power in kW" min="0.01" step="any" max= "10000"
                         required>
+                        <div class="invalid-feedback">
+                            The input value must be between 0.01 and 10000.
+                        </div>
                 </div>
             </form>
             <button type="button" class="btn btn-yask-blue mt-3" id="calculateResistorButton">

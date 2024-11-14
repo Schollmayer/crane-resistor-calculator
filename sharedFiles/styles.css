@@ -206,3 +206,7 @@ h1 {
   border-bottom-left-radius: 0.75rem !important;
   border-bottom-right-radius: 0.75rem !important;
 }
+
+.form-select.is-invalid {
+  border-color: var(--bs-form-invalid-border-color) !important; 
+}
