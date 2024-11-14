@@ -21,7 +21,6 @@ calculateButton.addEventListener('click', function () {
             firstInvalidInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     }
-
     storeFormInput(); // Store the form inputs
 });
 

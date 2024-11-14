@@ -14,6 +14,23 @@ calculateButton.addEventListener('click', function () {
   const outputDiv = document.getElementById("output");
   outputDiv.innerHTML = "";
 
+  const Rmin = document.getElementById('Rmin');
+  const Rmax = document.getElementById('Rmax');
+
+  const RminValue = parseFloat(Rmin.value);
+  const RmaxValue = parseFloat(Rmax.value);
+
+  // Reset custom validity messages
+  Rmin.setCustomValidity('');
+  Rmax.setCustomValidity('');
+
+  // Resistor validation check
+  if (RminValue > RmaxValue) {
+    Rmin.setCustomValidity('Rmax must be higher than Rmin!');
+    Rmax.setCustomValidity('Rmax must be higher than Rmin!');
+    Rmin.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
   const form = document.getElementById('brakingDataInputForm');
   if (validateForm(form)) {
     calculateResult(); // Call your calculation function

@@ -58,6 +58,23 @@ calculateButton.addEventListener('click', function () {
     const outputDiv = document.getElementById("output");
     outputDiv.innerHTML = "";
 
+    const Pb = document.getElementById('power');
+    const PBmax = document.getElementById('peakPower');
+  
+    const PbValue = parseFloat(Pb.value);
+    const PBmaxValue = parseFloat(PBmax.value);
+  
+    // Reset custom validity messages
+    Pb.setCustomValidity('');
+    PBmax.setCustomValidity('');
+  
+    // Resistor validation check
+    if (PbValue > PBmaxValue) {
+      Pb.setCustomValidity('Rmax must be higher than Rmin!');
+      PBmax.setCustomValidity('Rmax must be higher than Rmin!');
+      PBmax.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
     const form = document.getElementById('brakingDataInputForm');
     if (validateForm(form)) {
         calculate(); // Call your calculation function

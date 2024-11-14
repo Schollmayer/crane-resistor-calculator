@@ -71,7 +71,7 @@
                     <input type="number" inputmode="decimal" class="form-control" id="Rmin"
                         placeholder="Enter Rmin in Ω" min="0.01" max="30000" step="any" required>
                     <div class="invalid-feedback">
-                        The input value must be between 0.01 and 30000.
+                        The input value must be lower than Rmax and must be between 0.01 and 30000.
                     </div>
                 </div>
                 <div class="form-group">
@@ -81,7 +81,7 @@
                     <input type="number" inputmode="decimal" class="form-control" id="Rmax"
                         placeholder="Enter Rmax in Ω" step="any" min="0.01" max="30000" required>
                     <div class="invalid-feedback">
-                        The input value must be between 0.01 and 30000.
+                        The input value must be higher than Rmin and must be between 0.01 and 30000.
                     </div>
                 </div>
                 <div class="form-group">
