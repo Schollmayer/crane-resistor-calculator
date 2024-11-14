@@ -75,13 +75,14 @@
                 Please input values.
             </p>
             <h3 class="yask-blue mb-1">Power Considerations</h3>
-            <form id="brakingDataInputForm">
+            <form id="brakingDataInputForm" novalidate>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="motorRatedCurrentInput">
                         Motor Rated Current [A]:
                     </label>
                     <input type="number" inputmode="decimal" class="form-control" id="motorRatedCurrentInput"
                         placeholder="Enter motor rated current in A" min="1" max="605" step="any" required>
+                    <div class="invalid-feedback">The input value must be between 1 and 605.</div>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="avMechPowerInput">
@@ -89,6 +90,7 @@
                     </label>
                     <input type="number" inputmode="decimal" class="form-control" id="avMechPowerInput"
                         placeholder="Enter average mechanical power in kW" min="1" max="315" step="any" required>
+                    <div class="invalid-feedback">The input value must be between 1 and 315.</div>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="gearboxEffInput">
@@ -96,6 +98,7 @@
                     </label>
                     <input type="number" inputmode="decimal" class="form-control" id="gearboxEffInput"
                         placeholder="Enter gearbox efficiency in %" min="70" max="99" step="any" required>
+                    <div class="invalid-feedback">The input value must be between 70 and 99.</div>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="motorEffInput">
@@ -103,6 +106,7 @@
                     </label>
                     <input type="number" inputmode="decimal" class="form-control" id="motorEffInput"
                         placeholder="Enter motor efficiency in %" min="70" max="99" step="any" required>
+                    <div class="invalid-feedback">The input value must be between 70 and 99.</div>
                 </div>
                 <h3 class="yask-blue mb-1 mt-3">
                     Brake Time Considerations
@@ -113,13 +117,15 @@
                     </label>
                     <input type="number" inputmode="decimal" class="form-control" id="ed%Input"
                         placeholder="Enter regenerative percentage in %" min="10" max="50" step="any" required>
+                    <div class="invalid-feedback">The input value must be between 10 and 50.</div>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="hoistHeigthInput">
                         Hoist Height [m]:
                     </label>
                     <input type="number" inputmode="decimal" class="form-control" id="hoistHeigthInput"
-                        placeholder="Enter hoist height in m" min="1" max=200 step="any" required>
+                        placeholder="Enter hoist height in m" min="1" max="200" step="any" required>
+                    <div class="invalid-feedback">The input value must be between 1 and 200.</div>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="hoistLinSpeedInput">
@@ -127,8 +133,10 @@
                     </label>
                     <input type="number" inputmode="decimal" class="form-control" id="hoistLinSpeedInput"
                         placeholder="Enter hoist linear speed in m/min" min="1" max="50" step="any" required>
+                    <div class="invalid-feedback">The input value must be between 1 and 50.</div>
                 </div>
             </form>
+            
             <button type="button" class="btn btn-yask-blue mt-3" id="calculateButton">
                 Calculate
             </button>
