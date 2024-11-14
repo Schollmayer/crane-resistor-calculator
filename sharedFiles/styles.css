@@ -1,6 +1,16 @@
 /*
  * Custom CSS
  */
+
+body,
+html {
+  font-size: 1rem !important;
+}
+
+label {
+  font-size: 1rem !important;
+}
+
 body {
   background-color: var(--yask-super-light-gray);
 }
@@ -208,5 +218,5 @@ h1 {
 }
 
 .form-select.is-invalid {
-  border-color: var(--bs-form-invalid-border-color) !important; 
+  border-color: var(--bs-form-invalid-border-color) !important;
 }
