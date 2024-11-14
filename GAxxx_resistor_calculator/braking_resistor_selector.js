@@ -8,7 +8,6 @@ import { ga700_data } from "./ga700_data.js";
 import { ga500_data } from "./ga500_data.js";
 import { cr700_data } from "../CR700_calculator/cr700_data.js";
 import { la500_data } from "./la500_data.js";
-import { createSchematic } from "../sharedFiles/schematic_generator.js";
 
 
 const calculateResistorButton = document.getElementById('calculateResistorButton');
@@ -70,7 +69,6 @@ calculateButton.addEventListener('click', function () {
             firstInvalidInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     }
-
     storeFormInput(); // Store the form inputs
 });
 
@@ -98,7 +96,6 @@ function validateForm(form) {
 function applyValidationClasses(input, isValid) {
   if (isValid) {
       input.classList.remove('is-invalid');
-      //input.classList.add('is-valid');
   } else {
       input.classList.remove('is-valid');
       input.classList.add('is-invalid');
@@ -369,7 +366,7 @@ function performAndDisplayCalculations(minR, maxR, power, dutyCycle, dutyCycleDu
           outputSameDriveWithBrakingTransistor();
           var resistorResults = calculateResistors(selectedCDBR.cdbr.minResistance, Rmax, AvgPower, dutyCycle, dutyCycleDuration);
           if (resistorResults) {
-            displayResistorTransistorSelection("output", getSelectedDrive(selectedDrive), selectedCDBR, resistorResults, selectedCDBR.cdbr.minResistance, Rmax, power, parseFloat(peakPower.value),
+            displayResistorTransistorSelection("output", getSelectedDrive(selectedDrive), selectedCDBR, resistorResults, selectedCDBR.cdbr.minResistance, Rmax, AvgPower, parseFloat(peakPower.value),
               getMaxBreakTime(dutyCycle, dutyCycleDuration), dutyCycleDuration);
           }
           else {
