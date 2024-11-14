@@ -75,13 +75,16 @@
                 Please input values.
             </p>
             <h3 class="yask-blue mb-1">Main hoist motor data</h3>
-            <form id="brakingDataInputForm">
+            <form id="brakingDataInputForm" novalidate>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="motorRatedCurrentInput">
                         Motor Rated Current [A]:
                     </label>
                     <input type="number" inputmode="decimal" class="form-control" id="motorRatedCurrentInput"
                         placeholder="Enter motor rated current in A" min="0.01" max="605" step="any" required>
+                    <div class="invalid-feedback">
+                        The input value must be between 0.01 and 605.
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="avMotorPowerInput">
@@ -89,6 +92,9 @@
                     </label>
                     <input type="number" inputmode="decimal" class="form-control" id="avMotorPowerInput"
                         placeholder="Enter average motor power in kW" step="any" min="0.01" max="350" required>
+                    <div class="invalid-feedback">
+                        The input value must be between 0.01 and 350.
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="motorStartSpeedInput" id="tooltipLabelSpeed">
@@ -96,6 +102,9 @@
                     </label>
                     <input type="number" inputmode="decimal" class="form-control" id="motorStartSpeedInput"
                         placeholder="Enter start speed in rpm" step="any" min="0" max="20000" required>
+                    <div class="invalid-feedback">
+                        The input value must be higher than the "Motor Speed" value and must between 0 and 20000.
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="avMotorSpeedInput" id="tooltipLabelSpeed2">
@@ -103,13 +112,19 @@
                     </label>
                     <input type="number" inputmode="decimal" class="form-control" id="avMotorSpeedInput"
                         placeholder="Enter motor speed / target speed  in rpm" step="any" max="20000" required>
+                    <div class="invalid-feedback">
+                        The input value must be smaller than the "Start Speed" value and must between 0 and 20000.
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="MotorInertiaInput">
                         Motor Inertia [kgm&#178]:
                     </label>
                     <input type="number" inputmode="decimal" class="form-control" id="MotorInertiaInput"
-                        placeholder="Enter motor inertia in kgm&#178" step="any" min="0.001" required>
+                        placeholder="Enter motor inertia in kgm&#178" step="any" min="0.001" max="10000" required>
+                    <div class="invalid-feedback">
+                        The input value must be between 0.001 and 10000.
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="motorEffInput">
@@ -117,6 +132,9 @@
                     </label>
                     <input type="number" inputmode="decimal" class="form-control" id="motorEffInput"
                         placeholder="Enter pulley efficiency in %" min="70" max="100" step="any" value="92" required>
+                    <div class="invalid-feedback">
+                        The input value must be between 70 and 100.
+                    </div>
                 </div>
                 <h3 class="yask-blue mb-1 mt-3">
                     Main Hoist Data
@@ -126,7 +144,10 @@
                         Hoist Height [m]:
                     </label>
                     <input type="number" inputmode="decimal" class="form-control" id="hoistHeigthInput"
-                        placeholder="Enter hoist height in m" min="1" max=200 step="any" required>
+                        placeholder="Enter hoist height in m" min="1" max="200" step="any" required>
+                    <div class="invalid-feedback">
+                        The input value must be between 1 and 200.
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="hoistLinSpeedInput">
@@ -134,34 +155,49 @@
                     </label>
                     <input type="number" inputmode="decimal" class="form-control" id="hoistLinSpeedInput"
                         placeholder="Enter hoist linear speed in m/min" min="1" max="50" step="any" required>
+                    <div class="invalid-feedback">
+                        The input value must be between 1 and 50.
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="WorkingLoadInput">
                         Save Working Load [t]:
                     </label>
                     <input type="number" inputmode="decimal" class="form-control" id="WorkingLoadInput"
-                        placeholder="Enter save working load in t" step="any" min="0.01" required>
+                        placeholder="Enter save working load in t" step="any" min="0.01" max="1000" required>
+                    <div class="invalid-feedback">
+                        The input value must be between 0.01 and 1000.
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="ChainWeightInput">
                         Chain Weight [t]:
                     </label>
                     <input type="number" inputmode="decimal" class="form-control" id="ChainWeightInput"
-                        placeholder="Enter chain weight in t" step="any" min="0" required>
+                        placeholder="Enter chain weight in t" step="any" min="0" max="100" required>
+                    <div class="invalid-feedback">
+                        The input value must be between 0 and 100.
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="PulleyBlockRatioInput">
                         Pulley Block Ratio [ratio:1]:
                     </label>
                     <input type="number" inputmode="decimal" class="form-control" id="PulleyBlockRatioInput"
-                        placeholder="Enter pulley block ratio" step="any" min="1" required>
+                        placeholder="Enter pulley block ratio" step="any" min="1" max="1000" required>
+                    <div class="invalid-feedback">
+                        The input value must be between 1 and 1000.
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="GearboxRatioInput">
                         Gearbox Ratio [ratio:1]:
                     </label>
                     <input type="number" inputmode="decimal" class="form-control" id="GearboxRatioInput"
-                        placeholder="Enter gearbox ratio" step="any" min="1" required>
+                        placeholder="Enter gearbox ratio" step="any" min="1" max="1000" required>
+                    <div class="invalid-feedback">
+                        The input value must be between 1 and 1000.
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="gearboxEffInput">
@@ -169,6 +205,9 @@
                     </label>
                     <input type="number" inputmode="decimal" class="form-control" id="gearboxEffInput"
                         placeholder="Enter gearbox efficiency in %" min="70" max="100" step="any" value="80" required>
+                    <div class="invalid-feedback">
+                        The input value must be between 70 and 100.
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="pulleyEffInput">
@@ -176,13 +215,19 @@
                     </label>
                     <input type="number" inputmode="decimal" class="form-control" id="pulleyEffInput"
                         placeholder="Enter pulley efficiency in %" min="70" max="100" step="any" value="100" required>
+                    <div class="invalid-feedback">
+                        The input value must be between 70 and 100.
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-label yask-blue" for="groveDiameterInput">
                         Roope Groove Diameter [m]:
                     </label>
                     <input type="number" inputmode="decimal" class="form-control" id="groveDiameterInput"
-                        placeholder="Roope groove diameter in m" step="any" min="0.001" required>
+                        placeholder="Roope groove diameter in m" step="any" min="0.001" max="100" required>
+                    <div class="invalid-feedback">
+                        The input value must be between 0.001 and 100.
+                    </div>
                 </div>
                 <div class="form-group mt-2">
                     <label class="form-label yask-blue" for="ed%Input" id="tooltipLabel">
@@ -190,6 +235,9 @@
                     </label>
                     <input type="number" inputmode="decimal" class="form-control" id="ed%Input"
                         placeholder="Enter regenerative percentage in %" min="10" max="50" step="any" required>
+                    <div class="invalid-feedback">
+                        The input value must be between 10 and 50.
+                    </div>
                 </div>
             </form>
             <button type="button" class="btn btn-yask-blue mt-3" id="calculateButton">
@@ -213,7 +261,6 @@
     <script type="text/javascript" src="https://yeu-frontend.yaskawa.eu/assets/js/custom.js"></script>
     <script type="text/javascript"
         src="https://yeu-frontend.yaskawa.eu/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-
 </body>
 
 </html>

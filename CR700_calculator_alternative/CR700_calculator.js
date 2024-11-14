@@ -4,39 +4,76 @@ import { calculateResistors} from "../sharedFiles/braking_resistor_calculations.
 import {createSchematic} from "../sharedFiles/schematic_generator.js";
 import {displayResistorTransistorSelection} from "../sharedFiles/calculation_output.js";
 
-// Button-EventListener
+// Button Event Listener
 const calculateButton = document.getElementById('calculateButton');
 calculateButton.addEventListener('click', function () {
-  // Clear previous calculation results
-  var outputDiv = document.getElementById("output");
-  outputDiv.innerHTML = "";
+    // Clear previous calculation results
+    const outputDiv = document.getElementById("output");
+    outputDiv.innerHTML = "";
 
-  const startSpeedInput = document.getElementById('motorStartSpeedInput');
-  const targetSpeedInput = document.getElementById('avMotorSpeedInput');
+    const startSpeedInput = document.getElementById('motorStartSpeedInput');
+    const targetSpeedInput = document.getElementById('avMotorSpeedInput');
 
-  const startSpeed = parseFloat(startSpeedInput.value);
-  const targetSpeed = parseFloat(targetSpeedInput.value);
+    const startSpeed = parseFloat(startSpeedInput.value);
+    const targetSpeed = parseFloat(targetSpeedInput.value);
 
-  // Reset custom validity messages
-  startSpeedInput.setCustomValidity('');
-  targetSpeedInput.setCustomValidity('');
+    // Reset custom validity messages
+    startSpeedInput.setCustomValidity('');
+    targetSpeedInput.setCustomValidity('');
 
-  // Speed validation check
-  if (targetSpeed > startSpeed) {
-      targetSpeedInput.setCustomValidity('Target speed cannot be higher than start speed!');
-      targetSpeedInput.reportValidity();  // This will trigger the built-in validation error
-      return; // Exit the function to prevent further action
-  }
+    // Speed validation check
+    if (targetSpeed > startSpeed) {
+        targetSpeedInput.setCustomValidity('Target speed cannot be higher than start speed!');
+        targetSpeedInput.reportValidity();  // This will trigger the built-in validation error
+        applyValidationClasses(targetSpeedInput, false);
+        targetSpeedInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return; // Exit the function to prevent further action
+    }
 
-  var form = document.getElementById('brakingDataInputForm');
-  if (form.checkValidity()) {
-      calculateResult(); // Call your calculation function
-  } else {
-      form.reportValidity(); // Trigger browser's built-in validation
-  }
+    const form = document.getElementById('brakingDataInputForm');
+    if (validateForm(form)) {
+        calculateResult(); // Call your calculation function
+        calculateButton.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+        // Scroll to the first invalid input field
+        const firstInvalidInput = form.querySelector('input.is-invalid');
+        if (firstInvalidInput) {
+            firstInvalidInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
 
     storeFormInput(); // Store the form inputs
 });
+
+// Custom form validation function
+function validateForm(form) {
+  const inputs = form.querySelectorAll('input');
+  let isFormValid = true;
+
+  inputs.forEach(input => {
+      if (!input.checkValidity()) {
+          applyValidationClasses(input, false);
+          isFormValid = false;
+      } else {
+          applyValidationClasses(input, true);
+      }
+  });
+
+  //form.classList.add('was-validated');
+  return isFormValid;
+}
+
+// Helper function to apply Bootstrap validation classes
+function applyValidationClasses(input, isValid) {
+  if (isValid) {
+      input.classList.remove('is-invalid');
+      //input.classList.add('is-valid');
+  } else {
+      input.classList.remove('is-valid');
+      input.classList.add('is-invalid');
+  }
+}
+
 
 const loadInputsButton = document.getElementById('loadInputsButton');
 loadInputsButton.addEventListener('click', loadFormData);
