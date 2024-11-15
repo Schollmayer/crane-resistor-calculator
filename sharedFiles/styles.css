@@ -69,6 +69,10 @@ h1 {
   margin-bottom: 0px;
 }
 
+.btn{
+  border-radius: 0.75rem !important;
+}
+
 .accordion-button:not(.collapsed) {
   color: white;
   /* Text color */
