@@ -60,7 +60,6 @@ export class HoistAlternative {
         this.M_load = this.m_L_total * this.g_const * (this.d_r / 2) * this.i_gear * this.i_pulley;
 
         //Maximum breaking torque
-        //TODO Check n2 and 0.5, there is no 0.5 present to get result from example
         this.M_B_max = ((this.I_total * (this.n_motor_start - this.n_motor)) / (60 / (2 * Math.PI))) + this.M_load;
 
         //Maximum braking power in kW
