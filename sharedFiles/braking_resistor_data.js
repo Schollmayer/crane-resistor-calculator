@@ -47,7 +47,7 @@ const RH_0100W050 = {
 }
 */
 const RH_0100W330 = {
-  type: "RH-0100W330",
+  type: "RH-0100W330 [SAP-No. 10011408]",
   resistance: 330,
   tolerance: 0.1,
   contPower: 0.050,
@@ -77,7 +77,7 @@ const RH_0100W330 = {
 }
 
 const RH_0100W830 = {
-  type: "RH-0100W830",
+  type: "RH-0100W830 [SAP-No. 10004341]",
   resistance: 830,
   tolerance: 0.1,
   contPower: 0.050,
@@ -108,7 +108,7 @@ const RH_0100W830 = {
 
 //Not in NonConfigurableProducts
 const RH_0200W045 = {
-  type: "RH-0200W045",
+  type: "RH-0200W045 [SAP-No. 10011412]",
   resistance: 45,
   tolerance: 0.1,
   contPower: 0.140,
@@ -139,7 +139,7 @@ const RH_0200W045 = {
 
 //Not in NonConfigurableProducts
 const RH_0200W045_UL_T = {
-  type: "RH-0200W045_UL_T",
+  type: "RH-0200W045-UL-T [SAP-No. 10011413]",
   resistance: 45,
   tolerance: 0.1,
   contPower: 0.110,
@@ -169,7 +169,7 @@ const RH_0200W045_UL_T = {
 }
 
 const RH_0260W120 = {
-  type: "RH-0260W120",
+  type: "RH-0260W120 [SAP-No. 10004342]",
   resistance: 120,
   tolerance: 0.1,
   contPower: 0.250,
@@ -199,7 +199,7 @@ const RH_0260W120 = {
 }
 
 const RH_0260W135 = {
-  type: "RH-0260W135",
+  type: "RH-0260W135 [SAP-No. 10004343]",
   resistance: 135,
   tolerance: 0.1,
   contPower: 0.250,
@@ -261,7 +261,7 @@ const RH_0260W220 = {
 }
 */
 const RH_0260W270 = {
-  type: "RH-0260W270",
+  type: "RH-0260W270 [SAP-No. 10004345]",
   resistance: 270,
   tolerance: 0.1,
   contPower: 0.250,
@@ -291,7 +291,7 @@ const RH_0260W270 = {
 }
 
 const RH_0390W070 = {
-  type: "RH-0390W070",
+  type: "RH-0390W070 [SAP-No. 10004346]",
   resistance: 70,
   tolerance: 0.1,
   contPower: 0.300,
@@ -321,7 +321,7 @@ const RH_0390W070 = {
 }
 //Not in NonConfigurableProducts
 const RH_0400W024 = {
-  type: "RH-0400W024",
+  type: "RH-0400W024 [SAP-No. 10011424]",
   resistance: 24,
   tolerance: 0.1,
   contPower: 0.400,
@@ -349,13 +349,13 @@ const RH_0400W024 = {
     },
   ],
 }
-//Not in NonConfigurableProducts
-const RH_0400W032 = {
-  type: "RH-0400W032",
+
+const RH_0400W032_UL_T = {
+  type: "RH-0400W032-UL-T [SAP-No. 10011425]",
   resistance: 32,
   tolerance: 0.1,
   contPower: 0.400,
-  price: 131, //Price of RH-0400W032-UL-T as only UL-T version was listed
+  price: 131,
   ratedPower: [
     {
       type: "ED 6%",
@@ -380,12 +380,12 @@ const RH_0400W032 = {
   ],
 }
 
-const RH_0400W045 = {
-  type: "RH-0400W045",
+const RH_0400W045_UL_T = {
+  type: "RH-0400W045-UL-T [SAP-No. 10011426]",
   resistance: 45,
   tolerance: 0.1,
   contPower: 0.400,
-  price: 108, //Price of RH-0400W045-UL-T as only the UL-T Version was listed
+  price: 108,
   ratedPower: [
     {
       type: "ED 6%",
@@ -411,7 +411,7 @@ const RH_0400W045 = {
 }
 
 const RH_0520W120 = {
-  type: "RH-0520W120",
+  type: "RH-0520W120 [SAP-No. 10004347]",
   resistance: 120,
   tolerance: 0.1,
   contPower: 0.400,
@@ -473,7 +473,7 @@ const RH_0780W032 = {
 }
 */
 const RH_0780W040 = {
-  type: "RH-0780W040",
+  type: "RH-0780W040 [SAP-No. 10004348]",
   resistance: 40,
   tolerance: 0.1,
   contPower: 0.500,
@@ -503,7 +503,7 @@ const RH_0780W040 = {
 }
 
 const RH_0780W040_10 = {
-  type: "RH-0780W040-10",
+  type: "RH-0780W040-10 [SAP-No. 10011431]",
   resistance: 40,
   tolerance: 0.1,
   contPower: 0.250,
@@ -538,7 +538,7 @@ const RH_0780W040_10 = {
 }
 
 const RH_0780W040_UL_T = {
-  type: "RH-0780W040-UL-T",
+  type: "RH-0780W040-UL-T [SAP-No. 10011430]",
   resistance: 40,
   tolerance: 0.1,
   contPower: 0.400,
@@ -568,7 +568,7 @@ const RH_0780W040_UL_T = {
 }
 
 const RH_1000W120 = {
-  type: "RH-1000W120",
+  type: "RH-1000W120 [SAP-No. 10004349]",
   resistance: 120,
   tolerance: 0.1,
   contPower: 0.900,
@@ -598,7 +598,7 @@ const RH_1000W120 = {
 }
 
 const RH_1560W040 = {
-  type: "RH-1560W040",
+  type: "RH-1560W040 [SAP-No. 10004350]",
   resistance: 40,
   tolerance: 0.1,
   contPower: 1.500,
@@ -628,7 +628,7 @@ const RH_1560W040 = {
 }
 
 const RH_1560W040_UL_T = {
-  type: "RH-1560W040-UL-T",
+  type: "RH-1560W040-UL-T [SAP-No. 10011437]",
   resistance: 40,
   tolerance: 0.1,
   contPower: 1.000,
@@ -658,7 +658,7 @@ const RH_1560W040_UL_T = {
 }
 
 const RH_1560W040_10 = {
-  type: "RH-1560W040-10",
+  type: "RH-1560W040-10 [SAP-No. 10011438]",
   resistance: 40,
   tolerance: 0.1,
   contPower: 0.300,
@@ -693,7 +693,7 @@ const RH_1560W040_10 = {
 }
 
 const RH_2700W025 = {
-  type: "RH-2700W025",
+  type: "RH-2700W025 [SAP-No. 10004351]",
   resistance: 25,
   tolerance: 0.1,
   contPower: 2.600,
@@ -723,7 +723,7 @@ const RH_2700W025 = {
 }
 
 const RH_2700W025_UL_T = {
-  type: "RH-2700W025-UL-T",
+  type: "RH-2700W025-UL-T [SAP-No. 10011442]",
   resistance: 25,
   tolerance: 0.1,
   contPower: 1.800,
@@ -754,7 +754,7 @@ const RH_2700W025_UL_T = {
 
 
 const RH_29000W3P8_10 = {
-  type: "RH-29000W3P8-10",
+  type: "RH-29000W3P8-10 [SAP-No. 10011443]",
   resistance: 3.8,
   tolerance: 0.1,
   contPower: 8.000,
@@ -769,7 +769,7 @@ const RH_29000W3P8_10 = {
 }
 
 const RH_3700W025 = {
-  type: "RH-3700W025",
+  type: "RH-3700W025 [SAP-No. 10004352]",
   resistance: 25,
   tolerance: 0.1,
   contPower: 3.600,
@@ -799,7 +799,7 @@ const RH_3700W025 = {
 }
 
 const RH_3700W025_UL_T = {
-  type: "RH-3700W025-UL-T",
+  type: "RH-3700W025-UL-T [SAP-No. 10011446]",
   resistance: 25,
   tolerance: 0.1,
   contPower: 2.500,
@@ -829,7 +829,7 @@ const RH_3700W025_UL_T = {
 }
 
 const RH_38500W3P8_10 = {
-  type: "RH-38500W3P8-10",
+  type: "RH-38500W3P8-10 [SAP-No. 10011447]",
   resistance: 3.8,
   tolerance: 0.1,
   contPower: 9.500,
@@ -859,7 +859,7 @@ const RH_38500W3P8_10_UL_T = {
 }
 
 const RH_48000W3P8_10 = {
-  type: "RH-48000W3P8-10",
+  type: "RH-48000W3P8-10 [SAP-No. 10004355]",
   resistance: 3.8,
   tolerance: 0.1,
   contPower: 12.000,
@@ -873,7 +873,7 @@ const RH_48000W3P8_10 = {
   ],
 }
 const RH_48000W3P8_10_UL_T = {
-  type: "RH-48000W3P8-10-UL-T",
+  type: "RH-48000W3P8-10-UL-T [SAP-No. 10011453]",
   resistance: 3.8,
   tolerance: 0.1,
   contPower: 10.800,
@@ -888,7 +888,7 @@ const RH_48000W3P8_10_UL_T = {
 }
 
 const RH_4800W022 = {
-  type: "RH-4800W022",
+  type: "RH-4800W022 [SAP-No. 10004353]",
   resistance: 22,
   tolerance: 0.1,
   contPower: 4.600,
@@ -918,7 +918,7 @@ const RH_4800W022 = {
 }
 
 const RH_4800W022_10 = {
-  type: "RH-4800W022-10",
+  type: "RH-4800W022-10 [SAP-No. 10004354]",
   resistance: 22,
   tolerance: 0.1,
   contPower: 1.400,
@@ -933,7 +933,7 @@ const RH_4800W022_10 = {
 }
 
 const RH_4800W022_10_UL_T = {
-  type: "RH-4800W022-10-UL-T",
+  type: "RH-4800W022-10-UL-T [SAP-No. 10011451]",
   resistance: 22,
   tolerance: 0.1,
   contPower: 1.000,
@@ -948,7 +948,7 @@ const RH_4800W022_10_UL_T = {
 }
 
 const RH_4800W022_UL_T = {
-  type: "RH-4800W022-UL-T",
+  type: "RH-4800W022-UL-T [SAP-No. 10011449]",
   resistance: 22,
   tolerance: 0.1,
   contPower: 3.200,
@@ -978,7 +978,7 @@ const RH_4800W022_UL_T = {
 }
 
 const RH_6000W022 = {
-  type: "RH-6000W022",
+  type: "RH-6000W022 [SAP-No. 10004356]",
   resistance: 22,
   tolerance: 0.1,
   contPower: 5.800,
@@ -1008,7 +1008,7 @@ const RH_6000W022 = {
 }
 
 const RH_6000W022_10 = {
-  type: "RH-6000W022-10",
+  type: "RH-6000W022-10 [SAP-No. 10011456]",
   resistance: 22,
   tolerance: 0.1,
   contPower: 1.600,
@@ -1023,7 +1023,7 @@ const RH_6000W022_10 = {
 }
 
 const RH_6000W022_10_UL_T = {
-  type: "RH-6000W022-10-UL-T",
+  type: "RH-6000W022-10-UL-T [SAP-No. 10011457]",
   resistance: 22,
   tolerance: 0.1,
   contPower: 1.200,
@@ -1038,7 +1038,7 @@ const RH_6000W022_10_UL_T = {
 }
 
 const RH_6000W022_UL_T = {
-  type: "RH-6000W022-UL-T",
+  type: "RH-6000W022-UL-T [SAP-No. 10011455]",
   resistance: 22,
   tolerance: 0.1,
   contPower: 4.000,
@@ -1068,7 +1068,7 @@ const RH_6000W022_UL_T = {
 }
 
 const RH_7500W023 = {
-  type: "RH-7500W023",
+  type: "RH-7500W023 [SAP-No. 10004357]",
   resistance: 23,
   tolerance: 0.1,
   contPower: 7.200,
@@ -1098,7 +1098,7 @@ const RH_7500W023 = {
 }
 
 const RH_7500W023_UL_T = {
-  type: "RH-7500W023-UL-T",
+  type: "RH-7500W023-UL-T [SAP-No. 10011459]",
   resistance: 23,
   tolerance: 0.1,
   contPower: 5.000,
@@ -1128,7 +1128,7 @@ const RH_7500W023_UL_T = {
 }
 
 const RH_9600W015 = {
-  type: "RH-9600W015",
+  type: "RH-9600W015 [SAP-No. 10004358]",
   resistance: 15,
   tolerance: 0.1,
   contPower: 9.200,
@@ -1158,7 +1158,7 @@ const RH_9600W015 = {
 }
 
 const RH_9600W015_10 = {
-  type: "RH-9600W015-10",
+  type: "RH-9600W015-10 [SAP-No. 10011463]",
   resistance: 15,
   tolerance: 0.1,
   contPower: 3.000,
@@ -1173,7 +1173,7 @@ const RH_9600W015_10 = {
 }
 
 const RH_9600W015_10_UL_T = {
-  type: "RH-9600W015-10-UL-T",
+  type: "RH-9600W015-10-UL-T [SAP-No. 10011464]",
   resistance: 15,
   tolerance: 0.1,
   contPower: 2.100,
@@ -1188,7 +1188,7 @@ const RH_9600W015_10_UL_T = {
 }
 
 const RH_9600W015_UL_T = {
-  type: "RH-9600W015-UL-T",
+  type: "RH-9600W015-UL-T [SAP-No. 10011462]",
   resistance: 15,
   tolerance: 0.1,
   contPower: 6.400,
@@ -1220,8 +1220,8 @@ const RH_9600W015_UL_T = {
 //46 Resistors
 export const braking_resistor_data = [
   /*RH_0100W050,*/ RH_0100W330, RH_0100W830, RH_0200W045, RH_0200W045_UL_T, RH_0260W120,
-  RH_0260W135, /*RH_0260W220,*/ RH_0260W270, RH_0390W070, RH_0400W024, RH_0400W032,
-  RH_0400W045, RH_0520W120, /*RH_0780W032,*/ RH_0780W040, RH_0780W040_10,
+  RH_0260W135, /*RH_0260W220,*/ RH_0260W270, RH_0390W070, RH_0400W024, RH_0400W032_UL_T,
+  RH_0400W045_UL_T, RH_0520W120, /*RH_0780W032,*/ RH_0780W040, RH_0780W040_10,
   RH_0780W040_UL_T, RH_1000W120, RH_1560W040_UL_T, RH_1560W040_10,
   RH_1560W040, RH_2700W025, RH_2700W025_UL_T, RH_29000W3P8_10,
   RH_3700W025, RH_3700W025_UL_T, RH_38500W3P8_10,
