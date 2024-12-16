@@ -333,8 +333,8 @@ export function displayResistorTransistorSelection(outputDIVName, cr700Result, t
 
     else {
         var resistorError = document.createElement("div");
-        resistorError.innerHTML = `<h3>Unfortunately there is no resistor network in our portfolio which fits the selected application.</h3>
-      <br><h4>Please get a suitable resistor from a supplier.</h4>`
+        resistorError.innerHTML = `<h4>Unfortunately there is no resistor network in our portfolio which fits the selected application.</h4>
+      <br><h5>Please get a suitable resistor from a supplier.</h5>`
 
         outputDiv.appendChild(resistorError);
     }
