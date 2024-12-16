@@ -461,30 +461,30 @@ function performAndDisplayCalculations(minR, maxR, power, dutyCycle, dutyCycleDu
 function noTransistorFound() {
   var outputDiv = document.getElementById("outputMessage");
   outputDiv.innerHTML = `
-  <h3>No product found which matches the desired specifications.</h3>
-  <h4>Unfortunately there is no product in our catalog which matches the desired specifications.</h4>`
+  <h4>No product found which matches the desired specifications.</h4>
+  <h5>Unfortunately there is no product in our catalog which matches the desired specifications.</h5>`
 }
 
 function outputSameDriveWithBrakingTransistor() {
   var outputDiv = document.getElementById("outputMessage");
   outputDiv.innerHTML = `
-  <h3>The internal braking transistor is not sufficient for desired braking power.</h3>
-  <h4>The next higher dimensioned drive does not have an internal braking transistor.
-  Please use an external braking transistor with the suggested resistor combination.</h4>`
+  <h4>The internal braking transistor is not sufficient for desired braking power.</h4>
+  <h5>The next higher dimensioned drive does not have an internal braking transistor.
+  Please use an external braking transistor with the suggested resistor combination.</h5>`
 }
 
 function outputExternalBrakingTransistor() {
   var outputDiv = document.getElementById("outputMessage");
   outputDiv.innerHTML = `
-  <h3>The selected drive does not have a integrated braking transistor.</h3>
-  <h4>Please use an external braking transistor with the suggested resistor combination.</h4>`
+  <h4>The selected drive does not have a integrated braking transistor.</h4>
+  <h5>Please use an external braking transistor with the suggested resistor combination.</h5>`
 }
 
 function outputBrakingTransistorError() {
   var outputDiv = document.getElementById("outputMessage");
   outputDiv.innerHTML = `
-  <h3>Internal braking transistor not sufficient for desired braking power.</h3>
-  <h4>Please pick a higher dimensioned drive.</h4>`
+  <h4>Internal braking transistor not sufficient for desired braking power.</h4>
+  <h5>Please pick a higher dimensioned drive.</h5>`
 }
 
 function clearOutput() {

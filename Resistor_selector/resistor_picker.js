@@ -149,8 +149,8 @@ document.addEventListener('DOMContentLoaded', function () {
 function noResistorFound() {
   var outputDiv = document.getElementById("output");
   outputDiv.innerHTML = `
-  <h3>No product found which matches the desired specifications.</h3>
-  <h4>Unfortunately there is no product in our catalog which matches the desired specifications.</h4>`
+  <h4>No product found which matches the desired specifications.</h4>
+  <h5>Unfortunately there is no product in our catalog which matches the desired specifications.</h4>`
 }
 
 function clearOutput() {

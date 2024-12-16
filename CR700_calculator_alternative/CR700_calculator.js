@@ -1,44 +1,44 @@
 import { cdbr_data, ed_interpolate } from "../sharedFiles/cdbr_data.js";
 import { HoistAlternative } from "./hoist_data.js";
-import { calculateResistors} from "../sharedFiles/braking_resistor_calculations.js";
-import {createSchematic} from "../sharedFiles/schematic_generator.js";
-import {displayResistorTransistorSelection} from "../sharedFiles/calculation_output.js";
+import { calculateResistors } from "../sharedFiles/braking_resistor_calculations.js";
+import { createSchematic } from "../sharedFiles/schematic_generator.js";
+import { displayResistorTransistorSelection } from "../sharedFiles/calculation_output.js";
 
 // Button Event Listener
 const calculateButton = document.getElementById('calculateButton');
 calculateButton.addEventListener('click', function () {
-    // Clear previous calculation results
-    const outputDiv = document.getElementById("output");
-    outputDiv.innerHTML = "";
+  // Clear previous calculation results
+  const outputDiv = document.getElementById("output");
+  outputDiv.innerHTML = "";
 
-    const startSpeedInput = document.getElementById('motorStartSpeedInput');
-    const targetSpeedInput = document.getElementById('avMotorSpeedInput');
+  const startSpeedInput = document.getElementById('motorStartSpeedInput');
+  const targetSpeedInput = document.getElementById('avMotorSpeedInput');
 
-    const startSpeed = parseFloat(startSpeedInput.value);
-    const targetSpeed = parseFloat(targetSpeedInput.value);
+  const startSpeed = parseFloat(startSpeedInput.value);
+  const targetSpeed = parseFloat(targetSpeedInput.value);
 
-    // Reset custom validity messages
-    startSpeedInput.setCustomValidity('');
-    targetSpeedInput.setCustomValidity('');
+  // Reset custom validity messages
+  startSpeedInput.setCustomValidity('');
+  targetSpeedInput.setCustomValidity('');
 
-    // Speed validation check
-    if (targetSpeed > startSpeed) {
-        targetSpeedInput.setCustomValidity('Target speed cannot be higher than start speed!');
-        targetSpeedInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  // Speed validation check
+  if (targetSpeed > startSpeed) {
+    targetSpeedInput.setCustomValidity('Target speed cannot be higher than start speed!');
+    targetSpeedInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  const form = document.getElementById('brakingDataInputForm');
+  if (validateForm(form)) {
+    calculateResult(); // Call your calculation function
+    calculateButton.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    // Scroll to the first invalid input field
+    const firstInvalidInput = form.querySelector('input.is-invalid');
+    if (firstInvalidInput) {
+      firstInvalidInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
-
-    const form = document.getElementById('brakingDataInputForm');
-    if (validateForm(form)) {
-        calculateResult(); // Call your calculation function
-        calculateButton.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    } else {
-        // Scroll to the first invalid input field
-        const firstInvalidInput = form.querySelector('input.is-invalid');
-        if (firstInvalidInput) {
-            firstInvalidInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-    }
-    storeFormInput(); // Store the form inputs
+  }
+  storeFormInput(); // Store the form inputs
 });
 
 // Custom form validation function
@@ -47,12 +47,12 @@ function validateForm(form) {
   let isFormValid = true;
 
   inputs.forEach(input => {
-      if (!input.checkValidity()) {
-          applyValidationClasses(input, false);
-          isFormValid = false;
-      } else {
-          applyValidationClasses(input, true);
-      }
+    if (!input.checkValidity()) {
+      applyValidationClasses(input, false);
+      isFormValid = false;
+    } else {
+      applyValidationClasses(input, true);
+    }
   });
 
   //form.classList.add('was-validated');
@@ -62,11 +62,11 @@ function validateForm(form) {
 // Helper function to apply Bootstrap validation classes
 function applyValidationClasses(input, isValid) {
   if (isValid) {
-      input.classList.remove('is-invalid');
-      //input.classList.add('is-valid');
+    input.classList.remove('is-invalid');
+    //input.classList.add('is-valid');
   } else {
-      input.classList.remove('is-valid');
-      input.classList.add('is-invalid');
+    input.classList.remove('is-valid');
+    input.classList.add('is-invalid');
   }
 }
 
@@ -88,7 +88,6 @@ function storeFormInput() {
   inputs.forEach(input => {
     formData[input.id] = input.value;
   });
-
   // Store form data as a JSON string in local storage
   localStorage.setItem('InputFormDataCR700CalcAlt', JSON.stringify(formData));
 }
@@ -150,7 +149,15 @@ document.addEventListener('DOMContentLoaded', function () {
 function noCR700found() {
   var outputDiv = document.getElementById("output");
   outputDiv.innerHTML = `
-    <h3>Unfortunately there is no drive which meets the given requirements.</h3>`
+    <h4>Unfortunately there is no drive which meets the given requirements.</h4>`
+}
+
+function implausibleCalculations() {
+  var outputDiv = document.getElementById("output");
+  outputDiv.innerHTML = `
+    <h4>The calculated braking power is negative, which is implausible. 
+    <br>Please check your input values, particularly at 'Save Working Load' and 'Motor Power,' as mistakes often occur in these areas.
+    </h4>`
 }
 
 function clearOutput() {
@@ -166,44 +173,31 @@ function getdutyCyleTime(maxBrakeTime, dutyCycle) {
 function calculateResult() {
   let hoist = new HoistAlternative();
   let [CR700selection, useInternalbrakingTransistor] = hoist.selectedCR700();
-
-  if (CR700selection) {
-    if (useInternalbrakingTransistor) {
-      let resistorResults = calculateResistors(CR700selection.minBrakeResistance, hoist.R_max, hoist.P_El_avg, hoist.dutyCycle, getdutyCyleTime(hoist.t_brake_max, hoist.dutyCycle))
-      displayResistorTransistorSelection("output",CR700selection, null, resistorResults, CR700selection.minBrakeResistance, hoist.R_max, hoist.P_El_avg, hoist.P_B_max, hoist.t_brake_max, hoist.t_duty_cycle);
-    }
-
-    else {
-      let Rmax = hoist.R_max;
-      let Pavg = hoist.P_El_avg;
-      if (hoist.selectedCDBR().qtty > 1){
-        Rmax = Rmax * hoist.selectedCDBR().qtty;
-        Pavg = Pavg / hoist.selectedCDBR().qtty;
+  if (hoist.calculationPlausible) {
+    if (CR700selection) {
+      if (useInternalbrakingTransistor) {
+        let resistorResults = calculateResistors(CR700selection.minBrakeResistance, hoist.R_max, hoist.P_El_avg, hoist.dutyCycle, getdutyCyleTime(hoist.t_brake_max, hoist.dutyCycle))
+        displayResistorTransistorSelection("output", CR700selection, null, resistorResults, CR700selection.minBrakeResistance, hoist.R_max, hoist.P_El_avg, hoist.P_B_max, hoist.t_brake_max, hoist.t_duty_cycle);
       }
-      let resistorResults = calculateResistors(hoist.selectedCDBR().cdbr.minResistance, Rmax,Pavg , hoist.dutyCycle, getdutyCyleTime(hoist.t_brake_max, hoist.dutyCycle))
-      displayResistorTransistorSelection("output",CR700selection, hoist.selectedCDBR(), resistorResults, hoist.selectedCDBR().cdbr.minResistance, Rmax, Pavg, hoist.P_B_max, hoist.t_brake_max, hoist.t_duty_cycle);
+
+      else {
+        let Rmax = hoist.R_max;
+        let Pavg = hoist.P_El_avg;
+        if (hoist.selectedCDBR().qtty > 1) {
+          Rmax = Rmax * hoist.selectedCDBR().qtty;
+          Pavg = Pavg / hoist.selectedCDBR().qtty;
+        }
+        let resistorResults = calculateResistors(hoist.selectedCDBR().cdbr.minResistance, Rmax, Pavg, hoist.dutyCycle, getdutyCyleTime(hoist.t_brake_max, hoist.dutyCycle))
+        displayResistorTransistorSelection("output", CR700selection, hoist.selectedCDBR(), resistorResults, hoist.selectedCDBR().cdbr.minResistance, Rmax, Pavg, hoist.P_B_max, hoist.t_brake_max, hoist.t_duty_cycle);
+      }
+    }
+    else {
+      clearOutput()
+      noCR700found()
     }
   }
   else {
     clearOutput()
-    noCR700found()
+    implausibleCalculations()
   }
-
-
-  /*avBrakingPowerOutput.value = hoist.P_El_avg.toFixed(1)
-  maxBrakingPowerOutput.value = hoist.maxBrakePower().toFixed(1)
-  maxContBreakTimeOutput.value = hoist.maxBrakeTime().toFixed(1)
-  maxBrakingResOutput.value = CDBRselection.maxResistance.toFixed(2)
-  cdbrOutput1.value = CDBRselection.cdbr.type
-  */
-  //cdbrOutputQuantity1.value = CDBRselection.qtty
-
-}
-
-
-// Routine Start
-// Define new hoist by user
-
-function getBestResistorCombination(minR, maxR, power, resistorList) {
-  return null;
 }

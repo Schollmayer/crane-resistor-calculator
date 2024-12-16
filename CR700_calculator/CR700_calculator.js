@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function noCR700found() {
   var outputDiv = document.getElementById("output");
   outputDiv.innerHTML = `
-    <h3>Unfortunately there is no drive which meets the given requirements.</h3>`
+    <h4>Unfortunately there is no drive which meets the given requirements.</h4>`
 }
 
 function clearOutput() {

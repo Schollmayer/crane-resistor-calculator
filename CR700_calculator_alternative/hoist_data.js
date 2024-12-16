@@ -8,8 +8,7 @@ export class HoistAlternative {
         this.g_const = 9.81                 //g in m/s**2
 
         //Main hoist data
-
-
+        
         // Get hoist speed in meters per minute. Range [1 - 50] m/min
         this.v_hoist = parseFloat(document.getElementById("hoistLinSpeedInput").value);
         // Motor target speed in rpm
@@ -82,6 +81,9 @@ export class HoistAlternative {
 
         //Power while lowering - losses can be used as average electrical braking power in kW
         this.P_El_avg = (this.P_low - ((1 - this.η_motor) * this.P_m) - ((1 - this.η_gearbox) * this.P_low) - ((1 - this.η_pulley) * this.P_low));
+
+        //Checks if the braking power is negative to filter out wrong inputs
+        this.calculationPlausible = this.P_El_avg > 0;
     }
 
     selectedCDBR() {
