@@ -65,17 +65,14 @@
                 Braking Resistor Selection Tool
             </h2>
             <p class="yask-dark-gray">
-                The calculator internally calculates the maximum braking time by multiplying
-                the duty cycle with the duty cycle duration. <br>
-                If this is not accurate for your application, please do not use this tool.
+                This calculator is currently compatible only with 400V-class drives and motors. 
+                It assumes a CDBR voltage selection of 788V, factors in the tolerance of the resistors, and prioritizes the most cost-effective options. 
+                <br>The calculator also internally calculates the maximum braking time by multiplying the duty cycle with the duty cycle duration.
             </p>
             <p class="yask-dark-gray">
-                The calculator displays the most cost effective selection first and accounts for the tolerance of the
-                resistors..
+                If these parameters do not suit your application, please refrain from using this tool.
             </p>
-            <p class="yask-dark-gray body-font">
-                Please input values.
-            </p>
+
             <form id="brakingDataInputForm" novalidate>
                 <label for="dutyCycle" class="form-label yask-blue mt-2">
                     Select Drive Series:

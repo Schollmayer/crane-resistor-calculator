@@ -24,7 +24,7 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script data-require="snap.svg@0.5.1" data-semver="0.5.1"
         src="//cdn.jsdelivr.net/snap.svg/0.5.1/snap.svg-min.js"></script>
-    <link rel="icon" type="image/x-icon" href="../sharedFiles/favicon.ico">   
+    <link rel="icon" type="image/x-icon" href="../sharedFiles/favicon.ico">
     <link rel="stylesheet" href="https://yeu-frontend.yaskawa.eu/assets/css/plugins.css">
     <link rel="stylesheet" href="https://yeu-frontend.yaskawa.eu/assets/css/style.css">
     <link rel="stylesheet" href="https://yeu-frontend.yaskawa.eu/assets/css/yaskstyle.css">
@@ -69,15 +69,15 @@
                     href="../CR700_calculator/index.html">Simple Version</a>
                 <a class="nav-link yask-blue" href="../CR700_calculator_alternative/">Detailed Version</a>
             </nav>
-            <span class="yask-dark-gray body-font">
-                So far this calculator only works with the 400V-class drives and
-                motors.<br></span>
-            <p class="yask-dark-gray">This calculator assumes a CDBR voltage selection of 788V and accounts for the
-                tolerance of the resistors.</p>
-
             <p class="yask-dark-gray">
-                Please input values.
+                This calculator is currently compatible only with 400V-class drives and motors.
+                It assumes a CDBR voltage selection of 788V, factors in the tolerance of the resistors, and displays the
+                most cost-effective option first.
             </p>
+            <p class="yask-dark-gray">
+                If these parameters do not suit your application, please refrain from using this tool.
+            </p>
+
             <h3 class="yask-blue mb-1">Power Considerations</h3>
             <form id="brakingDataInputForm" novalidate>
                 <div class="form-group">
@@ -140,7 +140,7 @@
                     <div class="invalid-feedback">The input value must be between 1 and 200.</div>
                 </div>
             </form>
-            
+
             <button type="button" class="btn btn-yask-blue mt-3" id="calculateButton">
                 Calculate
             </button>
